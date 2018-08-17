@@ -76,7 +76,7 @@ no hint
 `@pre_exercise_code`
 
 ```{r}
-library(tm)
+library(ggvis)
 ```
 
 `@sample_code`
