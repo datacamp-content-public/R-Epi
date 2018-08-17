@@ -15,20 +15,15 @@ key: 847996f3f9
 
 
 This is a first task to get familar with R and time series analysis.
-We wanna start with some easy tasks. For time series analysis we need some data. So let's create some random numbers. Therefor we can use the command `[runif()](https://www.rdocumentation.org/packages/compositions/versions/1.40-2/topics/runif)`
+We wanna start with some easy tasks. For time series analysis we need some data. So let's create some random numbers. Therefor we can use the command [runif()](https://www.rdocumentation.org/packages/compositions/versions/1.40-2/topics/runif). First argument should be the numbers of numbers you would like to generate. By default you will get shuffeld numbers between 0 and 1, but you can add as arguments also an intervall. `runif(10,1,10)` will give you 10 random numbers out of 1 to 10.
 
 
 `@instructions`
-- Instruction 1
-- Instruction 2
-- Instruction 3
-- Instruction 4
+(i) Generate 2^15 random numbers from 0 to 1 by using `runif()` and save it to `numbers`
+(ii) Plot a histogram of your random numbers using `plot(hist(#))`
 
 `@hint`
-- Here is the hint for this setup problem. 
-- It should get students 50% of the way to the correct answer.
-- So don't provide the answer, but don't just reiterate the instructions.
-- Typically one hint per instruction is a sensible amount.
+(i)
 
 `@pre_exercise_code`
 
@@ -39,15 +34,7 @@ We wanna start with some easy tasks. For time series analysis we need some data.
 `@sample_code`
 
 ```{r}
-# Your
-# sample
-# code
-# should
-# be
-# ideally
-# 10 lines or less,
-# with a max
-# of 16 lines.
+# Have fun
 ```
 
 `@solution`
