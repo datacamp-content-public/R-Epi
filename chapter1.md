@@ -23,7 +23,8 @@ We wanna start with some easy tasks. For time series analysis we need some data.
 (ii) Plot a histogram of your random numbers using `plot(hist(#))`
 
 `@hint`
-(i)
+To raise the power in R use `n^p`
+To give a value to a variable use `x<-10`
 
 `@pre_exercise_code`
 
@@ -40,10 +41,8 @@ We wanna start with some easy tasks. For time series analysis we need some data.
 `@solution`
 
 ```{r}
-# Answer goes here
-# Make sure to match the comments with your sample code
-# to help students see the differences from solution
-# to given.
+x <- runif(2^15)
+plot(hist(x))
 ```
 
 `@sct`
