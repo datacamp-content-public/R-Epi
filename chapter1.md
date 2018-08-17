@@ -29,7 +29,7 @@ To give a value to a variable use `x<-10`
 `@pre_exercise_code`
 
 ```{r}
-# Load datasets and packages here.
+library(tm)
 ```
 
 `@sample_code`
