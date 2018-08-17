@@ -1,20 +1,22 @@
 ---
-title: Template Chapter 1
-description: This is a template chapter.
+  title: "Template Chapter 1"
+  description: "This is a template chapter."
 ---
 
 ## An exercise title written in sentence case
 
 ```yaml
-type: NormalExercise
+type: NormalExercise 
 lang: r
-xp: 100
+xp: 100 
 skills: 1
-key: c8ffef1850
+key: 847996f3f9   
 ```
+
 
 This is the assignment text. It should help provide students with the background information needed.
 The instructions that follow should be in bullet point form with clear guidance for what is expected.
+
 
 `@instructions`
 - Instruction 1
@@ -63,3 +65,51 @@ The instructions that follow should be in bullet point form with clear guidance 
 # Update this to something more informative.
 success_msg("Some praise! Then reinforce a learning objective from the exercise.")
 ```
+
+---
+
+## Insert exercise title here
+
+```yaml
+type: NormalExercise 
+xp: 100 
+key: bb2fdd4c01   
+```
+
+
+Generate a list of 2^15 random numbers. You can simply use the function `runif()`
+
+
+`@instructions`
+
+
+`@hint`
+
+
+`@pre_exercise_code`
+
+```{r}
+
+```
+
+
+`@sample_code`
+
+```{r}
+
+```
+
+
+`@solution`
+
+```{r}
+
+```
+
+
+`@sct`
+
+```{r}
+
+```
+
