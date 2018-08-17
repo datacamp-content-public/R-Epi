@@ -67,7 +67,7 @@ FFT
 
 
 `@instructions`
-Use your random numbers from the exercise bevore and calculate the FFT-spectrum of your "randome-time-series".
+Use your random numbers from the exercise bevore and calculate the FFT-spectrum of your "randome-time-series". fs=64Hz
 
 `@hint`
 no hint
