@@ -15,11 +15,7 @@ key: 847996f3f9
 
 
 This is a first task to get familar with R and time series analysis.
-We wanna start with some easy tasks. For time series analysis we need some data. So let's create some random numbers. Therefore we can use the command 
-
-> [runif](https://www.rdocumentation.org/packages/compositions/versions/1.40-2/topics/runif)
-
-. This function has 3 arguments
+We wanna start with some easy tasks. For time series analysis we need some data. So let's create some random numbers. Therefor we can use the command `[runif()](https://www.rdocumentation.org/packages/compositions/versions/1.40-2/topics/runif)`
 
 
 `@instructions`
