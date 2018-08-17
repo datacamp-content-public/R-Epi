@@ -70,28 +70,25 @@ FFT
 Use your random numbers from the exercise bevore and calculate the FFT-spectrum of your "randome-time-series".
 
 `@hint`
-
+no hint
 
 `@pre_exercise_code`
 
 ```{r}
-
+# no code		
 ```
-
 
 `@sample_code`
 
 ```{r}
-
+# no test
 ```
-
 
 `@solution`
 
 ```{r}
-
+# no solution
 ```
-
 
 `@sct`
 
