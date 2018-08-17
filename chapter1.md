@@ -75,7 +75,7 @@ no hint
 `@pre_exercise_code`
 
 ```{r}
-# no code		
+library(tm)
 ```
 
 `@sample_code`
