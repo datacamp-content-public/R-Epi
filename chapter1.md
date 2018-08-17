@@ -3,7 +3,7 @@
   description: "First Task"
 ---
 
-## An exercise title written in sentence case
+## Random Numbers
 
 ```yaml
 type: NormalExercise 
@@ -51,3 +51,51 @@ plot(hist(x))
 # Update this to something more informative.
 success_msg("Some praise! Then reinforce a learning objective from the exercise.")
 ```
+
+---
+
+## FFT spectrum
+
+```yaml
+type: NormalExercise 
+xp: 100 
+key: d9ac7746ab   
+```
+
+
+FFT
+
+
+`@instructions`
+Use your random numbers from the exercise bevore and calculate the FFT-spectrum of your "randome-time-series".
+
+`@hint`
+
+
+`@pre_exercise_code`
+
+```{r}
+
+```
+
+
+`@sample_code`
+
+```{r}
+
+```
+
+
+`@solution`
+
+```{r}
+
+```
+
+
+`@sct`
+
+```{r}
+
+```
+
