@@ -76,8 +76,9 @@ no hint
 `@pre_exercise_code`
 
 ```{r}
-library(ggvis)
+
 ```
+
 
 `@sample_code`
 
@@ -88,7 +89,10 @@ library(ggvis)
 `@solution`
 
 ```{r}
-# no solution
+x<-runif(2^12)
+y<-Re(fft(x))[2^11:2^12]
+fs<-64 #Hz
+plot(y,ylim=c(-50,50))
 ```
 
 `@sct`
