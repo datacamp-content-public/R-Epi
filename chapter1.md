@@ -57,11 +57,13 @@ key: d9ac7746ab
 ```
 
 
-We asume we have a signal with 2^15 datapoints and a sampling rate of 64 Hz. So the FFT of our signal will return 2^15 complex numbers. For now we take only the real part. Because of the nature of the FFT the signal is mirrored, we need only one half of the real part. At the end we have 2^14 - 1 frequencies in steps of 32/2^14 from 0 to (2^14-1)*32/2^14 = 32-32/2^14
+We asume we have a signal with 2^15 datapoints and a sampling rate of 64 Hz. So the FFT of our signal will return 2^15 complex numbers. For now we take only the real part. Because of the nature of the FFT the signal is mirrored, we need only one half of the real part. At the end we have 2^14 - 1 frequencies in steps of 32/2^14 from 0 to (2^14-1)*32/2^14 = 32-32/2^14.
 
 
 `@instructions`
-Use your random numbers from the exercise bevore and calculate the FFT-spectrum of your "randome-time-series". fs=64Hz
+1. Use your random numbers from the exercise bevore and calculate the FFT-spectrum of your "randome-time-series" of 2^15 datapoints!
+2. Calculate the frequencies of the FFT-coefficients, use a sampling rate of 64 Hz!
+3. Plot the FFT-spectrum (x-axis = frequencies, y-axis = FFT-coefficients)!
 
 `@hint`
 no hint
