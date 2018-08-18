@@ -57,7 +57,7 @@ key: d9ac7746ab
 ```
 
 
-We asume we have a signal with 2^15 datapoints and a sampling rate of 64 Hz. So the FFT of our signal will return 2^15 complex numbers.
+We asume we have a signal with 2^15 datapoints and a sampling rate of 64 Hz. So the FFT of our signal will return 2^15 complex numbers. For now we take only the real part. Because of the nature of the FFT the signal is mirrored, we need only one half of the real part. At the end we have 2^14 - 1 frequencies in steps of 32/2^14 from 0 to (2^14-1)*32/2^14 = 32-32/2^14
 
 
 `@instructions`
