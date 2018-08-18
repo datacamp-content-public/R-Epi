@@ -26,13 +26,6 @@ We wanna start with some easy tasks. For time series analysis we need some data.
 To raise the power in R use `n^p`
 To give a value to a variable use `x<-10`
 
-`@pre_exercise_code`
-
-```{r}
-
-```
-
-
 `@sample_code`
 
 ```{r}
@@ -64,7 +57,7 @@ key: d9ac7746ab
 ```
 
 
-FFT
+We asume we have a signal with 2^15 datapoints and a sampling rate of 64 Hz. So the FFT of our signal will return 2^15 complex numbers.
 
 
 `@instructions`
