@@ -66,7 +66,7 @@ We asume we have a signal with 2^15 datapoints and a sampling rate of 64 Hz. So 
 3. Plot the FFT-spectrum (x-axis = frequencies, y-axis = FFT-coefficients)!
 
 `@hint`
-no hint
+no hint given at the moment ... we need time to do so
 
 `@pre_exercise_code`
 
@@ -84,10 +84,14 @@ no hint
 `@solution`
 
 ```{r}
-x<-runif(2^12)
-y<-Re(fft(x))[2^11:2^12]
+r_numbers<-runif(2^15)
+y<-Re(fft(r_numbers))[2^14:2^15]
+plot(y)
+length(y)
 fs<-64 #Hz
-plot(y,ylim=c(-50,50))
+x<-seq(0, fs/2, by = (fs/2/2^14))
+length(x)
+plot(x=x,y=y)
 ```
 
 `@sct`
