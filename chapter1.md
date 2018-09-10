@@ -42,7 +42,8 @@ x <- 5
 
 `@sct`
 ```{r}
-
+ex() %>% check_object("m") %>% check_equal()
+success_msg("Well donee56!")
 ```
 
 ---
