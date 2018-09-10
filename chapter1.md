@@ -44,7 +44,7 @@ plot(hist(x))
 `@sct`
 ```{r}
 # Update this to something more informative.
-success_msg("Some praise! Then reinforce a learning objective from the exercise.")
+success_msg("Nice! You got the first steps.")
 ```
 
 ---
