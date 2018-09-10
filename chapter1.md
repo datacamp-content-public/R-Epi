@@ -45,9 +45,6 @@ x <- runif(2^15)
 ```{r}
 # Update this to something more informative.
 test_error()
-test_object("x",
-            undefined_msg = "Make sure to define `x`!",
-            incorrect_msg = "Have you correctly assigned 5 to `x`!")
 success_msg("Nice! You got the first steps.")
 ```
 
