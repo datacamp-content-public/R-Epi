@@ -26,11 +26,9 @@ To raise the power in R use `n^p`
 To give a value to a variable use  sdf`x<-10`
 
 `@pre_exercise_code`
-
 ```{r}
 
 ```
-
 
 `@sample_code`
 ```{r}
