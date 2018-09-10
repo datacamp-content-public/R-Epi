@@ -44,7 +44,11 @@ x <- runif(2^15)
 `@sct`
 ```{r}
 # Update this to something more informative.
-ex() %<% check_object("x", incorrect_msg = "o.O") %<% success_msg("Nice! You got the first steps.")
+test_error()
+test_object("x",
+            undefined_msg = "Make sure to define `x`!",
+            incorrect_msg = "Have you correctly assigned 5 to `x`!")
+success_msg("Nice! You got the first steps.")
 ```
 
 ---
