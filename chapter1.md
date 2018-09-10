@@ -18,6 +18,7 @@ We wanna start with some easy tasks. For time series analysis we need some data.
 
 `@instructions`
 (i) Generate 2^15 random numbers from 0 to 1 by using `runif()` and save it to `numbers`
+
 (ii) Plot a histogram of your random numbers using `plot(hist(#))`
 
 `@hint`
@@ -33,7 +34,7 @@ To give a value to a variable use `x<-10`
 
 `@sample_code`
 ```{r}
-# Have fun
+# Write your own code here!
 ```
 
 `@solution`
