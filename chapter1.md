@@ -44,7 +44,7 @@ x <- runif(2^15)
 `@sct`
 ```{r}
 # Update this to something more informative.
-check_object("x")
+ex() %<% check_object("x")
 success_msg("Nice! You got the first steps.")
 ```
 
