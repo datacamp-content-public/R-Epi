@@ -37,8 +37,8 @@ To give a value to a variable use `<-`. To give 10 to the variable x use `x<-10`
 
 `@solution`
 ```{r}
-numbers <- runif(2^15)
-plot(hist(numbers))
+x <- runif(2^15)
+#plot(hist(numbers))
 ```
 
 `@sct`
