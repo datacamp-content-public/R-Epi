@@ -45,7 +45,7 @@ plot(hist(numbers))
 ```{r}
 # Update this to something more informative.
 ex() %>% check_object("x")
-success_msg("Nice! You got the first steps.")
+# success_msg("Nice! You got the first steps.")
 ```
 
 ---
