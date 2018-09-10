@@ -42,8 +42,7 @@ x <- 5
 
 `@sct`
 ```{r}
-# Update this to something more informative.
-test_error()
+
 ```
 
 ---
