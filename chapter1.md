@@ -43,7 +43,7 @@ x <- 5
 `@sct`
 ```{r}
 # Update this to something more informative.
-#test_error()
+test_error()
 success_msg("Nice! You got the first steps.")
 ```
 
