@@ -37,7 +37,7 @@ To give a value to a variable use `<-`. To give 10 to the variable x use `x<-10`
 
 `@solution`
 ```{r}
-x <- 5
+numbers <- runif(2^15)
 ```
 
 `@sct`
