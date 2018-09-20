@@ -43,7 +43,7 @@ plot(hist(numbers))
 
 `@sct`
 ```{r}
-ex() %>% check_object("numbers")
+ex() %>% check_object('numbers')
 ```
 
 ---
