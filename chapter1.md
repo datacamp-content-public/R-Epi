@@ -42,7 +42,7 @@ x <- 5
 
 `@sct`
 ```{r}
-
+ex() %>% check_object("x")
 ```
 
 ---
