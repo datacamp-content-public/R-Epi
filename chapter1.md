@@ -38,11 +38,12 @@ To give a value to a variable use `<-`. To give 10 to the variable x use `x<-10`
 `@solution`
 ```{r}
 numbers <- runif(2^15)
+plot(hist(numbers))
 ```
 
 `@sct`
 ```{r}
-ex() %>% check_object("numbers") %>% check_equal()
+ex() %>% check_correct())
 ```
 
 ---
