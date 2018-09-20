@@ -42,7 +42,7 @@ numbers <- runif(2^15)
 
 `@sct`
 ```{r}
-ex() %>% check_object("numbers")
+ex() %>% check_object("numbers") %>% check_equal()
 ```
 
 ---
