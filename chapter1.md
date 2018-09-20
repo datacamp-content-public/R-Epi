@@ -23,7 +23,7 @@ We wanna start with some easy tasks. For time series analysis we need some data.
 
 `@hint`
 To raise the power in R use `n^p`
-To give a value to a variable use `<-`. To give 10 to the variable x use `x<-10`.
+To give a value to a variable use `<-`. Example: to give 10 to the variable x use `x<-10`.
 
 `@pre_exercise_code`
 ```{r}
