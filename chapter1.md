@@ -45,6 +45,7 @@ plot(hist(numbers))
 ```{r}
 ex() %>% check_error()
 ex() %>% check_object("numbers") %>% check_equal()
+success_msg("Good job! Your firs R-program.")
 ```
 
 ---
