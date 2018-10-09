@@ -59,19 +59,30 @@ key: d9ac7746ab
 xp: 100
 ```
 
-We asume we have a signal with 2^15 datapoints and a sampling rate of 64 Hz. So the FFT of our signal will return 2^15 complex numbers. For now we take only the real part. Because of the nature of the FFT the signal is mirrored, we need only one half of the real part. At the end we have 2^14 - 1 frequencies in steps of 32/2^14 from 0 to (2^14-1)*32/2^14 = 32-32/2^14.
+We asume we have a signal with 2^15 datapoints and a sampling rate of 64 Hz. So the FFT of our signal will return 2^15 complex numbers. For now we take only the **real part**. Because of the nature of the FFT the signal is mirrored, we need only one half of the real part. At the end we have 2^14 - 1 frequencies in steps of 32/2^14 from 0 to (2^14-1)*32/2^14 = 32-32/2^14.
 
 `@instructions`
-1. Use your random numbers from the exercise bevore and calculate the FFT-spectrum of your "randome-time-series" of 2^15 datapoints!
-2. Calculate the frequencies of the FFT-coefficients, use a sampling rate of 64 Hz!
-3. Plot the FFT-spectrum (x-axis = frequencies, y-axis = FFT-coefficients)!
+Use your random numbers from the exercise bevore and calculate the FFT-spectrum of your "randome-time-series" of 2^15 datapoints!
+But let's to it step by step: 
+1. First we need our random numbers (last exercise)! Create a new list of 2^15 random numbers and save it in `r_numbers`
+2. Calculate the FFT of this random time-series by using the function `fft()`. Save the result in `r_numbers_fft`! As mentioned bevore we need only the **real part** there for we will use the function `Re()` and we need only the second halfe of the real part of the fft-signal, which we can do with indices in brackets `[start_index:end_index]`. Save the result in `y`!
+ 
+1. Calculate the frequencies of the FFT-coefficients, use a sampling rate of 64 Hz!
+2. Plot the FFT-spectrum (x-axis = frequencies, y-axis = FFT-coefficients)!
 
 `@hint`
 no hint given at the moment ... we need time to do so
 
 `@pre_exercise_code`
 ```{r}
+# Have a lot of fun with this funny exercise.
+# Creat a list of 2^15 random numbers
+r_numbers <- 
 
+# Calculate the FFT of r_numbers
+r_numbers_fft <- 
+
+# 
 ```
 
 `@sample_code`
@@ -94,6 +105,8 @@ plot(x=x,y=y)
 `@sct`
 ```{r}
 ex() %>% check_error()
-ex() %>% check_object("numbers") %>% check_equal()
-ex() %>% check_function("plot") %>% check_result() %>% check_equal()
+ex() %>% check_object("r_numbers") %>% check_equal()
+#ex() %>% check_function("plot") %>% check_result() %>% check_equal()
+success_msg("Are you the next time-series-master?!")
+
 ```
