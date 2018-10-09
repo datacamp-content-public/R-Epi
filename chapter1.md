@@ -75,19 +75,19 @@ no hint given at the moment ... we need time to do so
 
 `@pre_exercise_code`
 ```{r}
+
+```
+
+`@sample_code`
+```{r}
 # Have a lot of fun with this funny exercise.
 # Creat a list of 2^15 random numbers
 r_numbers <- 
 
 # Calculate the FFT of r_numbers
-r_numbers_fft <- 
+r_numbers_fft <-  
 
 # 
-```
-
-`@sample_code`
-```{r}
-# no test
 ```
 
 `@solution`
