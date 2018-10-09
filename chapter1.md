@@ -93,17 +93,19 @@ r_numbers_fft <-
 y <-
 
 # Calculate the frequencies of each fourier coefficient.
+x <-
+
+# Plot the spectogram
 ```
 
 `@solution`
 ```{r}
 r_numbers<-runif(2^15)
-y<-Re(fft(r_numbers))[2^14:2^15]
-plot(y)
-length(y)
-fs<-64 #Hz
-x<-seq(0, fs/2, by = (fs/2/2^14))
-length(x)
+r_numbers_fft <-fft(r_numbers) 
+y<-Re(r_numbers_fft)[2^14:2^15]
+
+x<-seq(0, 32, by = (32/2^14))
+
 plot(x=x,y=y)
 ```
 
@@ -111,7 +113,14 @@ plot(x=x,y=y)
 ```{r}
 ex() %>% check_error()
 ex() %>% check_object("r_numbers") %>% check_equal()
-#ex() %>% check_function("plot") %>% check_result() %>% check_equal()
+ex() %>% check_function("runif") %>% check_result() %>% check_equal()
+ex() %>% check_object("r_numbers_fft") %>% check_equal()
+ex() %>% check_function("fft") %>% check_result() %>% check_equal()
+ex() %>% check_object("y") %>% check_equal()
+ex() %>% check_function("Re") %>% check_result() %>% check_equal()
+ex() %>% check_object("x") %>% check_equal()
+ex() %>% check_function("seq") %>% check_result() %>% check_equal()
+ex() %>% check_function("plot") %>% check_result() %>% check_equal()
 success_msg("Are you the next time-series-master?!")
 
 ```
