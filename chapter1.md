@@ -44,6 +44,7 @@ plot(hist(numbers))
 `@sct`
 ```{r}
 ex() %>% check_error()
+ex() %>% check_object("numbers") %>% check_equal()
 ```
 
 ---
