@@ -46,7 +46,7 @@ plot(hist(numbers))
 ex() %>% check_error()
 ex() %>% check_object("numbers") %>% check_equal()
 ex() %>% check_function("plot") %>% check_result() %>% check_equal()
-success_msg("Good job! Your firs R-program.")
+success_msg("Good job! You have finished your first R-program!")
 ```
 
 ---
@@ -93,5 +93,7 @@ plot(x=x,y=y)
 
 `@sct`
 ```{r}
-
+ex() %>% check_error()
+ex() %>% check_object("numbers") %>% check_equal()
+ex() %>% check_function("plot") %>% check_result() %>% check_equal()
 ```
