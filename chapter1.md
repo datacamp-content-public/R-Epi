@@ -67,11 +67,13 @@ But let's to it step by step:
 1. First we need our random numbers (last exercise)! Create a new list of 2^15 random numbers and save it in `r_numbers`
 2. Calculate the FFT of this random time-series by using the function `fft()`. Save the result in `r_numbers_fft`! As mentioned bevore we need only the **real part** there for we will use the function `Re()` and we need only the second halfe of the real part of the fft-signal, which we can do with indices in brackets `[start_index:end_index]`. Save the result in `y`!
  
-1. Calculate the frequencies of the FFT-coefficients, use a sampling rate of 64 Hz!
-2. Plot the FFT-spectrum (x-axis = frequencies, y-axis = FFT-coefficients)!
+At this point we have already our y-values also called fourier-coefficients for the FFT-spectrum. Each fourier-coefficient respresents a frequeuncy. Now we will calculate this frequencies:
+3. Create a list of frequencies from 0 to 32 Hz with steps of 32/2^14. Use `seq(start,end, step)` and save the result in `x`
+
+2. Plot the FFT-spectrum (x-axis = frequencies, y-axis = FFT-coefficients)! Use `plot(x=x-values, y=y-values)`!
 
 `@hint`
-no hint given at the moment ... we need time to do so
+`no` hint given at the moment ... we need time to do ```so```
 
 `@pre_exercise_code`
 ```{r}
@@ -87,7 +89,10 @@ r_numbers <-
 # Calculate the FFT of r_numbers
 r_numbers_fft <-  
 
-# 
+# Calculate the real part and take only the second half of the fft-result
+y <-
+
+# Calculate the frequencies of each fourier coefficient.
 ```
 
 `@solution`
