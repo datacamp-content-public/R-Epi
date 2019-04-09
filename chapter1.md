@@ -1,6 +1,6 @@
 ---
-title: 'Task 1'
-description: 'First Task'
+title: 'Short Introduction to FFT'
+description: ""
 free_preview: true
 ---
 
@@ -15,7 +15,7 @@ skills: 1
 ```
 
 This is a first task to get familar with R and time series analysis.
-We wanna start with some easy tasks. For time series analysis we need some data. So let's create some random numbers. Therefor we can use the command [runif()](https://www.rdocumentation.org/packages/compositions/versions/1.40-2/topics/runif). First argument should be the numbers of numbers you would like to generate. By default you will get shuffeld numbers between 0 and 1, but you can also add an intervall as argument. `runif(10,1,10)` will give you 10 random numbers out of 1 to 10.
+We wanna start with some easy tasks. For time series analysis we need some data. So let's create some random numbers. Therefor we can use the command [runif()](https://www.rdocumentation.org/packages/compositions/versions/1.40-2/topics/runif). First argument should be the number of numbers you would like to generate. By default you will get shuffeld numbers between 0 and 1, but you can also add an intervall as argument. `runif(10,1,10)` will give you 10 random numbers out of 1 to 10.
 
 `@instructions`
 (i) Generate 2^15 random numbers from 0 to 1 by using `runif()` and save it to `numbers`
@@ -66,7 +66,7 @@ We asume we have a signal with 2^15 datapoints and a sampling rate of 64 Hz. So 
 Use your random numbers from the exercise bevore and calculate the FFT-spectrum of your "randome-time-series" of 2^15 datapoints!
 But let's to it step by step: 
 1. First we need our random numbers (last exercise)! Create a new list of 2^15 random numbers and save it in `r_numbers`
-2. Calculate the FFT of this random time-series by using the function `fft()`. Save the result in `r_numbers_fft`! As mentioned bevore we need only the **real part** there for we will use the function `Re()` and we need only the second halfe of the real part of the fft-signal, which we can do with indices in brackets `[start_index:end_index]`. Save the result in `y`!
+2. Calculate the FFT of this random time-series by using the function `fft()`. Save the result in `r_numbers_fft`! As mentioned bevore we need only the **real part** there for we will use the function `Re()` and we need only the second half of the real part of the fft-signal, which we can do with indices in brackets `[start_index:end_index]`. Save the result in `y`!
  
 At this point we have already our y-values also called fourier-coefficients for the FFT-spectrum. Each fourier-coefficient respresents a frequeuncy. Now we will calculate this frequencies:
 3. Create a list of frequencies from 0 to 32 Hz with steps of 32/2^14. Use `seq(start,end, step)` and save the result in `x`
@@ -114,7 +114,6 @@ plot(x=x,y=y)
 ```{r}
 ex() %>% check_error()
 ex() %>% check_object("r_numbers") %>% check_equal()
-ex() %>% check_function("runif") %>% check_result() %>% check_equal()
 ex() %>% check_object("r_numbers_fft") %>% check_equal()
 ex() %>% check_function("fft") %>% check_result() %>% check_equal()
 ex() %>% check_object("y") %>% check_equal()
