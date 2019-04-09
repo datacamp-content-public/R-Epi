@@ -11,7 +11,7 @@ key: 8dc2739bea
 xp: 100
 ```
 
-In the last example we could actually see anything happens. Thats why we investigate in the next step real data. To load data we use here [scan()](https://www.rdocumentation.org/packages/base/versions/3.5.3/topics/scan). 
+In the last example we could actually see anything happens. Thats why we investigate in the next step real data. To load data we use here [scan()](https://www.rdocumentation.org/packages/base/versions/3.5.3/topics/scan).
 
 `@instructions`
 Let's start with loading your data. 
