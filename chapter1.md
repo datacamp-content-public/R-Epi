@@ -1,6 +1,7 @@
 ---
 title: 'Task 1'
 description: 'First Task'
+free_preview: true
 ---
 
 ## Random Numbers
