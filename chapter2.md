@@ -33,20 +33,20 @@ path_data = "https://assets.datacamp.com/production/repositories/3401/datasets/d
 ```{r}
 # The path to "atmung.dat" is stored in path_data
 # Load the data
-data <- scan(path_data)
+data <- 
 
 # Create time
-time <- seq(0,375,0.25)
+time <- 
 
 # Plot the data
-plot(x=time,y=data)
+
 
 # define start and end
-start <- 240
-end <- 480
+start <- 
+end <- 
 
 # Plot only the second houre as line-plot
-plot(x=time[start:end],y=data[start:end],"l")
+
 ```
 
 `@solution`
