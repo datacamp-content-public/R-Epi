@@ -90,7 +90,7 @@ key: 4617f36b93
 xp: 100
 ```
 
-In the last example, we 
+In the last example, we
 
 `@instructions`
 
