@@ -11,13 +11,15 @@ key: 8dc2739bea
 xp: 100
 ```
 
-In the last example we could actually see anything happens. Thats why we investigate in the next step real data. To load data we use here [scan()](https://www.rdocumentation.org/packages/base/versions/3.5.3/topics/scan).
+In the last example we couldn't actually see anything happens. Thats why we investigate in the next step real data. To load data we use here [scan()](https://www.rdocumentation.org/packages/base/versions/3.5.3/topics/scan). The data is a time series of a temperature sensor placed to the nostrils. This is a common way to record respiration. In the following exercise we will plot the data and calculate a frequency spectrum, to investigate the respiration frequency.
+
+
 
 `@instructions`
 Let's start with loading your data. 
 1. Load the data from ```path_data``` to ```data``` by using ```scan()```. The first argument is the path. 
 2. The data has a sampling rate of 4 Hz. Create a time series of the time and store it to ```time```. You can check the length of a vector by ```length(vector)```.  Now plot the data to see how the data looks like. If you like, you can set the x-label and y-label with 
-3. The plot from task 2 isn't quit well. Let's plot again, but only the second houre of data and with a **line plot**, by adding ```"l"``` to the arguments of ```plot()```
+3. The plot from task 2 isn't quit well. Let's plot again, but only the second hour of data and with a **line plot**, by adding ```"l"``` to the arguments of ```plot()```
 
 `@hint`
 - Do you remember the ```seq(start,end,step)``` command to create the time series of the time?!
