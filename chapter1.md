@@ -47,7 +47,7 @@ plot(hist(numbers))
 ex() %>% check_error()
 ex() %>% check_object("numbers") %>% check_equal()
 ex() %>% check_function("plot") %>% check_result() %>% check_equal()
-success_msg("Good job! You have finished your first R-program!")
+success_msg("Good job! You finished the first task of our Workshop!")
 ```
 
 ---
@@ -121,6 +121,6 @@ ex() %>% check_function("Re") %>% check_result() %>% check_equal()
 ex() %>% check_object("x") %>% check_equal()
 ex() %>% check_function("seq") %>% check_result() %>% check_equal()
 ex() %>% check_function("plot") %>% check_result() %>% check_equal()
-success_msg("Are you the next time-series-master?!")
+success_msg("Great!")
 
 ```
