@@ -101,12 +101,20 @@ x <-
 
 `@solution`
 ```{r}
-r_numbers<-runif(2^15)
-r_numbers_fft <-fft(r_numbers) 
-y<-Re(r_numbers_fft)[2^14:2^15]
+# Have a lot of fun with this funny exercise.
+# Creat a list of 2^15 random numbers
+r_numbers <- runif(2^15)
 
-x<-seq(0, 32, by = (32/2^14))
+# Calculate the FFT of r_numbers
+r_numbers_fft <- fft(r_numbers) 
 
+# Calculate the real part and take only the second half of the fft-result
+y <- Re(r_numbers_fft)[2^14:2^15]
+
+# Calculate the frequencies of each fourier coefficient.
+x <- seq(0, 32, by = (32/2^14))
+
+# Plot the spectogram
 plot(x=x,y=y)
 ```
 

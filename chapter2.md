@@ -96,25 +96,37 @@ In the following exercise we will calculate a frequency spectrum, to investigate
 
 
 `@instructions`
+The respiration data is still stored in ```data```.
+1. Calculate the fourier-transformation of the data and save fourier-coefficients to ```fft```
 
+2. Calculate the corresponding frequencies of the fourier-coefficients and store them to ```freq```
+
+3. Plot the frequency spectrum.
+
+3. Correct the frequency spectrum by 1/frequency
 
 `@hint`
 
 
 `@pre_exercise_code`
 ```{r}
-
+path_data = "https://assets.datacamp.com/production/repositories/3401/datasets/d191ac1f6ae2fda3392c4d41b892ba8bd2822bf3/atmung.dat"
+data = scan(path_data)
 
 
 ```
 
 `@sample_code`
 ```{r}
-# Plot the data
-start <- 240
-end <- 480
-# Plot only the second houre as line-plot
-plot(x=time[start:end],y=data[start:end],"l")
+# Calculate the fourier-coefficients
+fft <-
+
+# Calculate the frequencies
+freq <- 
+
+# Plot the frequency spectrum
+
+
 ```
 
 `@solution`
