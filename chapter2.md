@@ -99,7 +99,7 @@ In the following exercise we will calculate a frequency spectrum, to investigate
 The respiration data is still stored in ```data```.
 1. Calculate the fourier-transformation of the data and save fourier-coefficients to ```fft```. Use a power of 2 as number of data points. 
 
-2. Save the absolute of the fourier-coeeficients to ```y```.
+2. Save the absolute of the fourier-coefficients to ```y```.
 
 3. Calculate the corresponding frequencies of the fourier-coefficients and store them to ```freq```
 
@@ -121,26 +121,29 @@ data = scan(path_data)
 `@sample_code`
 ```{r}
 # Calculate the fourier-coefficients
-fft <-
+fft <- fft(data[0:((2^10)-1)]) 
 
-# Calculate the frequencies
-freq <- 
+# Calculate the absolute and take only the second half of the fft-result
+y <- abs(fft)[2^9:2^10]
 
-# Plot the frequency spectrum
+# Calculate the frequencies of each fourier coefficient.
+x <- seq(0, 2, by = (2/2^9))
 
+# Plot the spectogram
+plot(x=x,y=y)
 
 ```
 
 `@solution`
 ```{r}
 # Calculate the fourier-coefficients
-fft <- fft(data[0:2^10-1]) 
+fft <- fft(data[0:((2^10)-1)]) 
 
 # Calculate the absolute and take only the second half of the fft-result
-y <- abs(r_numbers_fft)[2^9:2^10]
+y <- abs(fft)[2^9:2^10]
 
 # Calculate the frequencies of each fourier coefficient.
-x <- seq(0, 32, by = (32/2^14))
+x <- seq(0, 2, by = (2/2^9))
 
 # Plot the spectogram
 plot(x=x,y=y)
