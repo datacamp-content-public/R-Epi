@@ -109,7 +109,7 @@ r_numbers <- runif(2^15)
 r_numbers_fft <- fft(r_numbers) 
 
 # Calculate the absolute and take only the second half of the fft-result
-y <- abs(r_numbers_fft)[2^14:2^15]
+y <- abs(r_numbers_fft)[0:2^14]
 
 # Calculate the frequencies of each fourier coefficient.
 x <- seq(0, 32, by = (32/2^14))

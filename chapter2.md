@@ -13,15 +13,17 @@ xp: 100
 
 In the last example we couldn't actually see anything happens. Thats why we investigate in the next step real data. To load data we use here [scan()](https://www.rdocumentation.org/packages/base/versions/3.5.3/topics/scan). The data is a time series of a temperature sensor placed to the nostrils. This is a common way to record respiration.
 
+
+
 `@instructions`
 Let's start with loading your data. 
 1. Load the data from ```path_data``` to ```data``` by using ```scan()```. The first argument is the path. 
-2. The data has a sampling rate of 4 Hz. Create a time series of the time and store it to ```time```. You can check the length of a vector by ```length(vector)```. Check the length of time and data, maybe you have to adjust your time series. 
-3. Now plot the data to see how the data looks like. If you like, you can set the x-label and y-label with arguments ```xlab``` and ```ylab```.
+2. The data has a sampling rate of 4 Hz. Create a time series of the time and store it to ```time```. You can check the length of a vector by ```length(vector)```.   
+3. Now plot the data to see how the data looks like. If you like, you can set the x-label and y-label with arguments ```xlab=x-label``` and ```ylab=y-label``` to the arguments of ```plot()```.
 4. The plot from task 2 isn't quit well. Let's plot again, but only the second hour of data and with a **line plot**, by adding ```"l"``` to the arguments of ```plot()```
 
 `@hint`
-- Do you remember the ```seq(start,end,step)``` command to create the time series of the time?!
+- Do you remember the ```seq(start,end,step)``` command to create the time series of the time?! 
 - 4 Hz = 4 values per second => step = 0.25
 - You can plot by ```plot(x=time-values,y=data-values,xlab='x-label',ylab='y-label')```.
 
@@ -34,6 +36,7 @@ path_data = "https://assets.datacamp.com/production/repositories/3401/datasets/d
 ```{r}
 # Load the data
 data <- 
+
 
 # Create time
 time <- 
@@ -82,6 +85,33 @@ success_msg("You plotted a very nice graph!")
 
 ---
 
+## Insert exercise title here
+
+```yaml
+type: PureMultipleChoiceExercise
+key: b986615cd9
+xp: 50
+```
+
+What is a normal respiration frequency? (no physical acitvity)
+
+`@hint`
+Take some breaths ;-)
+
+`@possible_answers`
+1. 10 Hz
+2. [0.3 Hz]
+3. 1 Hz 
+4. 0.001 Hz
+
+`@feedback`
+1. Do you really breathe 10 times a second?? 
+2. Correct! Normally the respiration frequency 0.15 and 0.5 Hz.
+3. Close. During physical activities you can reach up to 1 Hz.
+4. I am scared, are you taking only a breath every 1000 seconds?
+
+---
+
 ## Frequency spectrum of our respiration data
 
 ```yaml
@@ -94,15 +124,15 @@ In the following exercise we will calculate a frequency spectrum, to investigate
 
 `@instructions`
 The respiration data is still stored in ```data```.
-1. Calculate the fourier-transformation of the data and save fourier-coefficients to ```fft```. Use a power of 2 as number of data points. 
+1. You remember the FFT works best with data lengths of the power of 2. Set ```n``` as highest possible power of 2. So maybe you have to check the length of data first. Hint: You can take the console as a calculator too.
 
-2. Save the absolute of the fourier-coefficients to ```y```.
+2. Calculate the fourier-transformation of the data and save fourier-coefficients to ```fft```. Use a power of 2 as number of data points. 
 
-3. Calculate the corresponding frequencies of the fourier-coefficients and store them to ```freq```
+3. Save the absolute of the fourier-coefficients to ```abs_ff```.
 
-4. Plot the frequency spectrum.
+4. Calculate the corresponding frequencies of the fourier-coefficients and store them to ```freq```
 
-5. Correct the frequency spectrum by 1/frequency
+5. Plot the frequency spectrum.
 
 `@hint`
 
@@ -118,7 +148,7 @@ data = scan(path_data)
 `@sample_code`
 ```{r}
 # set length of data (power of 2!)
-n <- 2^10
+n <- 
 
 # Calculate the fourier-coefficients
 fft <-  
@@ -160,5 +190,14 @@ plot(x=freq,y=abs_fft,'l')
 
 `@sct`
 ```{r}
-
+ex() %>% check_error()
+ex() %>% check_function("scan") %>% check_result() %>% check_equal()
+ex() %>% check_object("data") %>% check_equal()
+ex() %>% check_function("seq") %>% check_result() %>% check_equal()
+ex() %>% check_object("time") %>% check_equal()
+ex() %>% check_object("start") %>% check_equal()
+ex() %>% check_object("end") %>% check_equal()
+ex() %>% check_function("plot") %>% check_result() %>% check_equal()
+ex() %>% check_function("plot") %>% check_result() %>% check_equal()
+success_msg("Check out your frequency spectrum. What is the respiration frequency? Is it plausible?")
 ```
