@@ -117,33 +117,45 @@ data = scan(path_data)
 
 `@sample_code`
 ```{r}
+# set length of data (power of 2!)
+n <- 2^10
+
 # Calculate the fourier-coefficients
-fft <- fft(data[0:((2^10)-1)]) 
+fft <-  
 
-# Calculate the absolute and take only the second half of the fft-result
-y <- abs(fft)[2^9:2^10]
+# Calculate absolute of fft and take the first halfe
+abs_fft <- 
 
-# Calculate the frequencies of each fourier coefficient.
-x <- seq(0, 2, by = (2/2^9))
+# Set sampling frequency fs
+fs <- 
 
-# Plot the spectogram
-plot(x=x,y=y)
+# Calculate frequencies
+freq <- 
+
+# Plot the spectogram as lineplot
+
 
 ```
 
 `@solution`
 ```{r}
+# set length of data (power of 2!)
+n <- 2^10
+
 # Calculate the fourier-coefficients
-fft <- fft(data[0:((2^10)-1)]) 
+fft <- fft(data[0:n])/n 
 
-# Calculate the absolute and take only the second half of the fft-result
-y <- abs(fft)[2^9:2^10]
+# Calculate absolute of fft and take the first halfe
+abs_fft <- abs(fft[0:(n/2)])
 
-# Calculate the frequencies of each fourier coefficient.
-x <- seq(0, 2, by = (2/2^9))
+# Set sampling frequency fs
+fs <- 4
+
+# Calculate frequencies
+freq <- seq(n/2)*fs/n
 
 # Plot the spectogram
-plot(x=x,y=y)
+plot(x=freq,y=abs_fft,'l')
 ```
 
 `@sct`
