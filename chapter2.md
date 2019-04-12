@@ -11,9 +11,7 @@ key: 8dc2739bea
 xp: 100
 ```
 
-In the last example we couldn't actually see anything happens. Thats why we investigate in the next step real data. To load data we use here [scan()](https://www.rdocumentation.org/packages/base/versions/3.5.3/topics/scan). The data is a time series of a temperature sensor placed to the nostrils. This is a common way to record respiration. 
-
-
+In the last example we couldn't actually see anything happens. Thats why we investigate in the next step real data. To load data we use here [scan()](https://www.rdocumentation.org/packages/base/versions/3.5.3/topics/scan). The data is a time series of a temperature sensor placed to the nostrils. This is a common way to record respiration.
 
 `@instructions`
 Let's start with loading your data. 
@@ -93,7 +91,6 @@ xp: 100
 ```
 
 In the following exercise we will calculate a frequency spectrum, to investigate the respiration frequency of our dataset.
-
 
 `@instructions`
 The respiration data is still stored in ```data```.
