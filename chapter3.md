@@ -24,7 +24,7 @@ $\beta$-waves (>13 Hz):
 $\delta$-waves (0,5-3 Hz):
 - deep sleep
 
-What can we obtain from EEGs? 
+What can we obtain from EEGs?
 
 `@hint`
 no hint

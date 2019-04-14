@@ -13,8 +13,6 @@ xp: 100
 
 In the last example we couldn't actually see anything happens. Thats why we investigate in the next step real data. To load data we use here [scan()](https://www.rdocumentation.org/packages/base/versions/3.5.3/topics/scan). The data is a time series of a temperature sensor placed to the nostrils. This is a common way to record respiration.
 
-
-
 `@instructions`
 Let's start with loading your data. 
 1. Load the data from ```path_data``` to ```data``` by using ```scan()```. The first argument is the path. 
