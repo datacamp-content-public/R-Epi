@@ -149,8 +149,7 @@ xp: 100
 
 `@pre_exercise_code`
 ```{r}
-#path_in = "https://assets.datacamp.com/production/repositories/3401/datasets/3e194398da1386d2b053671f6666f311cf72682c/eeg_c4m1.rds"
-#data = readRDS(path_in)
+
 ```
 
 `@sample_code`
