@@ -1,6 +1,5 @@
 title: Workshop 1 - Händel-Seminar 2019
-description: |-
+description: |
   This course is part of the first workshop of the Händelsminar 2019 in Halle.
-  Written by Johannes Zschocke
 programming_language: r
 from: 'r-base-prod:v1.0.1'
