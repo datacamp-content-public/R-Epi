@@ -128,3 +128,41 @@ Now we will print the signals
 ```{r}
 
 ```
+
+---
+
+## Insert exercise title here
+
+```yaml
+type: NormalExercise
+key: 81e2834c82
+xp: 100
+```
+
+
+
+`@instructions`
+
+
+`@hint`
+
+
+`@pre_exercise_code`
+```{r}
+#eeg1 = readRDS("https://assets.datacamp.com/production/repositories/3401/datasets/d191ac1f6ae2fda3392c4d41b892ba8bd2822bf3/eeg_c4m1.rds")
+```
+
+`@sample_code`
+```{r}
+#eeg1[0:10]
+```
+
+`@solution`
+```{r}
+#eeg1[0:10]
+```
+
+`@sct`
+```{r}
+
+```
