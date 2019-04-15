@@ -131,7 +131,7 @@ Now we will print the signals
 
 ---
 
-## Insert exercise title here
+## test
 
 ```yaml
 type: NormalExercise
@@ -149,12 +149,13 @@ xp: 100
 
 `@pre_exercise_code`
 ```{r}
-#eeg1 = readRDS("https://assets.datacamp.com/production/repositories/3401/datasets/d191ac1f6ae2fda3392c4d41b892ba8bd2822bf3/eeg_c4m1.rds")
+#path_in = "https://assets.datacamp.com/production/repositories/3401/datasets/3e194398da1386d2b053671f6666f311cf72682c/eeg_c4m1.rds"
+#data = readRDS(path_in)
 ```
 
 `@sample_code`
 ```{r}
-#eeg1[0:10]
+
 ```
 
 `@solution`
