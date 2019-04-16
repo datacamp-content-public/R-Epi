@@ -52,11 +52,15 @@ key: 8c2fda9edb
 xp: 100
 ```
 
-
+In this task we will focus on one EEG channel and how to extract EEG bands!
+The EEG data has a sampling rate of 1024 Hz.
 
 `@pre_exercise_code`
 ```{r}
+download.file(url = "https://assets.datacamp.com/production/repositories/3401/datasets/95bca38defab344cd4660eae1a472d70224cfb89/eeg_c4m1.rds", destfile = "eeg1.rds")
 
+# Load compressed file "eeg1.rds" with readRDS()
+eeg1 <- 
 ```
 
 ***
@@ -68,9 +72,9 @@ xp: 50
 ```
 
 `@instructions`
-In this task we will focus on 2 EEG channels and how to extract EEG bands!
-1. Load the EEG data from path_eeg1 and path_eeg2 and store store it to eeg1 and eeg2
-2. Check length of data and set ```n``` to the highest power of 2 in the length of data.
+Load & Plot
+1. Load the compressed EEG file ```eeg1.rds``` with ```loadRDS(file)``` to ```eeg1```
+2. Plot the EEG data.
 
 `@hint`
 
@@ -79,16 +83,16 @@ In this task we will focus on 2 EEG channels and how to extract EEG bands!
 ```{r}
 # Load EEG data from path_eeg1 and path_eeg2
 eeg1 <-
-eeg2 <-
+
 
 # check length of data and set n data 
 ```
 
 `@solution`
 ```{r}
-# Load EEG data from path_eeg1 and path_eeg2
-eeg1 <-1
-eeg2 <-1
+# Load compressed EEG data "eeg1.rds"
+#eeg1 <- readRDS("eeg1.rds")
+
 
 # check length of data and set n data 
 ```
@@ -108,7 +112,7 @@ xp: 50
 
 `@instructions`
 Now we will print the signals
-3. plot
+3. 2. Check length of data and set ```n``` to the highest power of 2 in the length of data.
 4. plot
 
 `@hint`
@@ -149,17 +153,18 @@ xp: 100
 
 `@pre_exercise_code`
 ```{r}
-
+download.file(url = "https://assets.datacamp.com/production/repositories/3401/datasets/95bca38defab344cd4660eae1a472d70224cfb89/eeg_c4m1.rds", destfile = "eeg1.rds")
 ```
 
 `@sample_code`
 ```{r}
-
+# Load compressed file "eeg1.rds" with readRDS()
+eeg1 <- 
 ```
 
 `@solution`
 ```{r}
-#eeg1[0:10]
+
 ```
 
 `@sct`
