@@ -52,7 +52,10 @@ key: 14525283ea
 xp: 100
 ```
 
-In this task we will focus on one EEG channel and how to extract EEG bands!
+In this and the following task we will focus on one EEG channel and how to extract EEG bands!
+
+First we need to load the data.
+
 The EEG data has a sampling rate of **1024 Hz** and is recorded about **17 minutes and 4 seconds**. The values are in mV.
 Be aware that the calculations in this part can take some minutes.
 
@@ -74,10 +77,10 @@ download.file(url = "https://assets.datacamp.com/production/repositories/3401/da
 `@sample_code`
 ```{r}
 # Load compressed EEG data "eeg1.rds"
-eeg1 <- readRDS("eeg1.rds")
+eeg1 <- 
 
 # Create time 
-time <- seq(length(eeg1))/(1024*60)
+time <- 
 
 # Plot data 
 
@@ -97,7 +100,13 @@ plot(time,eeg1)
 
 `@sct`
 ```{r}
-
+ex() %>% check_error()
+ex() %>% check_object("eeg1") %>% check_equal()
+ex() %>% check_function("readRDS") %>% check_result() %>% check_equal()
+ex() %>% check_object("time") %>% check_equal()
+ex() %>% check_function("seq") %>% check_result() %>% check_equal()
+ex() %>% check_function("plot") %>% check_result() %>% check_equal()
+success_msg("You finished the first step to an EEG analyse!")
 ```
 
 ---
@@ -110,33 +119,78 @@ key: 3bfc4232e8
 xp: 100
 ```
 
+Now we will calculate the FFT of your EEG data and plot the frequncy spectrum.
 
+The EEG data has a sampling rate of **1024 Hz** and is recorded about **17 minutes and 4 seconds**. The values are in mV.
+Be aware that the calculations in this part can take some minutes.
 
 `@instructions`
-
+Now we need the FFT and therfore the max power of 2 in the length of the signal.
+1. Check out the highest power of 2 in the singal length and store it to ```n```. (You can use the R console as a calculator)
+2. Calculate the FFT and store it to ```fft```. Use only a data length of power of 2.
+3. Determine the frequencies (```freq```) that corresponded to the fourier-coefficients.
 
 `@hint`
-
+- Do you remember the function of the FFT ```fft()```?
+- The Nyquist-Theroem says: We can only resolve frequencies up to half of the sampling frequency -> We have a maximum frequency of ```(sampling frequency)/2```. 
+- Furthermore the FFT-signals contains as much data points as the original signal = n, but it is mirrored in the middle, which means we have only ```n/2``` frequencies. 
+- Now use ```seq(0,n/2-1)*(sampling frequency)/n``` to obtain a series of the frequencies.```
+- Plot: Absolute = ```abs()```, you can choose data ranges by square bracktes e.g.: data[1:10]
 
 `@pre_exercise_code`
 ```{r}
 download.file(url = "https://assets.datacamp.com/production/repositories/3401/datasets/636762184295f3f3370287b8a7a20cbc48aa5ae6/eeg_c4m1.rds", destfile = "eeg1.rds")
-
+# Load compressed EEG data "eeg1.rds"
+eeg1 <- readRDS("eeg1.rds")
+# Create time 
+time <- seq(length(eeg1))/1024/60
 ```
 
 `@sample_code`
 ```{r}
+# Your EEG data is still stored in eeg1
+# max power of 2 in the length of the signal
+n <- 
+
+# Calculate the FFT
+fft_eeg1 <- 
+
+# Calculate the frequencies
+freq <- 
+
+# Plot the data, but use only the absolute of the first half of the fft
 
 ```
 
 `@solution`
 ```{r}
+# Your EEG data is still stored in eeg1
+# max power of 2 in the length of the signal
+n <- 2^20
 
+# Calculate the FFT
+fft_eeg1 <- fft(eeg1)
+
+# Calculate the frequencies
+freq <- seq(0,n/2-1)*1024/n
+
+# Plot the data, but use only the absolute of the first half of the fft
+plot(freq,abs(fft_eeg1[1:2^19]))
 ```
 
 `@sct`
 ```{r}
-
+ex() %>% check_error()
+ex() %>% check_object("eeg1") %>% check_equal()
+ex() %>% check_function("readRDS") %>% check_result() %>% check_equal()
+ex() %>% check_object("time") %>% check_equal()
+ex() %>% check_object("n") %>% check_equal()
+ex() %>% check_object("fft_eeg1") %>% check_equal()
+ex() %>% check_function("fft") %>% check_result() %>% check_equal()
+ex() %>% check_object("freq") %>% check_equal()
+ex() %>% check_function("seq") %>% check_result() %>% check_equal()
+#ex() %>% check_function("plot") %>% check_result() %>% check_equal()
+success_msg("You created successfull a frequency spectrum!")
 ```
 
 ---
@@ -149,31 +203,111 @@ key: a2a114075b
 xp: 100
 ```
 
+Now we come to the highlight of this session, the bandpass filter or how to select specific frequencies of my signal and suppress other frequencies.
 
+Lets start with the $\alpha$-band of an EEG. You remember it contains the frequency range from 8 to 13 Hz. The basic principle is now to use our frequency domain, and set all fourier coefficients to 0, whose frequencies are out of 8 to 13 Hz. But don't forget the mirrored part. 
+
+The EEG data has a sampling rate of **1024 Hz** and is recorded about **17 minutes and 4 seconds**. The values are in mV.
+Be aware that the calculations in this part can take some minutes.
 
 `@instructions`
-
+1. Define your minimum frequency and your maximum frequency of the $\alpha$-band.
+2. Iterate over all frequencies ```freq``` and set the fourier coefficients to 0, whom not in the $\alpha$-band. Don't forget the mirrored part.
 
 `@hint`
-
+- ```for (i in 1:10) {}``` will iterate i from 1 to 10.
+- ```|``` and ```&``` are the logical OR and AND of R 
+- As the ```fft_eeg1``` is symmetric, you have to set ```fft_eeg1[i]``` and ```fft_eeg1[n-i]``` to 0.
 
 `@pre_exercise_code`
 ```{r}
 download.file(url = "https://assets.datacamp.com/production/repositories/3401/datasets/636762184295f3f3370287b8a7a20cbc48aa5ae6/eeg_c4m1.rds", destfile = "eeg1.rds")
-
+# Load compressed EEG data "eeg1.rds"
+eeg1 <- readRDS("eeg1.rds")
+# max power of 2 in the length of the signal
+n <- 2^20
+# Calculate the FFT
+fft_eeg1 <- fft(eeg1)
+# Calculate the frequencies
+freq <- seq(0,n/2-1)*1024/n
 ```
 
 `@sample_code`
 ```{r}
+# eeg1, n = 2^20, fft_eeg1 and freq still available
+# Set your minimum frequency and your maximum frequency
+freq_min <- 8
+freq_max <- 13
+
+# Set all fourier coefficients 0, which not between freq_min and freq_max
+for (i in 1:(n/2)) {
+  if ((freq[i]<freq_min) | (freq[i]>freq_max)) {
+    # Set the fft_coefficients to zero, also in the mirrored part
+    fft_eeg1[i] <- 0
+    fft_eeg1[n-i] <- 0
+    }
+  }
+
+# Check your result by plotting the fourier coefficients
+#plot(fft_eeg1)
 
 ```
 
 `@solution`
 ```{r}
+# eeg1, n = 2^20, fft_eeg1 and freq still available
+# Set your minimum frequency and your maximum frequency
+freq_min <- 8
+freq_max <- 13
+
+# Set all fourier coefficients 0, which not between freq_min and freq_max
+for (i in 1:(n/2)) {
+  if ((freq[i]<freq_min) | (freq[i]>freq_max)) {
+    # Set the fft_coefficients to zero, also in the mirrored part
+    fft_eeg1[i] <- 0
+    fft_eeg1[n-i] <- 0
+    }
+  }
+  
+plot(x=freq,y=abs(fft_eeg1[1:2^19]))
+plot(x=abs(fft_eeg1))
 
 ```
 
 `@sct`
 ```{r}
-
+ex() %>% check_error()
+ex() %>% check_object("eeg1") %>% check_equal()
+#ex() %>% check_function("readRDS") %>% check_result() %>% check_equal()
+ex() %>% check_object("n") %>% check_equal()
+#ex() %>% check_object("fft_eeg1") %>% check_equal()
+#ex() %>% check_function("fft") %>% check_result() %>% check_equal()
+ex() %>% check_object("freq") %>% check_equal()
+ex() %>% check_object("freq_min") %>% check_equal()
+ex() %>% check_object("freq_max")  %>% check_equal()
+# check for loop
+ex() %>% check_for() %>% {
+  check_cond(.) %>% {
+    check_code(., "in")
+    check_code(., "1")
+    check_code(., "(n/2)")
+  }
+  check_body(.) %>%check_if_else(1) %>%  {
+  check_cond(.) %>% {
+    check_code(., "freq_min")
+    check_code(., "|")
+    check_code(., "freq_max")
+  	}
+  check_if(.) %>% check_code(.,"    fft_eeg1[i] <- 0") %>% check_equal() #{
+    #check_code(.) %>% check_equal()
+    #check_code(., c("i", "n-i"))
+    #check_code(.,"fft_eeg1[i] <- 0") #%>% check_arg("x") %>% check_equal()
+    #check_object(.,"fft_eeg1<-0") %>% check_equal()
+    #check_code(.,"fft_eeg1[i]")
+    #check_code(.,"fft_eeg1[n-i]")
+    #}  
+  }
+}
+#ex() %>% check_function("plot") %>% check_result() %>% check_equal()
+success_msg("Nice! As you can see in the plot, you have only left frequencies between 8 and 13 Hz.\n In the next task we will look at the effect of this")
 ```
