@@ -15,12 +15,19 @@ skills: 1
 ```
 
 This is a first task to get familar with R and time series analysis.
-We wanna start with some easy tasks. For time series analysis we need some data. So let's create some random numbers. Therefor we can use the command [runif()](https://www.rdocumentation.org/packages/compositions/versions/1.40-2/topics/runif). First argument should be the number of numbers you would like to generate. By default you will get shuffeld numbers between 0 and 1, but you can also add an intervall as argument. `runif(10,1,10)` will give you 10 random numbers out of 1 to 10.
+We will start with some easy tasks. For time series analysis we need some data. So let's create some random numbers. Therefor we can use the command [runif()](https://www.rdocumentation.org/packages/compositions/versions/1.40-2/topics/runif). First argument should be the number of numbers you would like to generate. By default you will get shuffeld numbers between 0 and 1, but you can also add an interval as argument. `runif(10,1,10)` will give you 10 random numbers out of 1 to 10.
+Another possibility is to pull random numbers from a normal distribution
+
+Advices for R beginners
+- You can assign values to variables by ```<-``` but also ```=```. Most people uses ```<-```. But be carful for arguments in functions only ```=``` can be used.
+- If you need additional information or if you search function you can use [www.rdocumentation.org](https://www.rdocumentation.org/)
 
 `@instructions`
-(i) Generate 2^15 random numbers from 0 to 1 by using `runif()` and save it to `numbers`
+1. Generate 2^15 random numbers from 0 to 1 by using `runif()` and save it to `numbers`
 
-(ii) Plot a histogram of your random numbers using `plot(hist(#))`
+2. Generate 2^15 
+
+3. Plot a histogram of your random numbers using ```plot(hist(#))```
 
 `@hint`
 To raise the power in R use `n^p`
@@ -132,96 +139,5 @@ ex() %>% check_object("x") %>% check_equal()
 ex() %>% check_function("seq") %>% check_result() %>% check_equal()
 ex() %>% check_function("plot") %>% check_result() %>% check_equal()
 success_msg("Great!")
-
-```
-
----
-
-## Insert exercise title here
-
-```yaml
-type: TabExercise
-key: 966c74a5ac
-xp: 100
-```
-
-We assume that we have a signal with 2^15 data points and a sampling rate of 64 Hz. Here we want to use the Fast-Fourier-Transformation and visualise the result. 
-
-
-So the Fast-Fourier-Transformation (FFT) of our signal will return 2^15 complex numbers. Because of the nature of the FFT the signal is mirrored, we need only the first half. Based on the Nyquist Theorem we can detect frequencies 
-
-At the end we have 2^14 - 1 frequencies in steps of 32/2^14 from 0 to (2^14-1)*32/2^14 = 32-32/2^14.
-
-`@pre_exercise_code`
-```{r}
-
-```
-
-***
-
-```yaml
-type: NormalExercise
-key: 0614d0fd69
-xp: 50
-```
-
-`@instructions`
-Use your random numbers from the exercise bevore and calculate the FFT-spectrum of your "randome-time-series" of 2^15 datapoints!
-But let's to it step by step:
-1. Create 2^15 randome numbers and save the result to ```r_numbers```
-2. Calculate the fft of your random numbers and store it to rr_numbers_fft
-
-`@hint`
-
-
-`@sample_code`
-```{r}
-# Creat a list of 2^15 random numbers
-r_numbers <- 
-
-# Calculate the FFT of r_numbers
-r_numbers_fft <-
-```
-
-`@solution`
-```{r}
-# Creat a list of 2^15 random numbers
-r_numbers <- runif(2^15)
-
-# Calculate the FFT of r_numbers 
-r_numbers_fft <- fft(r_numbers) 
-```
-
-`@sct`
-```{r}
-
-```
-
-***
-
-```yaml
-type: NormalExercise
-key: 8f8b34a7f4
-xp: 50
-```
-
-`@instructions`
-
-
-`@hint`
-
-
-`@sample_code`
-```{r}
-
-```
-
-`@solution`
-```{r}
-
-```
-
-`@sct`
-```{r}
 
 ```

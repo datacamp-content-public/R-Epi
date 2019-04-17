@@ -298,7 +298,7 @@ ex() %>% check_for() %>% {
     check_code(., "|")
     check_code(., "freq_max")
   	}
-  check_if(.) %>% check_code(.,"    fft_eeg1[i] <- 0") %>% check_equal() #{
+  check_if(.) #%>% check_code(.,"fft_eeg1[i] <- 0") %>% check_equal() #{
     #check_code(.) %>% check_equal()
     #check_code(., c("i", "n-i"))
     #check_code(.,"fft_eeg1[i] <- 0") #%>% check_arg("x") %>% check_equal()
@@ -308,6 +308,7 @@ ex() %>% check_for() %>% {
     #}  
   }
 }
+ex() %>% check_object("fft_eeg1") %>% check_equal()
 #ex() %>% check_function("plot") %>% check_result() %>% check_equal()
 success_msg("Nice! As you can see in the plot, you have only left frequencies between 8 and 13 Hz.\n In the next task we will look at the effect of this")
 ```
