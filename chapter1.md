@@ -14,24 +14,28 @@ xp: 100
 skills: 1
 ```
 
-This is a first task to get familar with R and time series analysis.
+This is a first task to get familiar with R and time series analysis.
 We will start with some easy tasks. For time series analysis we need some data. So let's create some random numbers. Therefor we can use the command [runif()](https://www.rdocumentation.org/packages/compositions/versions/1.40-2/topics/runif). First argument should be the number of numbers you would like to generate. By default you will get shuffeld numbers between 0 and 1, but you can also add an interval as argument. `runif(10,1,10)` will give you 10 random numbers out of 1 to 10.
-Another possibility is to pull random numbers from a normal distribution
+Another possibility is to pull random numbers from a normal distribution. ```rnorm(n,mean,std)``` where n is the number of numbers, mean the mean of the distribution with standard deviation std. 
+You can show your data by using square brackets ```array[start:end]```.
 
 Advices for R beginners
 - You can assign values to variables by ```<-``` but also ```=```. Most people uses ```<-```. But be carful for arguments in functions only ```=``` can be used.
 - If you need additional information or if you search function you can use [www.rdocumentation.org](https://www.rdocumentation.org/)
+- The **indices starts in R with 1** like in Fortran and not with 0 like in python or C! 
+- To raise the power in R use `n^p`
 
 `@instructions`
-1. Generate 2^15 random numbers from 0 to 1 by using `runif()` and save it to `numbers`
+1. Generate 2^15 random numbers from 0 to 1 by using ```runif()``` and save it to ```numbers```
 
-2. Generate 2^15 
+2. Generate 2^15 random numbers from a normal distribution with mean 0.5 and std 0.15. Use ```rnorm()``` and save the results to ```n_numbers```
 
-3. Plot a histogram of your random numbers using ```plot(hist(#))```
+3. Print the first 10 values of both lists
+
+4. Let's plot your data in a histogram!
 
 `@hint`
-To raise the power in R use `n^p`
-To give a value to a variable use `<-`. Example: to give 10 to the variable x use `x<-10`.
+
 
 `@pre_exercise_code`
 ```{r}
@@ -41,19 +45,48 @@ To give a value to a variable use `<-`. Example: to give 10 to the variable x us
 `@sample_code`
 ```{r}
 # Write your own code here!
+# Create a list of 2^15 random numbers
+numbers <-
+
+# Create a list of 2^15 normal distributed numbers
+n_numbers <-
+
+# Print the first 10 values of both lists (replace _)
+numbers[_:_]
+n_numbers[_:_]
+
+# Lets plot your histograms (do not change!)
+plot(hist(n_numbers),col='blue')
+hist(numbers,col=rgb(1, 0, 0, alpha=0.5),add=T)
 ```
 
 `@solution`
 ```{r}
+# Write your own code here!
+# Create a list of 2^15 random numbers
 numbers <- runif(2^15)
-plot(hist(numbers))
+
+# Create a list of 2^15 normal distributed numbers
+n_numbers <- rnorm(2^15,0.5,0.15)
+
+# Print the first 10 values of both lists (replace _)
+numbers[1:10]
+n_numbers[1:10]
+
+# Lets plot your histograms (do not change!)
+plot(hist(n_numbers),col='blue')
+hist(numbers,col=rgb(1, 0, 0, alpha=0.5),add=T)
 ```
 
 `@sct`
 ```{r}
 ex() %>% check_error()
 ex() %>% check_object("numbers") %>% check_equal()
-ex() %>% check_function("plot") %>% check_result() %>% check_equal()
+ex() %>% check_function("runif") %>% check_arg("x") %>% check_equal()
+ex() %>% check_object("n_numbers") %>% check_equal()
+ex() %>% check_function("rnorm") %>% check_arg("x") %>% check_equal()
+#ex() %>% check_function("plot",not_called_msg="Did you remove the plot-function?")
+#ex() %>% check_function("hist",not_called_msg="Did you remove the hist-function?")
 success_msg("Good job! You finished the first task of our Workshop!")
 ```
 
