@@ -53,8 +53,8 @@ u_numbers <-
 n_numbers <-
 
 # Print the first 10 values of both lists (replace _)
-u_numbers[_:_]
-n_numbers[_:_]
+u_first <- u_numbers[_:_]
+n_first <- n_numbers[_:_]
 
 # Lets plot your histograms (do not change!)
 plot(hist(n_numbers),col='blue')
@@ -71,8 +71,8 @@ u_numbers <- runif(2^15)
 n_numbers <- rnorm(2^15,0.5,0.15)
 
 # Print the first 10 values of both lists (replace _)
-u_numbers[1:10]
-n_numbers[1:10]
+u_first <- u_numbers[1:10]
+n_first <- n_numbers[1:10]
 
 # Lets plot your histograms (do not change!)
 plot(hist(n_numbers),col='blue')
@@ -82,14 +82,16 @@ hist(u_numbers,col=rgb(1, 0, 0, alpha=0.5),add=T)
 `@sct`
 ```{r}
 ex() %>% check_error()
-ex() %>% check_object("u_numbers") 
-ex() %>% check_function("runif") %>% check_arg("n") %>% check_equal(incorrect_msg="ölaksdf")
-ex() %>% check_object("n_numbers") %>% check_equal()
+ex() %>% check_function("runif") %>% check_arg("n") %>% check_equal()
+ex() %>% check_object("u_numbers")
 ex() %>% check_function("rnorm") %>% {
-  check_arg("n") %>% check_equal()
-  check_arg("mean") %>% check_equal()
-  check_arg("sd") %>% check_equal()
+  check_arg(.,"n") %>% check_equal()
+  check_arg(.,"mean") %>% check_equal()
+  check_arg(.,"sd") %>% check_equal()
   }
+ex() %>% check_object("n_numbers")
+ex() %>% check_object("u_first")
+ex() %>% check_object("n_first")
 ex() %>% check_function("plot",not_called_msg="Did you remove the plot-function?")
 ex() %>% check_function("hist",not_called_msg="Did you remove the hist-function?")
 success_msg("Good job! You finished the first task of our Workshop!")
