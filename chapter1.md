@@ -15,20 +15,21 @@ skills: 1
 ```
 
 This is a first task to get familiar with R and time series analysis.
-We will start with some easy tasks. For time series analysis we need some data. So let's create some random numbers. Therefor we can use the command [runif()](https://www.rdocumentation.org/packages/compositions/versions/1.40-2/topics/runif). First argument should be the number of numbers you would like to generate. By default you will get shuffeld numbers between 0 and 1, but you can also add an interval as argument. `runif(10,1,10)` will give you 10 random numbers out of 1 to 10.
-Another possibility is to pull random numbers from a normal distribution. ```rnorm(n,mean,std)``` where n is the number of numbers, mean the mean of the distribution with standard deviation std. 
+We will start with some easy tasks. For time series analysis we need some data. So let's create some random numbers. Therefor we can use the command [runif(n)](https://www.rdocumentation.org/packages/compositions/versions/1.40-2/topics/runif). The argument ```n``` should be the number of numbers you would like to generate. By default you will get shuffeld numbers between 0 and 1, uniform distributed.
+Another possibility is to pull random numbers from a normal distribution. [rnorm(n,mean,std)](https://www.rdocumentation.org/packages/stats/versions/3.5.3/topics/Normal) where n is the number of numbers, mean the mean of the distribution with standard deviation std. 
 You can show your data by using square brackets ```array[start:end]```.
 
 Advices for R beginners
 - You can assign values to variables by ```<-``` but also ```=```. Most people uses ```<-```. But be carful for arguments in functions only ```=``` can be used.
 - If you need additional information or if you search function you can use [www.rdocumentation.org](https://www.rdocumentation.org/)
+- Our you can type e.g. ?runif, in the R Consol (lower window on the right siede) and a help window will pop up.
 - The **indices starts in R with 1** like in Fortran and not with 0 like in python or C! 
-- To raise the power in R use `n^p`
+- To raise the power in R use ```n^p```
 
 `@instructions`
-1. Generate 2^15 random numbers from 0 to 1 by using ```runif()``` and save it to ```numbers```
+1. Generate 2^15 random numbers from a uniform distribution between 0 to 1 by using ```runif()``` and save it to ```u_numbers```
 
-2. Generate 2^15 random numbers from a normal distribution with mean 0.5 and std 0.15. Use ```rnorm()``` and save the results to ```n_numbers```
+2. Generate 2^15 random numbers from a normal distribution with mean 0.5 and std 0.15. Use ```rnorm()``` and save the result to ```n_numbers```
 
 3. Print the first 10 values of both lists
 
@@ -46,47 +47,51 @@ Advices for R beginners
 ```{r}
 # Write your own code here!
 # Create a list of 2^15 random numbers
-numbers <-
+u_numbers <-
 
 # Create a list of 2^15 normal distributed numbers
 n_numbers <-
 
 # Print the first 10 values of both lists (replace _)
-numbers[_:_]
+u_numbers[_:_]
 n_numbers[_:_]
 
 # Lets plot your histograms (do not change!)
 plot(hist(n_numbers),col='blue')
-hist(numbers,col=rgb(1, 0, 0, alpha=0.5),add=T)
+hist(u_numbers,col=rgb(1, 0, 0, alpha=0.5),add=T)
 ```
 
 `@solution`
 ```{r}
 # Write your own code here!
 # Create a list of 2^15 random numbers
-numbers <- runif(2^15)
+u_numbers <- runif(2^15)
 
 # Create a list of 2^15 normal distributed numbers
 n_numbers <- rnorm(2^15,0.5,0.15)
 
 # Print the first 10 values of both lists (replace _)
-numbers[1:10]
+u_numbers[1:10]
 n_numbers[1:10]
 
 # Lets plot your histograms (do not change!)
 plot(hist(n_numbers),col='blue')
-hist(numbers,col=rgb(1, 0, 0, alpha=0.5),add=T)
+hist(u_numbers,col=rgb(1, 0, 0, alpha=0.5),add=T)
 ```
 
 `@sct`
 ```{r}
 ex() %>% check_error()
-ex() %>% check_object("numbers") %>% check_equal()
-ex() %>% check_function("runif") %>% check_arg("x") %>% check_equal()
+ex() %>% check_object("u_numbers") 
+ex() %>% check_function("runif") %>% check_arg("n") %>% check_equal(incorrect_msg="ölaksdf")
 ex() %>% check_object("n_numbers") %>% check_equal()
-ex() %>% check_function("rnorm") %>% check_arg("x") %>% check_equal()
-#ex() %>% check_function("plot",not_called_msg="Did you remove the plot-function?")
-#ex() %>% check_function("hist",not_called_msg="Did you remove the hist-function?")
+ex() %>% check_function("rnorm") %>% {
+  check_arg("n") %>% check_equal()
+  check_arg("mean") %>% check_equal()
+  check_arg("sd") %>% check_equal()
+  }
+ex() %>% check_function("plot",not_called_msg="Did you remove the plot-function?")
+ex() %>% check_function("hist",not_called_msg="Did you remove the hist-function?")
 success_msg("Good job! You finished the first task of our Workshop!")
 ```
 
