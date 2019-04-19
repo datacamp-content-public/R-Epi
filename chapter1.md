@@ -156,16 +156,15 @@ We have a signal with **$2^{15}$ data points** and a sampling rate of **64 Hz**.
 
 `@instructions`
 1. First we need our random numbers (last exercise)! Create a new list of 2^15 normal distributed random numbers with mean of 0, and a standard deviation of 0.5. Save it in `numbers`
-2. Calculate the FFT of this random time-series by using the function `fft()`. Save the result in `r_numbers_fft`! As mentioned bevore we need only the absolute there for we will use the function `abs()` and we need only the first half of the real part of the fft-signal, which we can do with indices in brackets `[start_index:end_index]`. Save the result in `y`!
+2. Calculate the FFT of this random time-series by using the function [fft()](https://www.rdocumentation.org/packages/stats/versions/3.5.3/topics/fft). Save the result in `r_numbers_fft`! 
+3. As mentioned before we need only the first half of fourier coefficients (1 to 2^14+1), which we can do with indices in brackets `[start_index:end_index]`. It is difficult to plot complex numbers thats why we use the absolute of our fourier coefficients. You can do it by `abs()` (It works also about a whole list of complex numbers). Save the result in `y`!
  
-At this point we have already our y-values also called fourier-coefficients for the FFT-spectrum. Each fourier-coefficient respresents a frequeuncy. Now we will calculate this frequencies:
+4. Create a list of frequencies from 0 to 32 Hz with steps of 32/2^14. Use `seq(start,end, step)` and save the result in `x`
 
-3. Create a list of frequencies from 0 to 32 Hz with steps of 32/2^14. Use `seq(start,end, step)` and save the result in `x`
-
-2. Plot the FFT-spectrum (x-axis = frequencies, y-axis = FFT-coefficients)! Use `plot(x=x-values, y=y-values)`!
+5. Plot the FFT-spectrum (x-axis = frequencies, y-axis = FFT-coefficients)! Use `plot(x=x-values, y=y-values)`!
 
 `@hint`
-
+- Do you remember the function ```rnorm(n,mean,sd)```?
 
 `@pre_exercise_code`
 ```{r}
@@ -181,7 +180,7 @@ numbers <-
 # Calculate the FFT of r_numbers
 numbers_fft <- 
 
-# Calculate the absolute and take only the second half of the fft-result (replace _)
+# Calculate the absolute and take only the first half of the fft-result (replace _)
 y <- abs(numbers_fft[_:_])
 
 # Calculate the frequencies of each fourier coefficient.
@@ -200,7 +199,7 @@ numbers <- rnorm(2^15,0,0.5)
 # Calculate the FFT of r_numbers
 numbers_fft <- fft(numbers) 
 
-# Calculate the absolute and take only the second half of the fft-result
+# Calculate the absolute and take only the first half of the fft-result
 y <- abs(numbers_fft[1:(2^14+1)])
 
 # Calculate the frequencies of each fourier coefficient.
