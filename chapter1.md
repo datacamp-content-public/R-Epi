@@ -76,7 +76,7 @@ u_numbers[1:10]
 n_numbers[1:10]
 
 # Lets plot your histograms (do not change!)
-plot(hist(n_numbers),col='blue')
+plot(hist(n_numbers),col='blue')a
 hist(u_numbers,col=rgb(1, 0, 0, alpha=0.5),add=T)
 ```
 
