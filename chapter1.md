@@ -37,7 +37,8 @@ You can show your data by using square brackets ```array[start:end]```.
 4. Let's plot your data in a histogram!
 
 `@hint`
-
+- Did you use ```runif(n)``` and ```rnorm(n,mean,sd)``` as described?
+- Have you started with index 1?
 
 `@pre_exercise_code`
 ```{r}
@@ -76,7 +77,7 @@ u_numbers[1:10]
 n_numbers[1:10]
 
 # Lets plot your histograms (do not change!)
-plot(hist(n_numbers),col='blue')a
+plot(hist(n_numbers),col='blue')
 hist(u_numbers,col=rgb(1, 0, 0, alpha=0.5),add=T)
 ```
 
@@ -100,6 +101,47 @@ success_msg("Good job! You finished the first task of our Workshop!")
 
 ---
 
+## Fourier Series
+
+```yaml
+type: PureMultipleChoiceExercise
+key: 045c484b8a
+xp: 50
+```
+
+The idea of the Fourier series is to cut a signal down in sinus and cosinus parts. A Fourier series can be defined as follows:
+
+Fourier series = $2\cdot a_0 + \sum _{i=1} ^{2^N-1} (a_i \cdot cos(i \cdot x) + b _i \cdot sin(i \cdot x))$ 
+
+- $2^N$ represents the number of datapoints in the interval of the signal. 
+- $i \cdot x$ describe different frequencies.
+- $a$ and $b$ shows the weight of each frequency and called fourier coefficients where $a$ is the real part and $b$ the imaginar part of the complex fourier coefficients. This fourier coefficients are a measurment of appearence of frequencies.
+- A Fourier Transformation will return the fourier coefficients!
+- As you maybe now we can describe sinus with a cosinus function and vice versa which means the second half of the fourier coefficients is mirrored to the first half!
+
+Now we assume that we have a signal with **$2^{15}$ data points** and a sampling rate of **64 Hz**. So the Fast-Fourier-Transformation (FFT) of our signal will return 2^15 fourier coefficients. The first coefficient $a_0$ is a constant representing more or less the offset of a signal. Because of the nature of the FFT the other $2^{15}-1 $ coefficients are mirrored at the ($2^{14}+1$)th data point. Based on the Nyquist Theorem (You don't need to know anything about it) the maximal frequency we can detect is half of the sampling rate, here 32 Hz!
+
+Now the first 2^14 + 1 fourier coefficients representing 32 Hz. What is the Frequency step/distance between each Fourier coefficient?  
+
+
+
+`@hint`
+- Hz = Hertz = 1/s, in this case data points per seconds!
+
+`@possible_answers`
+1. $\frac{32}{2^{14 + 1}}$ Hz
+2. 1 Hz
+3. [$\frac{32}{2^{14}}$]
+4. $\frac{32}{2^{15} -1}$
+
+`@feedback`
+1. Close, but false! Remember the first coefficient is a constant, which means frequency = 0!
+2. Did you read the instruction?
+3. Good work! (Or just luck?!)
+4. o.O False. Try again!
+
+---
+
 ## FFT spectrum
 
 ```yaml
@@ -108,23 +150,22 @@ key: d9ac7746ab
 xp: 100
 ```
 
-We assume that we have a signal with 2^15 data points and a sampling rate of 64 Hz. So the Fast-Fourier-Transformation (FFT) of our signal will return 2^15 complex numbers. Because of the nature of the FFT the signal is mirrored, we need only the first half. Based on the Nyquist Theorem we can detect frequencies 
+Now we calculate the FFT and plot a frequency spectrum!
+We have a signal with **$2^{15}$ data points** and a sampling rate of **64 Hz**.
 
-At the end we have 2^14 - 1 frequencies in steps of 32/2^14 from 0 to (2^14-1)*32/2^14 = 32-32/2^14.
 
 `@instructions`
-Use your random numbers from the exercise bevore and calculate the FFT-spectrum of your "randome-time-series" of 2^15 datapoints!
-But let's to it step by step: 
-1. First we need our random numbers (last exercise)! Create a new list of 2^15 random numbers and save it in `r_numbers`
+1. First we need our random numbers (last exercise)! Create a new list of 2^15 normal distributed random numbers with mean of 0, and a standard deviation of 0.5. Save it in `numbers`
 2. Calculate the FFT of this random time-series by using the function `fft()`. Save the result in `r_numbers_fft`! As mentioned bevore we need only the absolute there for we will use the function `abs()` and we need only the first half of the real part of the fft-signal, which we can do with indices in brackets `[start_index:end_index]`. Save the result in `y`!
  
 At this point we have already our y-values also called fourier-coefficients for the FFT-spectrum. Each fourier-coefficient respresents a frequeuncy. Now we will calculate this frequencies:
+
 3. Create a list of frequencies from 0 to 32 Hz with steps of 32/2^14. Use `seq(start,end, step)` and save the result in `x`
 
 2. Plot the FFT-spectrum (x-axis = frequencies, y-axis = FFT-coefficients)! Use `plot(x=x-values, y=y-values)`!
 
 `@hint`
-`no` hint given at the moment ... we need time to do ```so```
+
 
 `@pre_exercise_code`
 ```{r}
@@ -134,89 +175,51 @@ At this point we have already our y-values also called fourier-coefficients for 
 `@sample_code`
 ```{r}
 # Have a lot of fun with this funny exercise.
-# Creat a list of 2^15 random numbers
-r_numbers <- 
+# Creat a list of 2^15 normal distributed random numbers (mean = 0, sd = 0.5)
+numbers <- 
 
 # Calculate the FFT of r_numbers
-r_numbers_fft <-  
+numbers_fft <- 
 
-# Calculate the absolute and take only the second half of the fft-result
-y <-
+# Calculate the absolute and take only the second half of the fft-result (replace _)
+y <- abs(numbers_fft[_:_])
 
 # Calculate the frequencies of each fourier coefficient.
-x <-
+x <- seq(0, 32, by = (32/2^14))
 
 # Plot the spectogram
+
 ```
 
 `@solution`
 ```{r}
 # Have a lot of fun with this funny exercise.
-# Creat a list of 2^15 random numbers
-r_numbers <- runif(2^15)
+# Creat a list of 2^15 normal distributed random numbers (mean = 0, sd = 0.5)
+numbers <- rnorm(2^15,0,0.5)
 
 # Calculate the FFT of r_numbers
-r_numbers_fft <- fft(r_numbers) 
+numbers_fft <- fft(numbers) 
 
 # Calculate the absolute and take only the second half of the fft-result
-y <- abs(r_numbers_fft)[0:2^14]
+y <- abs(numbers_fft[1:(2^14+1)])
 
 # Calculate the frequencies of each fourier coefficient.
-x <- seq(32)*32/2^14 #seq(0, 32-(32/2^14), by = (32/2^14))
+x <- seq(0, 32, by = (32/2^14))
 
 # Plot the spectogram
-#plot(x=x,y=y)
+plot(x=x,y=y)
 ```
 
 `@sct`
 ```{r}
-ex() %>% check_error()
-ex() %>% check_object("r_numbers") %>% check_equal()
-ex() %>% check_object("r_numbers_fft") %>% check_equal()
+ex() %>% check_object("numbers") #%>% check_equal()
+ex() %>% check_object("numbers_fft") #%>% check_equal()
 ex() %>% check_function("fft") %>% check_result() %>% check_equal()
-ex() %>% check_object("y") %>% check_equal()
-ex() %>% check_function("Re") %>% check_result() %>% check_equal()
+ex() %>% check_object("y") %>% check_equal(incorrect_msg="Did you use round brackets for operations in the index area e.g. list[1:(2^2 +1)]?")
 ex() %>% check_object("x") %>% check_equal()
 ex() %>% check_function("seq") %>% check_result() %>% check_equal()
+ex() %>% check_error()
 ex() %>% check_function("plot") %>% check_result() %>% check_equal()
 success_msg("Great!")
 
-```
-
----
-
-## Insert exercise title here
-
-```yaml
-type: NormalExercise
-key: a042f2b0b5
-xp: 100
-```
-
-
-
-`@instructions`
-
-
-`@hint`
-
-
-`@pre_exercise_code`
-```{r}
-x = c(1,2,3,4,5)
-```
-
-`@sample_code`
-```{r}
-y = x[1:2]
-```
-
-`@solution`
-```{r}
-y = x[1:2]
-```
-
-`@sct`
-```{r}
-ex() %>% check_code("y = x[1:2]",fixed=TRUE)
 ```
