@@ -121,9 +121,7 @@ Fourier series = $2\cdot a_0 + \sum _{i=1} ^{2^N-1} (a_i \cdot cos(i \cdot x) + 
 
 Now we assume that we have a signal with **$2^{15}$ data points** and a sampling rate of **64 Hz**. So the Fast-Fourier-Transformation (FFT) of our signal will return 2^15 fourier coefficients. The first coefficient $a_0$ is a constant representing more or less the offset of a signal. Because of the nature of the FFT the other $2^{15}-1 $ coefficients are mirrored at the ($2^{14}+1$)th data point. Based on the Nyquist Theorem (You don't need to know anything about it) the maximal frequency we can detect is half of the sampling rate, here 32 Hz!
 
-Now the first 2^14 + 1 fourier coefficients representing 32 Hz. What is the Frequency step/distance between each Fourier coefficient?  
-
-
+Now the first 2^14 + 1 fourier coefficients representing 32 Hz. What is the Frequency step/distance between each Fourier coefficient?
 
 `@hint`
 - Hz = Hertz = 1/s, in this case data points per seconds!
@@ -152,7 +150,6 @@ xp: 100
 
 Now we calculate the FFT and plot a frequency spectrum!
 We have a signal with **$2^{15}$ data points** and a sampling rate of **64 Hz**.
-
 
 `@instructions`
 1. First we need our random numbers (last exercise)! Create a new list of 2^15 normal distributed random numbers with mean of 0, and a standard deviation of 0.5. Save it in `numbers`
