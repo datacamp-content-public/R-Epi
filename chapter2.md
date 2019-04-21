@@ -124,7 +124,6 @@ xp: 100
 
 [Bild](https://assets.datacamp.com/production/repositories/3401/datasets/3ef69998a7434569bb3df0dc7e33b09c2b827e65/respiration.png) In the last exercise we got this plot. Now we would like to know the respiration frequency - and we can calculate determine it by fourier transformation
 
-
 `@instructions`
 The respiration data is still stored in ```data```.
 1. You remember the FFT works best with data lengths of the power of 2. Set ```n``` as highest possible power of 2. So maybe you have to check the length of data first. Hint: You can take the console as a calculator too.
