@@ -122,15 +122,15 @@ key: 4617f36b93
 xp: 100
 ```
 
-[Bild](https://assets.datacamp.com/production/repositories/3401/datasets/3ef69998a7434569bb3df0dc7e33b09c2b827e65/respiration.png) In the last exercise we got this plot. Now we would like to know the respiration frequency - and we can calculate determine it by fourier transformation
+In the last programming exercise we got this plot. ![](https://assets.datacamp.com/production/repositories/3401/datasets/3ef69998a7434569bb3df0dc7e33b09c2b827e65/respiration.png). Now we would like to know the respiration frequency - and we can determine it by fourier-transformation. The data is still available and has a **sampling rate of 4 Hz**.
 
 `@instructions`
 The respiration data is still stored in ```data```.
 1. You remember the FFT works best with data lengths of the power of 2. Set ```n``` as highest possible power of 2. So maybe you have to check the length of data first. Hint: You can take the console as a calculator too.
 
-2. Calculate the fourier-transformation of the data and save fourier-coefficients to ```fft```. Use a power of 2 as number of data points. 
+2. Calculate the fourier-transformation of the data and save fourier-coefficients to ```fft_data```. Use a power of 2 as number of data points. 
 
-3. Save the absolute of the fourier-coefficients to ```abs_ff```.
+3. Save the absolute of the fourier-coefficients to ```abs_fft_data```, which contains the freuqencies from 0 to 2 Hz.
 
 4. Calculate the corresponding frequencies of the fourier-coefficients and store them to ```freq```
 
@@ -150,23 +150,19 @@ data = scan(path_data)
 `@sample_code`
 ```{r}
 # set length of data (power of 2!)
-n <- 
+n <- 2^10
 
 # Calculate the fourier-coefficients
-fft <-  
+fft_data <- fft(data[1:n])
 
 # Calculate absolute of fft and take the first halfe
-abs_fft <- 
-
-# Set sampling frequency fs
-fs <- 
+abs_fft_data <- abs(fft_data[1:((n/2)+1)])
 
 # Calculate frequencies
-freq <- 
+freq <- seq(0, 2, by = (2/2^9))
 
-# Plot the spectogram as lineplot
-
-
+# Plot the spectogram
+plot(x=freq,y=abs_fft_data,"l")
 ```
 
 `@solution`
@@ -175,30 +171,53 @@ freq <-
 n <- 2^10
 
 # Calculate the fourier-coefficients
-fft <- fft(data[0:n])/n 
+fft_data <- fft(data[1:n])
 
 # Calculate absolute of fft and take the first halfe
-abs_fft <- abs(fft[0:(n/2)])
-
-# Set sampling frequency fs
-fs <- 4
+abs_fft_data <- abs(fft_data[1:((n/2)+1)])
 
 # Calculate frequencies
-freq <- seq(n/2)*fs/n
+freq <- seq(0, 2, by = (2/2^9))
 
 # Plot the spectogram
-plot(x=freq,y=abs_fft,'l')
+plot(x=freq,y=abs_fft_data,"l")
 ```
 
 `@sct`
 ```{r}
 ex() %>% check_error()
-ex() %>% check_object("n") %>% check_result() %>% check_equal()
-ex() %>% check_object("fft") %>% check_equal()
+ex() %>% check_object("n") %>% check_equal()
+ex() %>% check_object("fft_data") %>% check_equal()
 ex() %>% check_function("fft") %>% check_result() %>% check_equal()
-ex() %>% check_object("abs_fft") %>% check_result() %>% check_equal()
-ex() %>% check_object("fs") %>% check_result() %>% check_equal()
-ex() %>% check_object("frq") %>% check_result() %>% check_equal()
+ex() %>% check_object("abs_fft_data") %>% check_equal()
+ex() %>% check_object("freq") %>% check_equal()
 ex() %>% check_function("plot") %>% check_result() %>% check_equal()
-success_msg("Check out your frequency spectrum. What is the respiration frequency? Is it plausible?")
+success_msg("Check out your frequency spectrum. What is the respiration frequency? And what represents the other peak? Is it plausible?")
 ```
+
+---
+
+## What tells us the frequency spectrum?
+
+```yaml
+type: PureMultipleChoiceExercise
+key: bcc8e7e8a1
+xp: 50
+```
+
+![](https://assets.datacamp.com/production/repositories/3401/datasets/e9a75a9779ec5042622026a258642cf8d64b8e62/respiration_spectrum.png)
+Let's check our frequncy spectrum of the respiration again. 
+What is the respiration frequency?
+
+`@hint`
+
+
+`@possible_answers`
+1. 0.01 Hz
+2. [0.22 Hz]
+3. 0.44 Hz
+
+`@feedback`
+1. No.
+2. Right!
+3. This is the first harmonic of the respiration frequency, but not the respiration frequency.
