@@ -15,46 +15,49 @@ In the last example we couldn't actually see anything happens. Thats why we inve
 
 `@instructions`
 Let's start with loading your data. 
-1. Load the data from ```path_data``` to ```data``` by using ```scan()```. The first argument is the path. 
+1. Load the data ```respiration.dat``` to ```data``` by using ```scan()```. The first argument is the path. The file is located in your current directory. 
 2. The data has a sampling rate of 4 Hz. Create a time series of the time and store it to ```time```. You can check the length of a vector by ```length(vector)```.   
 3. Now plot the data to see how the data looks like. If you like, you can set the x-label and y-label with arguments ```xlab=x-label``` and ```ylab=y-label``` to the arguments of ```plot()```.
-4. The plot from task 2 isn't quit well. Let's plot again, but only the second hour of data and with a **line plot**, by adding ```"l"``` to the arguments of ```plot()```
+4. The plot from task 3 isn't quit well. Let's plot again, but only the second minute of data and with a **line plot**, by adding ```"l"``` (minuscle of L) to the arguments of ```plot()```. But first create the ```start``` and ```end``` index for the second minute and then use it in the ```plot``` command.
 
 `@hint`
-- Do you remember the ```seq(start,end,step)``` command to create the time series of the time?! 
 - 4 Hz = 4 values per second => step = 0.25
+- Do you remember the ```seq(start,end,step)``` command to create the time series of the time?!  
+- If the lengths of ```data``` and ```time``` doesn't match, you need to reduce maybe the time vector - you can do this by subtracting one step (0.25) from the step argument in ```seq(start,end,by=step)```.
 - You can plot by ```plot(x=time-values,y=data-values,xlab='x-label',ylab='y-label')```.
 
 `@pre_exercise_code`
 ```{r}
-path_data = "https://assets.datacamp.com/production/repositories/3401/datasets/d191ac1f6ae2fda3392c4d41b892ba8bd2822bf3/atmung.dat"
+download.file(url = "https://assets.datacamp.com/production/repositories/3401/datasets/d191ac1f6ae2fda3392c4d41b892ba8bd2822bf3/atmung.dat", destfile = "respiration.dat")
+
 ```
 
 `@sample_code`
 ```{r}
-# Load the data
+# Load the file "respiration.dat"
 data <- 
-
 
 # Create time
 time <- 
 
 # Plot the data
 
-# define start and end
-start <- 
-end <- 
 
-# Plot only the second houre as line-plot
+# define start and end
+
+
+
+# Plot only the first houre as line-plot
+
 ```
 
 `@solution`
 ```{r}
-# Load the data
-data <- scan(path_data)
+# Load the file "respiration.dat"
+data <- scan("respiration.dat")
 
 # Create time
-time <- seq(0,length(data)/4-0.25,0.25)
+time <- seq(0,length(data)/4-0.25,by=0.25)
 
 # Plot the data
 plot(x=time,y=data)
@@ -63,21 +66,22 @@ plot(x=time,y=data)
 start <- 240
 end <- 480
 
-# Plot only the second houre as line-plot
+# Plot only the first houre as line-plot
 plot(x=time[start:end],y=data[start:end],"l")
 ```
 
 `@sct`
 ```{r}
-ex() %>% check_error()
+
 ex() %>% check_function("scan") %>% check_result() %>% check_equal()
 ex() %>% check_object("data") %>% check_equal()
 ex() %>% check_function("seq") %>% check_result() %>% check_equal()
 ex() %>% check_object("time") %>% check_equal()
 ex() %>% check_object("start") %>% check_equal()
 ex() %>% check_object("end") %>% check_equal()
-ex() %>% check_function("plot") %>% check_result() %>% check_equal()
-ex() %>% check_function("plot") %>% check_result() %>% check_equal()
+ex() %>% check_error()
+ex() %>% check_function("plot",index=1) %>% check_result() %>% check_equal()
+ex() %>% check_function("plot",index=2) %>% check_result() %>% check_equal()
 success_msg("You plotted a very nice graph!")
 ```
 
@@ -118,7 +122,8 @@ key: 4617f36b93
 xp: 100
 ```
 
-In the following exercise we will calculate a frequency spectrum, to investigate the respiration frequency of our dataset.
+[Bild](https://assets.datacamp.com/production/repositories/3401/datasets/3ef69998a7434569bb3df0dc7e33b09c2b827e65/respiration.png) In the last exercise we got this plot. Now we would like to know the respiration frequency - and we can calculate determine it by fourier transformation
+
 
 `@instructions`
 The respiration data is still stored in ```data```.
