@@ -11,9 +11,9 @@ key: f7c74cb697
 xp: 50
 ```
 
-[Electroencephalography](https://en.wikipedia.org/wiki/Electroencephalography) is an electrophysiological monitoring method to record electrical activity of the brain. The human body transfers information by neurons. This cells emitting singals via changes of electrochemical potentials. Invivo normally a single neuronal activity can't detected. But in thought process mostly hundreds of cells are involved, why we can measure electrical potentials on the scalp.
+[Electroencephalography](https://en.wikipedia.org/wiki/Electroencephalography) is an electrophysiological monitoring method to record electrical activity of the brain. The human body transfers information by neurons. This cells emitting signals via changes of electrochemical potentials. Invivo normally a single neuronal activity can't detected. But in thought process mostly hundreds of cells are involved, why we can measure electrical potentials on the scalp.
 
-The signals measured in milli volts (mv) and need some simple pre-processing to obtain information. At the end of this part we can compare $\alpha$-, $\beta$- and $\delta$-bands. 
+The signals are measured in milli volts (mV) and need some simple pre-processing to obtain information. At the end of this part we can compare $\alpha$-, $\beta$- and $\delta$-bands. 
 
 $\alpha$-waves (8-13 Hz):
 - relaxed and awake, but closed eyes
@@ -61,11 +61,11 @@ Be aware that the calculations in this part can take some minutes.
 
 `@instructions`
 1. Load the compressed EEG file ```eeg1.rds``` with ```readRDS(file)``` to ```eeg1```
-2. Create a time series in minutes for your EEG data and store it in ```time```
+2. Create a time series in minutes for your EEG data and store it in ```time```. 
 2. Plot the EEG data, y-axis in mV and x-axis in minutes
 
 `@hint`
-- To create a time series use ```seq(number of points-1)``` afterwards you can divide the whole array by the step size in minutes.
+- To create a time series use ```seq(start,end,by=step)```. start = 0. end = length(data)/(step) - 1/(step)
 - Step size in minutes = 1/(sampling rate * 60)
 
 `@pre_exercise_code`
@@ -92,7 +92,7 @@ time <-
 eeg1 <- readRDS("eeg1.rds")
 
 # Create time 
-time <- seq(length(eeg1))/(1024*60)
+time <- seq(0,length(eeg1)/(1024*60)-1/(1024*60),by=1/(1024*60))
 
 # Plot data 
 plot(time,eeg1)
@@ -104,7 +104,7 @@ ex() %>% check_error()
 ex() %>% check_object("eeg1") %>% check_equal()
 ex() %>% check_function("readRDS") %>% check_result() %>% check_equal()
 ex() %>% check_object("time") %>% check_equal()
-ex() %>% check_function("seq") %>% check_result() %>% check_equal()
+ex() %>% check_function("seq") %>% check_result() #%>% check_equal()
 ex() %>% check_function("plot") %>% check_result() %>% check_equal()
 success_msg("You finished the first step to an EEG analyse!")
 ```
@@ -131,19 +131,14 @@ Now we need the FFT and therfore the max power of 2 in the length of the signal.
 3. Determine the frequencies (```freq```) that corresponded to the fourier-coefficients.
 
 `@hint`
-- Do you remember the function of the FFT ```fft()```?
-- The Nyquist-Theroem says: We can only resolve frequencies up to half of the sampling frequency -> We have a maximum frequency of ```(sampling frequency)/2```. 
-- Furthermore the FFT-signals contains as much data points as the original signal = n, but it is mirrored in the middle, which means we have only ```n/2``` frequencies. 
-- Now use ```seq(0,n/2-1)*(sampling frequency)/n``` to obtain a series of the frequencies.```
-- Plot: Absolute = ```abs()```, you can choose data ranges by square bracktes e.g.: data[1:10]
+- Check the previous exercises if you need help!
+- Be carfull, you need to use bracktes in calculations of the index like data[1:(2^18+1)]!
 
 `@pre_exercise_code`
 ```{r}
 download.file(url = "https://assets.datacamp.com/production/repositories/3401/datasets/636762184295f3f3370287b8a7a20cbc48aa5ae6/eeg_c4m1.rds", destfile = "eeg1.rds")
 # Load compressed EEG data "eeg1.rds"
 eeg1 <- readRDS("eeg1.rds")
-# Create time 
-time <- seq(length(eeg1))/1024/60
 ```
 
 `@sample_code`
@@ -172,24 +167,21 @@ n <- 2^20
 fft_eeg1 <- fft(eeg1)
 
 # Calculate the frequencies
-freq <- seq(0,n/2-1)*1024/n
+freq <- seq(0,512,by = 512/(2^19))
 
-# Plot the data, but use only the absolute of the first half of the fft
-plot(freq,abs(fft_eeg1[1:2^19]))
+# Plot the frequency spectrum
+plot(freq,abs(fft_eeg1[1:(2^19+1)]))
 ```
 
 `@sct`
 ```{r}
 ex() %>% check_error()
-ex() %>% check_object("eeg1") %>% check_equal()
-ex() %>% check_function("readRDS") %>% check_result() %>% check_equal()
-ex() %>% check_object("time") %>% check_equal()
 ex() %>% check_object("n") %>% check_equal()
 ex() %>% check_object("fft_eeg1") %>% check_equal()
 ex() %>% check_function("fft") %>% check_result() %>% check_equal()
 ex() %>% check_object("freq") %>% check_equal()
 ex() %>% check_function("seq") %>% check_result() %>% check_equal()
-#ex() %>% check_function("plot") %>% check_result() %>% check_equal()
+ex() %>% check_function("plot") %>% check_result() %>% check_equal()
 success_msg("You created successfull a frequency spectrum!")
 ```
 
