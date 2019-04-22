@@ -204,7 +204,7 @@ Be aware that the calculations in this part can take some minutes.
 
 `@instructions`
 1. Define your minimum frequency and your maximum frequency of the $\alpha$-band.
-2. Iterate over all frequencies ```freq``` and set the fourier coefficients to 0, whom not in the $\alpha$-band. Don't forget the mirrored part.
+2. Iterate over all frequencies ```freq``` (which means n/2), and set the fourier coefficients to 0, whom not in the $\alpha$-band. Don't forget the mirrored part.
 
 `@hint`
 - ```for (i in 1:10) {}``` will iterate i from 1 to 10.
@@ -221,27 +221,27 @@ n <- 2^20
 # Calculate the FFT
 fft_eeg1 <- fft(eeg1)
 # Calculate the frequencies
-freq <- seq(0,n/2-1)*1024/n
+freq <- seq(0,512,by = 512/(2^19))
 ```
 
 `@sample_code`
 ```{r}
 # eeg1, n = 2^20, fft_eeg1 and freq still available
 # Set your minimum frequency and your maximum frequency
-freq_min <- 8
-freq_max <- 13
+freq_min <- ___
+freq_max <- ___
 
-# Set all fourier coefficients 0, which not between freq_min and freq_max
-for (i in 1:(n/2)) {
-  if ((freq[i]<freq_min) | (freq[i]>freq_max)) {
+# Set all fourier coefficients 0, which not between freq_min and freq_max (replace ___)
+for (i in ___:___) {
+  if ((freq[i]<=___) | (freq[i]>=___)) {
     # Set the fft_coefficients to zero, also in the mirrored part
-    fft_eeg1[i] <- 0
-    fft_eeg1[n-i] <- 0
+    fft_eeg1[___] <- ___
+    fft_eeg1[___] <- ___
     }
   }
 
-# Check your result by plotting the fourier coefficients
-#plot(fft_eeg1)
+# Check your result by plotting the fourier coefficients again (frequency spectrum)
+
 
 ```
 
@@ -252,17 +252,18 @@ for (i in 1:(n/2)) {
 freq_min <- 8
 freq_max <- 13
 
-# Set all fourier coefficients 0, which not between freq_min and freq_max
+# Set all fourier coefficients 0, which not between freq_min and freq_max (replace ___)
 for (i in 1:(n/2)) {
-  if ((freq[i]<freq_min) | (freq[i]>freq_max)) {
+  if ((freq[i] <= freq_min) | (freq[i] >= freq_max)) {
     # Set the fft_coefficients to zero, also in the mirrored part
     fft_eeg1[i] <- 0
     fft_eeg1[n-i] <- 0
     }
   }
-  
+
+
+# Check your result by plotting the fourier coefficients again (frequency spectrum)
 plot(x=freq,y=abs(fft_eeg1[1:2^19]))
-plot(x=abs(fft_eeg1))
 
 ```
 
@@ -290,17 +291,13 @@ ex() %>% check_for() %>% {
     check_code(., "|")
     check_code(., "freq_max")
   	}
-  check_if(.) #%>% check_code(.,"fft_eeg1[i] <- 0") %>% check_equal() #{
-    #check_code(.) %>% check_equal()
-    #check_code(., c("i", "n-i"))
-    #check_code(.,"fft_eeg1[i] <- 0") #%>% check_arg("x") %>% check_equal()
-    #check_object(.,"fft_eeg1<-0") %>% check_equal()
-    #check_code(.,"fft_eeg1[i]")
-    #check_code(.,"fft_eeg1[n-i]")
-    #}  
+  check_if(.) %>%{
+    ex() %>% check_code("fft_eeg1[i]",fixed=TRUE)
+    ex() %>% check_code("fft_eeg1[n-i]",fixed=TRUE)  
+  	}    
   }
 }
 ex() %>% check_object("fft_eeg1") %>% check_equal()
-#ex() %>% check_function("plot") %>% check_result() %>% check_equal()
+ex() %>% check_function("plot") %>% check_result() %>% check_equal()
 success_msg("Nice! As you can see in the plot, you have only left frequencies between 8 and 13 Hz.\n In the next task we will look at the effect of this")
 ```
