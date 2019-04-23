@@ -263,7 +263,7 @@ for (i in 1:(n/2)) {
 
 
 # Check your result by plotting the fourier coefficients again (frequency spectrum)
-plot(x=freq,y=abs(fft_eeg1[1:2^19]))
+plot(x=freq,y=abs(fft_eeg1[1:(2^19+1)]))
 
 ```
 
