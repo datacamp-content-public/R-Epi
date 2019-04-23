@@ -187,7 +187,7 @@ success_msg("You created successfull a frequency spectrum!")
 
 ---
 
-## Bandpass filter
+## Bandpass filter Part I - frequency domain
 
 ```yaml
 type: NormalExercise
@@ -300,4 +300,82 @@ ex() %>% check_for() %>% {
 ex() %>% check_object("fft_eeg1") %>% check_equal()
 ex() %>% check_function("plot") %>% check_result() %>% check_equal()
 success_msg("Nice! As you can see in the plot, you have only left frequencies between 8 and 13 Hz.\n In the next task we will look at the effect of this")
+```
+
+---
+
+## Bandpass filter Part II - Inverse FFT
+
+```yaml
+type: NormalExercise
+key: d2eee606de
+xp: 100
+```
+
+As we saw in the result of the last task, we eliminated the frequencies out of **8 to 13 Hz** from the spectrum. With the **inverse FFT (iFFT)** we can now reverse our bandpass filtered FFT and receive a signal with "only" frequencies between 8 to 13 Hz, also called the $\alpha$-band.  
+
+The bandpass filtered Fourier coeffiecients are still available under ```fft_eeg1``` and the time series in minutes is still stored in ```time```. Let's plot the bandpass filtered signal!
+
+`@instructions`
+1. Use the inverse Fourier transformation to receive your bandpass filtered signal and save it to ```eeg1_alpha```. For iFFT you use ```fft()``` again, but with the argument ```inverse=TRUE```, which is by default ```FALSE```. We need to normalize the result too by dividing by the length of data (but this is a special case for R - see documentation of [fft](https://www.rdocumentation.org/packages/stats/versions/3.5.3/topics/fft). And finaly we need only the real part ```Re()``` of the result. 
+2. Plot the bandpass filtered signal.
+
+`@hint`
+
+
+`@pre_exercise_code`
+```{r}
+download.file(url = "https://assets.datacamp.com/production/repositories/3401/datasets/636762184295f3f3370287b8a7a20cbc48aa5ae6/eeg_c4m1.rds", destfile = "eeg1.rds")
+# Load compressed EEG data "eeg1.rds"
+eeg1 <- readRDS("eeg1.rds")
+# max power of 2 in the length of the signal
+n <- 2^20
+# Calculate the FFT
+fft_eeg1 <- fft(eeg1)
+# Calculate the frequencies
+freq <- seq(0,512,by = 512/(2^19))
+# eeg1, n = 2^20, fft_eeg1 and freq still available
+# Set your minimum frequency and your maximum frequency
+freq_min <- 8
+freq_max <- 13
+
+# Set all fourier coefficients 0, which not between freq_min and freq_max (replace ___)
+for (i in 1:(n/2)) {
+  if ((freq[i] <= freq_min) | (freq[i] >= freq_max)) {
+    # Set the fft_coefficients to zero, also in the mirrored part
+    fft_eeg1[i] <- 0
+    fft_eeg1[n-i] <- 0
+    }
+  }
+# Create time 
+time <- seq(0,length(eeg1)/(1024*60)-1/(1024*60),by=1/(1024*60))
+```
+
+`@sample_code`
+```{r}
+# Use ifft()
+eeg1_alpha <- 
+
+# Plot bandpass filtered signal
+
+```
+
+`@solution`
+```{r}
+# Use fft(__, inverse=TRUE), length() and Re() as descriped
+eeg1_alpha <- Re(fft(fft_eeg1,inverse=TRUE)/length(fft_eeg1))
+
+# Plot bandpass filtered signal
+plot(x=time, y=eeg1_alpha)
+```
+
+`@sct`
+```{r}
+ex() %>% check_error()
+ex() %>% check_function("fft") %>% check_result() %>% check_equal()
+ex() %>% check_function("length") %>% check_result() %>% check_equal()
+ex() %>% check_function("Re") %>% check_result() %>% check_equal()
+ex() %>% check_object("eeg1_alpha") %>% check_equal()
+ex() %>% check_function("plot") %>% check_result() %>% check_equal()
+success_msg("You got your first bandpass filtered signal - go on!")
 ```
