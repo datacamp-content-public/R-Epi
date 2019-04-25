@@ -230,29 +230,30 @@ freq <- seq(0,512,by = 512/(2^19))
 `@sample_code`
 ```{r}
 # eeg1, n = 2^20, fft_eeg1 and freq still available
-# Set your minimum frequency and your maximum frequency
+# Set your minimum frequency and your maximum frequency (replace ___) 
 freq_min <- ___
 freq_max <- ___
 
-# Set all fourier coefficients 0, which not between freq_min and freq_max (replace ___) 
+# Set all Fourier coefficients 0, which not between freq_min and freq_max 
+# The mirrored Fourier coefficients (replace ___) 
 for (i in ___:___ {
-  if ((freq[___] <= ___) | (freq[___] >= ___)) {
+  if ((freq[___] < ___) | (freq[___] > ___)) {
     # Set the fft_coefficients to zero, also in the mirrored part
     fft_eeg1[___] <- 0
     fft_eeg1[___] <- 0
     }
   }
      
-# Check the first Fourier coefficient/frequency
-if ((freq[___] <= ___) | (freq[___] >= ___)) {
+# Check the first Fourier coefficient/frequency (replace ___) 
+if ((freq[___] < ___) | (freq[___] > ___)) {
     fft_eeg1[___] <- 0
     }
-# Check the hightest frequency
-if ((freq[___] <= ___) | (freq[___] >= ___)) {
+     
+# Check the hightest frequency (replace ___) 
+if ((freq[___] < ___) | (freq[___] > ___)) {
     fft_eeg1[___] <- 0
     }
 
-# Check
 # Check your result by plotting the fourier coefficients again (frequency spectrum)
 
 
@@ -261,25 +262,27 @@ if ((freq[___] <= ___) | (freq[___] >= ___)) {
 `@solution`
 ```{r}
 # eeg1, n = 2^20, fft_eeg1 and freq still available
-# Set your minimum frequency and your maximum frequency
+# Set your minimum frequency and your maximum frequency (replace ___) 
 freq_min <- 8
 freq_max <- 13
 
-# Set all fourier coefficients 0, which not between freq_min and freq_max (replace ___) 
+# Set all Fourier coefficients 0, which not between freq_min and freq_max 
+# The mirrored Fourier coefficients (replace ___) 
 for (i in 2:(n/2)) {
-  if ((freq[i] <= freq_min) | (freq[i] >= freq_max)) {
+  if ((freq[i] < freq_min) | (freq[i] > freq_max)) {
     # Set the fft_coefficients to zero, also in the mirrored part
     fft_eeg1[i] <- 0
     fft_eeg1[n-i+2] <- 0
     }
   }
 
-# Check the first Fourier coefficient/frequency
-if ((freq[1] <= freq_min) | (freq[1] >= freq_max)) {
+# Check the first Fourier coefficient/frequency (replace ___) 
+if ((freq[1] < freq_min) | (freq[1] > freq_max)) {
     fft_eeg1[1] <- 0
     }
-# Check the hightest frequency
-if ((freq[n/2+1] <= freq_min) | (freq[n/2+1] >= freq_max)) {
+
+# Check the hightest frequency (replace ___) 
+if ((freq[n/2+1] < freq_min) | (freq[n/2+1] > freq_max)) {
     fft_eeg1[n/2+1] <- 0
     }
 
@@ -313,28 +316,37 @@ ex() %>% check_for() %>% {
     check_code(., "freq_max")
   	}
   check_if(.) %>%{
-    ex() %>% check_code("fft_eeg1[i]",fixed=TRUE)
-    ex() %>% check_code("fft_eeg1[n-i+2]",fixed=TRUE)  
-        #ex() %>% check_code(c("fft_eeg1[n-i+2]","fft_eeg1[2+n-i]","fft_eeg1[n+2-i]"),fixed=TRUE) 
+    ex() %>% check_code("fft_eeg1[i]",fixed=TRUE) 
+    ex() %>% check_code(c("fft_eeg1[n-i+2]","fft_eeg1[2+n-i]","fft_eeg1[n+2-i]"),fixed=TRUE) 
   	}    
   }
 }
 
 # check first index
-ex() %>% check_if_else(1,index=2) %>%  {
+ex() %>% check_if_else() %>%  {
   check_cond(.) %>% {
-	#check_code(., "freq[1]",fixed=TRUE)
+    check_code(.,"freq[1]",times = 2, fixed=TRUE,missing_msg="Did you take the first index in both if-conditions?")
     check_code(., "freq_min")
     check_code(., "|")
     check_code(., "freq_max")
-    #check_code(., "freq[1]")
   }
   check_if(.) %>%{
-    ex() %>% check_code(.,"fft_eeg1[1]",fixed=TRUE)
+    ex() %>% check_code(.,"fft_eeg1[1]",fixed=TRUE,missing_msg="Did you take the first index??")
   }
 }
-# check highest frequency
 
+# check highest frequency
+ex() %>% check_if_else(index=2) %>%  {
+  check_cond(.) %>% {
+    check_code(.,"freq[n/2+1]",times = 2, fixed=TRUE,missing_msg="Did you take the index with the highest frequency in both if-conditions?")
+    check_code(., "freq_min")
+    check_code(., "|")
+    check_code(., "freq_max")
+  }
+  check_if(.) %>%{
+    ex() %>% check_code(.,"fft_eeg1[n/2+1]",fixed=TRUE,missing_msg="Did you take the Fourier coefficient with the highest frequency?")
+  }
+}
 ex() %>% check_object("fft_eeg1") %>% check_equal()
 ex() %>% check_function("plot") %>% check_result() %>% check_equal()
 success_msg("Nice! As you can see in the plot, you have only left frequencies between 8 and 13 Hz.\n In the next task we will look at the effect of this")
@@ -377,14 +389,28 @@ freq <- seq(0,512,by = 512/(2^19))
 freq_min <- 8
 freq_max <- 13
 
-# Set all fourier coefficients 0, which not between freq_min and freq_max (replace ___)
-for (i in 1:(n/2)) {
-  if ((freq[i] <= freq_min) | (freq[i] >= freq_max)) {
+# Set all fourier coefficients 0, which not between freq_min and freq_max
+freq_min <- 8
+freq_max <- 13
+
+# Set all Fourier coefficients 0, which not between freq_min and freq_max 
+# The mirrored Fourier coefficients (replace ___) 
+for (i in 2:(n/2)) {
+  if ((freq[i] < freq_min) | (freq[i] > freq_max)) {
     # Set the fft_coefficients to zero, also in the mirrored part
     fft_eeg1[i] <- 0
-    fft_eeg1[n-i] <- 0
+    fft_eeg1[n-i+2] <- 0
     }
   }
+# Check the first Fourier coefficient/frequency
+if ((freq[1] < freq_min) | (freq[1] > freq_max)) {
+    fft_eeg1[1] <- 0
+    }
+# Check the hightest frequency
+if ((freq[n/2+1] < freq_min) | (freq[n/2+1] > freq_max)) {
+    fft_eeg1[n/2+1] <- 0
+    }
+
 # Create time 
 time <- seq(0,length(eeg1)/(1024*60)-1/(1024*60),by=1/(1024*60))
 ```
@@ -449,13 +475,21 @@ ___ <- function(___,___,___,___) {
 	fft_eeg <- ___
 	
 	# Here we have the filter (do not change!)
-    for (i in 1:(len_eeg/2)) {
-      if ((freq[i] <= freq_min) | (freq[i] >= freq_max)) {
-        # Set the fft_coefficients to zero, also in the mirrored part
-        fft_eeg[i] <- 0
-        fft_eeg[n-i] <- 0
+  	# Mirrored part
+    for (i in 2:(n/2)) {
+      if ((freq[i] < freq_min) | (freq[i] > freq_max)) {
+        fft_eeg1[i] <- 0
+        fft_eeg1[n-i+2] <- 0
+        }
       }
-    }
+    # Check the first Fourier coefficient/frequency
+    if ((freq[1] < freq_min) | (freq[1] > freq_max)) {
+        fft_eeg1[1] <- 0
+        }
+    # Check the hightest frequency
+    if ((freq[n/2+1] < freq_min) | (freq[n/2+1] > freq_max)) {
+        fft_eeg1[n/2+1] <- 0
+        }
 	
 	# Apply the inverse fft, 
 	bandpass_signal <- Re(fft(___,inverse=TRUE)/___)
@@ -472,13 +506,21 @@ bandpass_filter <- function(signal,freq_min,freq_max,len_eeg) {
 	fft_eeg <- fft(signal)
 	
 	# Here we have the filter (do not change!)
-    for (i in 1:(len_eeg/2)) {
-      if ((freq[i] <= freq_min) | (freq[i] >= freq_max)) {
-        # Set the fft_coefficients to zero, also in the mirrored part
-        fft_eeg[i] <- 0
-        fft_eeg[n-i] <- 0
+  	# Mirrored part
+    for (i in 2:(n/2)) {
+      if ((freq[i] < freq_min) | (freq[i] > freq_max)) {
+        fft_eeg1[i] <- 0
+        fft_eeg1[n-i+2] <- 0
+        }
       }
-    }
+    # Check the first Fourier coefficient/frequency
+    if ((freq[1] < freq_min) | (freq[1] > freq_max)) {
+        fft_eeg1[1] <- 0
+        }
+    # Check the hightest frequency
+    if ((freq[n/2+1] < freq_min) | (freq[n/2+1] > freq_max)) {
+        fft_eeg1[n/2+1] <- 0
+        }
 	
 	# Apply the inverse fft, 
 	bandpass_signal <- Re(fft(fft_eeg,inverse=TRUE)/len_eeg)
