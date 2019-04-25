@@ -88,14 +88,14 @@ time <-
 
 `@solution`
 ```{r}
-# Load compressed EEG data "eeg1.rds"
+# Load compressed EEG data "eeg.rds"
 eeg <- readRDS("eeg.rds")
 
 # Create time 
 time <- seq(0,length(eeg1)/(1024*60)-1/(1024*60),by=1/(1024*60))
 
 # Plot data 
-plot(time,eeg1)
+plot(time,eeg)
 ```
 
 `@sct`
