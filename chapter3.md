@@ -654,17 +654,17 @@ eeg_beta  <- ___
 eeg_delta <- ___ 
 
 # Plot preparation 
-par(mfrow=c(4,1),mar=c(0.05,0,0,0),oma=c(2,2,0,0))
+par(mfrow=c(4,1),mar=c(1,5,0,0),oma=c(2,2,0,0))
 xlimit<-c(0,4)
 ylimit<-c(-100,100)
 
 # Plot (replace ___)
-plot(x=time,y=___,"l",xaxt='n', ann=FALSE,ylab="alpha",xlim=xlimit,ylim=ylimit)
-plot(x=time,y=___,"l",xaxt='n', ann=FALSE,ylab="beta",xlim=xlimit,ylim=ylimit)
-plot(x=time,y=___,"l",xaxt='n', ann=FALSE,ylab="delta",xlim=xlimit,ylim=ylimit)
+plot(x=time,y=___,"l",xaxt='n',ylab="alpha",xlim=xlimit,ylim=ylimit)
+plot(x=time,y=___,"l",xaxt='n',ylab="beta",xlim=xlimit,ylim=ylimit)
+plot(x=time,y=___,"l",xaxt='n',ylab="delta",xlim=xlimit,ylim=ylimit)
 
 plot(sleep_time,sleep_stage,yaxt='n',xlab="time in minutes",ylab="sleep stage",xlim=xlimit)
-axis(2, at=1:5, labels=c('N1','N2','N3','REM','AWAKE'))
+axis(2, at=1:5, labels=c('N1','N2','N3','REM','W'))
 ```
 
 `@solution`
@@ -675,16 +675,16 @@ eeg_beta  <- bandpass_filter(eeg,freq,13,30)
 eeg_delta <- bandpass_filter(eeg,freq,0.5,3) 
 
 # Plot preparation
-par(mfrow=c(4,1),mar=c(0.05,0,0,0),oma=c(2,2,0,0))
+par(mfrow=c(4,1),mar=c(1,5,0,0),oma=c(2,2,0,0))
 xlimit<-c(0,4)
 ylimit<-c(-100,100)
 
 # Plot
-plot(time,eeg_alpha,"l",xaxt='n', ann=FALSE,ylab="alpha",xlim=xlimit,ylim=ylimit)
-plot(time,eeg_beta,"l",xaxt='n', ann=FALSE,ylab="beta",xlim=xlimit,ylim=ylimit)
-plot(time,eeg_delta,"l",xaxt='n', ann=FALSE,ylab="delta",xlim=xlimit,ylim=ylimit)
+plot(time,eeg_alpha,"l",xaxt='n',ylab="alpha",xlim=xlimit,ylim=ylimit)
+plot(time,eeg_beta,"l",xaxt='n',ylab="beta",xlim=xlimit,ylim=ylimit)
+plot(time,eeg_delta,"l",xaxt='n',ylab="delta",xlim=xlimit,ylim=ylimit)
 plot(sleep_time,sleep_stage,yaxt='n',xlab="time in minutes",ylab="sleep stage",xlim=xlimit)
-axis(2, at=1:5, labels=c('N1','N2','N3','REM','AWAKE'))
+axis(2, at=1:5, labels=c('N1','N2','N3','REM','W'))
 ```
 
 `@sct`
