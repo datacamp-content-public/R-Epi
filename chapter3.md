@@ -597,7 +597,8 @@ $\delta$-waves (0,5-3 Hz)
 
 `@instructions`
 1. Use your function ```bandpass_filter()``` to calculate the α-, β-, δ-band of the ```eeg1``` signal. Store the result in ```eeg_alpha```, ```eeg_beta``` and ```eeg_delta```
-2. Plot all 3 bands in 3 rows. Therefore, we already prepared some stuff. [par(mfrow=c(3,1))](https://www.rdocumentation.org/packages/graphics/versions/3.5.3/topics/par) will set 3 rows of plots. Finaly you just have to add 3 plots.
+2. Plot all 3 bands in 3 rows. Therefore, we already prepared some stuff. [par(mfrow=c(3,1))](https://www.rdocumentation.org/packages/graphics/versions/3.5.3/topics/par) will set 3 rows of plots. ```xlimits``` defines the range of the plot, here the first 8 minutes. Finally you just have to add 3 plots. 
+3. Now we add with the 4$^{th}$ plot the sleep stage.
 
 `@hint`
 
@@ -656,11 +657,12 @@ eeg_beta  <- bandpass_filter(eeg,freq,13,30)
 eeg_delta <- bandpass_filter(eeg,freq,0.5,3) 
 
 # Plot 
-par(mfrow=c(3,1))
-plot(time,eeg_alpha,xlab="time in minutes",ylab="alpha")
-plot(time,eeg_beta,xlab="time in minutes",ylab="beta")
-plot(time,eeg_delta,xlab="time in minutes",ylab="delta")
-plot(sleep_time,sleep_stage,xlab="time in minutes",)
+par(mfrow=c(4,1))
+xlimit<-c(0,8)
+plot(time,eeg_alpha,xlab="time in minutes",ylab="alpha",xlim=xlimit)
+plot(time,eeg_beta,xlab="time in minutes",ylab="beta",xlim=xlimit)
+plot(time,eeg_delta,xlab="time in minutes",ylab="delta",xlim=xlimit)
+plot(sleep_time,sleep_stage,xlab="time in minutes",ylab="sleep stage",xlim=xlimit)
 ```
 
 `@solution`
@@ -672,9 +674,12 @@ eeg_delta <- bandpass_filter(eeg,freq,0.5,3)
 
 # Plot 
 par(mfrow=c(3,1))
-plot(time,eeg_alpha,xlab="time in minutes",ylab="alpha")
-plot(time,eeg_beta,xlab="time in minutes",ylab="beta")
-plot(time,eeg_delta,xlab="time in minutes",ylab="delta")
+par(mfrow=c(4,1))
+xlimit<-c(0,8)
+plot(time,eeg_alpha,xlab=NULL,ylab="alpha",xlim=xlimit)
+plot(time,eeg_beta,xlab=NULL,ylab="beta",xlim=xlimit)
+plot(time,eeg_delta,xlab=NULL,ylab="delta",xlim=xlimit)
+plot(sleep_time,sleep_stage,xlab="time in minutes",ylab="sleep stage",xlim=xlimit)
 ```
 
 `@sct`
