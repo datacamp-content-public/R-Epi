@@ -655,7 +655,7 @@ eeg_delta <- ___
 
 # Plot preparation 
 par(mfrow=c(4,1),mar=c(0.05,0,0,0),oma=c(2,2,0,0))
-xlimit<-c(0,8)
+xlimit<-c(0,4)
 ylimit<-c(-100,100)
 
 # Plot (replace ___)
@@ -676,7 +676,7 @@ eeg_delta <- bandpass_filter(eeg,freq,0.5,3)
 
 # Plot preparation
 par(mfrow=c(4,1),mar=c(0.05,0,0,0),oma=c(2,2,0,0))
-xlimit<-c(0,8)
+xlimit<-c(0,4)
 ylimit<-c(-100,100)
 
 # Plot
