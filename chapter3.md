@@ -212,13 +212,13 @@ Be aware that the calculations in this part can take some minutes.
 
 `@hint`
 - ```|``` and ```&``` are the logical OR and AND of R 
-- As the ```fft_eeg1``` is symmetric from the second to the last index, you have to set ```fft_eeg1[i]``` and ```fft_eeg1[n-i+2]``` to 0 for i = 2 to n/2.
+- As the ```fft_eeg``` is symmetric from the second to the last index, you have to set ```fft_eeg[i]``` and ```fft_eeg[n-i+2]``` to 0 for i = 2 to n/2.
 
 `@pre_exercise_code`
 ```{r}
-download.file(url = "https://assets.datacamp.com/production/repositories/3401/datasets/636762184295f3f3370287b8a7a20cbc48aa5ae6/eeg_c4m1.rds", destfile = "eeg1.rds")
-# Load compressed EEG data "eeg1.rds"
-eeg <- readRDS("eeg1.rds")
+download.file(url = "https://assets.datacamp.com/production/repositories/3401/datasets/636762184295f3f3370287b8a7a20cbc48aa5ae6/eeg_c4m1.rds", destfile = "eeg.rds")
+# Load compressed EEG data "eeg.rds"
+eeg <- readRDS("eeg.rds")
 # max power of 2 in the length of the signal
 n <- 2^20
 # Calculate the FFT
@@ -584,7 +584,7 @@ xp: 100
 
 We are coming to our final task were we merge all together what we learned! Here we will create a plot of different EEG-bands from one EEG channel.
 
-The signal ```eeg```, ```freq``` and the function ```bandpass_filter(signal, freq_min,freq_max,len_eeg)``` are still available. Short reminder of the EEG-bands:
+The signal ```eeg```, ```freq```, ```time``` (in minutes) and the function ```bandpass_filter(signal, freq_min,freq_max,len_eeg)``` are still available. Short reminder of the EEG-bands:
 
 $\alpha$-waves (8-13 Hz)
 
@@ -597,6 +597,7 @@ $\delta$-waves (0,5-3 Hz)
 
 `@instructions`
 1. Use your function ```bandpass_filter()``` to calculate the α-, β-, δ-band of the ```eeg1``` signal. Store the result in ```eeg_alpha```, ```eeg_beta``` and ```eeg_delta```
+2. Plot all 3 bands in 3 rows. Therefore, we already prepared some stuff. [par(mfrow=c(3,1))](https://www.rdocumentation.org/packages/graphics/versions/3.5.3/topics/par) will set 3 rows of plots. Finaly you just have to add 3 plots.
 
 `@hint`
 
@@ -637,16 +638,24 @@ bandpass_filter <- function(signal,freq,freq_min,freq_max) {
 
 download.file(url = "https://assets.datacamp.com/production/repositories/3401/datasets/636762184295f3f3370287b8a7a20cbc48aa5ae6/eeg_c4m1.rds", destfile = "eeg1.rds")
 # Load compressed EEG data "eeg1.rds"
-eeg <- readRDS("eeg1.rds")
-freq <- seq(0,512,by = 512/(2^19))
+eeg <- readRDS("eeg1.rds")[1:2^19]
+freq <- seq(0,512,by = 512/(2^18))
+# Create time 
+time <- seq(0,length(eeg)/(1024*60)-1/(1024*60),by=1/(1024*60))
 ```
 
 `@sample_code`
 ```{r}
 # Calculate the α-, β-, δ-band of the eeg signal
-eeg_alpha <- 
-eeg_beta <- 
-eeg_delta <- 
+eeg_alpha <- bandpass_filter(eeg,freq,8,13) 
+eeg_beta  <- bandpass_filter(eeg,freq,13,30) 
+eeg_delta <- bandpass_filter(eeg,freq,0.5,3) 
+
+# Plot 
+par(mfrow=c(3,1))
+plot(time,eeg_alpha,xlab="time in minutes",ylab="alpha")
+plot(time,eeg_beta,xlab="time in minutes",ylab="beta")
+plot(time,eeg_delta,xlab="time in minutes",ylab="delta")
 ```
 
 `@solution`
@@ -655,6 +664,12 @@ eeg_delta <-
 eeg_alpha <- bandpass_filter(eeg,freq,8,13) 
 eeg_beta  <- bandpass_filter(eeg,freq,13,30) 
 eeg_delta <- bandpass_filter(eeg,freq,0.5,3) 
+
+# Plot 
+par(mfrow=c(3,1))
+plot(time,eeg_alpha,xlab="time in minutes",ylab="alpha")
+plot(time,eeg_beta,xlab="time in minutes",ylab="beta")
+plot(time,eeg_delta,xlab="time in minutes",ylab="delta")
 ```
 
 `@sct`
