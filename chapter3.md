@@ -592,12 +592,9 @@ $\beta$-waves (13-30 Hz)
 
 $\delta$-waves (0,5-3 Hz)
 
-
-
-
 `@instructions`
 1. Use your function ```bandpass_filter()``` to calculate the α-, β-, δ-band of the ```eeg1``` signal. Store the result in ```eeg_alpha```, ```eeg_beta``` and ```eeg_delta```
-2. Plot all 3 bands in 3 rows. Therefore, we already prepared some stuff. [par(mfrow=c(3,1))](https://www.rdocumentation.org/packages/graphics/versions/3.5.3/topics/par) will set 3 rows of plots. ```xlimits``` defines the range of the plot, here the first 8 minutes. Finally you just have to add 3 plots. 
+2. Plot all 3 bands in 3 rows. Therefore, we already prepared some stuff. [par(mfrow=c(4,1))](https://www.rdocumentation.org/packages/graphics/versions/3.5.3/topics/par) will set 4 rows of plots. ```xlimit``` and ```ylimit```defines the range of the plot, here the first 8 minutes from -150 to 150 mV. Finally you just have to add 3 plots. 
 3. Now we add with the 4$^{th}$ plot the sleep stage.
 
 `@hint`
@@ -651,18 +648,23 @@ sleep_time <- seq(0,19,0.5)
 
 `@sample_code`
 ```{r}
-# Calculate the α-, β-, δ-band of the eeg signal
-eeg_alpha <- bandpass_filter(eeg,freq,8,13) 
-eeg_beta  <- bandpass_filter(eeg,freq,13,30) 
-eeg_delta <- bandpass_filter(eeg,freq,0.5,3) 
+# Calculate the α-, β-, δ-band of the eeg signal (replace ___)
+eeg_alpha <- ___ 
+eeg_beta  <- ___ 
+eeg_delta <- ___ 
 
-# Plot 
-par(mfrow=c(4,1))
+# Plot preparation 
+par(mfrow=c(4,1),mar=c(0.05,0,0,0),oma=c(2,2,0,0))
 xlimit<-c(0,8)
-plot(time,eeg_alpha,xlab="time in minutes",ylab="alpha",xlim=xlimit)
-plot(time,eeg_beta,xlab="time in minutes",ylab="beta",xlim=xlimit)
-plot(time,eeg_delta,xlab="time in minutes",ylab="delta",xlim=xlimit)
-plot(sleep_time,sleep_stage,xlab="time in minutes",ylab="sleep stage",xlim=xlimit)
+ylimit<-c(-100,100)
+
+# Plot (replace ___)
+plot(x=time,y=___,"l",xaxt='n', ann=FALSE,ylab="alpha",xlim=xlimit,ylim=ylimit)
+plot(x=time,y=___,"l",xaxt='n', ann=FALSE,ylab="beta",xlim=xlimit,ylim=ylimit)
+plot(x=time,y=___,"l",xaxt='n', ann=FALSE,ylab="delta",xlim=xlimit,ylim=ylimit)
+
+plot(sleep_time,sleep_stage,yaxt='n',xlab="time in minutes",ylab="sleep stage",xlim=xlimit)
+axis(2, at=1:5, labels=c('N1','N2','N3','REM','AWAKE'))
 ```
 
 `@solution`
@@ -672,14 +674,17 @@ eeg_alpha <- bandpass_filter(eeg,freq,8,13)
 eeg_beta  <- bandpass_filter(eeg,freq,13,30) 
 eeg_delta <- bandpass_filter(eeg,freq,0.5,3) 
 
-# Plot 
-par(mfrow=c(3,1))
-par(mfrow=c(4,1))
+# Plot preparation
+par(mfrow=c(4,1),mar=c(0.05,0,0,0),oma=c(2,2,0,0))
 xlimit<-c(0,8)
-plot(time,eeg_alpha,xlab=NULL,ylab="alpha",xlim=xlimit)
-plot(time,eeg_beta,xlab=NULL,ylab="beta",xlim=xlimit)
-plot(time,eeg_delta,xlab=NULL,ylab="delta",xlim=xlimit)
-plot(sleep_time,sleep_stage,xlab="time in minutes",ylab="sleep stage",xlim=xlimit)
+ylimit<-c(-100,100)
+
+# Plot
+plot(time,eeg_alpha,"l",xaxt='n', ann=FALSE,ylab="alpha",xlim=xlimit,ylim=ylimit)
+plot(time,eeg_beta,"l",xaxt='n', ann=FALSE,ylab="beta",xlim=xlimit,ylim=ylimit)
+plot(time,eeg_delta,"l",xaxt='n', ann=FALSE,ylab="delta",xlim=xlimit,ylim=ylimit)
+plot(sleep_time,sleep_stage,yaxt='n',xlab="time in minutes",ylab="sleep stage",xlim=xlimit)
+axis(2, at=1:5, labels=c('N1','N2','N3','REM','AWAKE'))
 ```
 
 `@sct`
