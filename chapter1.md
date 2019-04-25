@@ -119,7 +119,7 @@ Fourier series = $2\cdot a_0 + \sum _{i=1} ^{2^N-1} (a_i \cdot cos(i \cdot x) + 
 - A Fourier Transformation will return the fourier coefficients!
 - As you maybe now we can describe sinus with a cosinus function and vice versa which means the second half of the fourier coefficients is mirrored to the first half!
 
-Now we assume that we have a signal with **$2^{15}$ data points** and a sampling rate of **64 Hz**. So the Fast-Fourier-Transformation (FFT) of our signal will return 2^15 fourier coefficients. The first coefficient $a_0$ is a constant representing more or less the offset of a signal. Because of the nature of the FFT the other $2^{15}-1 $ coefficients are mirrored at the ($2^{14}+1$)th data point. Based on the Nyquist Theorem (You don't need to know anything about it) the maximal frequency we can detect is half of the sampling rate, here 32 Hz!
+Now we assume that we have a signal with **$2^{15}$ data points** and a sampling rate of **64 Hz**. So the Fast-Fourier-Transformation (FFT) of our signal will return 2^15 fourier coefficients. The first coefficient $a_0$ is a constant representing more or less the offset of a signal. Because of the nature of the FFT the other $2^{15}-1 $ coefficients are mirrored at the $2^{14}+1^{th}$ data point. Based on the Nyquist Theorem (You don't need to know anything about it) the maximal frequency we can detect is half of the sampling rate, here 32 Hz!
 
 Now the first $2^{14} + 1$ fourier coefficients representing 32 Hz. What is the Frequency step/distance between each Fourier coefficient?
 
@@ -181,7 +181,7 @@ numbers_fft <-
 y <- abs(numbers_fft[_:_])
 
 # Calculate the frequencies of each fourier coefficient.
-x <- seq(0, 32, by = (32/2^14))
+x <- 
 
 # Plot the spectogram
 

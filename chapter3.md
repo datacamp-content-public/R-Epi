@@ -204,7 +204,11 @@ Be aware that the calculations in this part can take some minutes.
 
 `@instructions`
 1. Define your minimum frequency and your maximum frequency of the $\alpha$-band.
-2. Iterate over all frequencies ```freq``` (which means n/2), and set the fourier coefficients to 0, whom not in the $\alpha$-band. Don't forget the mirrored part.
+2. Iterate over all frequencies ```freq``` and set the Fourier coefficients to 0, whom not in the $\alpha$-band. Example ```for (i in 1:10) {i}``` will iterate i from 1 to 10. 
+
+	Don't forget the mirrored part! Remember the first Fourier coefficients (here index 1 of ```freq```) and the (n/2+1)$^{th}$ Fourier coefficient (here index (n/2 +1)) is not mirrored. Otherwise the 2$^{nd}$ coefficient is mirrored to the n$^{th}$ coefficient, the 3$^{rd}$ is mirrored to the (n-1)$^{th}$ coefficient and so on.... till the (n/2)$^{th}$ is mirrored to the (n/2+2)$^{th}$ coefficient.
+    
+    So you need an extra ```if``` condition for the first and the (n/2+1)$^{th}$ Fourier coefficient.
 
 `@hint`
 - ```for (i in 1:10) {}``` will iterate i from 1 to 10.
@@ -231,15 +235,22 @@ freq <- seq(0,512,by = 512/(2^19))
 freq_min <- ___
 freq_max <- ___
 
-# Set all fourier coefficients 0, which not between freq_min and freq_max (replace ___)
-for (i in ___:___) {
-  if ((freq[i]<=___) | (freq[i]>=___)) {
+# Set all fourier coefficients 0, which not between freq_min and freq_max (replace ___) 
+for (i in _:(n/2)) {
+  if ((freq[i] <= freq_min) | (freq[i] >= freq_max)) {
     # Set the fft_coefficients to zero, also in the mirrored part
-    fft_eeg1[___] <- ___
-    fft_eeg1[___] <- ___
+    fft_eeg1[i] <- 0
+    fft_eeg1[n-i] <- 0
     }
   }
+if ((freq[1] <= freq_min) | (freq[1] >= freq_max)) {
+    fft_eeg1[1] <- 0
+    }
+if ((freq[n/2+1] <= freq_min) | (freq[n/2+1] >= freq_max)) {
+    fft_eeg1[n/2+1] <- 0
+    }
 
+# Check
 # Check your result by plotting the fourier coefficients again (frequency spectrum)
 
 
@@ -252,17 +263,20 @@ for (i in ___:___) {
 freq_min <- 8
 freq_max <- 13
 
-# Set all fourier coefficients 0, which not between freq_min and freq_max (replace ___)
-fft_eeg1[1] <- 
-fft_eeg1[n/2+1]<- 
-for (i in 2:(n/2-1)) {
+# Set all fourier coefficients 0, which not between freq_min and freq_max (replace ___) 
+for (i in 2:(n/2)) {
   if ((freq[i] <= freq_min) | (freq[i] >= freq_max)) {
     # Set the fft_coefficients to zero, also in the mirrored part
     fft_eeg1[i] <- 0
-    fft_eeg1[n-i+2] <- 0
+    fft_eeg1[n-i] <- 0
     }
   }
-
+if ((freq[1] <= freq_min) | (freq[1] >= freq_max)) {
+    fft_eeg1[1] <- 0
+    }
+if ((freq[n/2+1] <= freq_min) | (freq[n/2+1] >= freq_max)) {
+    fft_eeg1[n/2+1] <- 0
+    }
 
 # Check your result by plotting the fourier coefficients again (frequency spectrum)
 plot(x=freq,y=abs(fft_eeg1[1:(2^19+1)]))
