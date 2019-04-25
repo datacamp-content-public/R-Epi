@@ -211,9 +211,8 @@ Be aware that the calculations in this part can take some minutes.
     So you need an extra ```if``` condition for the first and the (n/2+1)$^{th}$ Fourier coefficient.
 
 `@hint`
-- ```for (i in 1:10) {}``` will iterate i from 1 to 10.
 - ```|``` and ```&``` are the logical OR and AND of R 
-- As the ```fft_eeg1``` is symmetric from the second to the last index, you have to set ```fft_eeg1[i]``` and ```fft_eeg1[n-i+2]``` to 0.
+- As the ```fft_eeg1``` is symmetric from the second to the last index, you have to set ```fft_eeg1[i]``` and ```fft_eeg1[n-i+2]``` to 0 for i = 2 to n/2.
 
 `@pre_exercise_code`
 ```{r}
@@ -236,18 +235,21 @@ freq_min <- ___
 freq_max <- ___
 
 # Set all fourier coefficients 0, which not between freq_min and freq_max (replace ___) 
-for (i in _:(n/2)) {
-  if ((freq[i] <= freq_min) | (freq[i] >= freq_max)) {
+for (i in ___:___ {
+  if ((freq[___] <= ___) | (freq[___] >= ___)) {
     # Set the fft_coefficients to zero, also in the mirrored part
-    fft_eeg1[i] <- 0
-    fft_eeg1[n-i] <- 0
+    fft_eeg1[___] <- 0
+    fft_eeg1[___] <- 0
     }
   }
-if ((freq[1] <= freq_min) | (freq[1] >= freq_max)) {
-    fft_eeg1[1] <- 0
+     
+# Check the first Fourier coefficient/frequency
+if ((freq[___] <= ___) | (freq[___] >= ___)) {
+    fft_eeg1[___] <- 0
     }
-if ((freq[n/2+1] <= freq_min) | (freq[n/2+1] >= freq_max)) {
-    fft_eeg1[n/2+1] <- 0
+# Check the hightest frequency
+if ((freq[___] <= ___) | (freq[___] >= ___)) {
+    fft_eeg1[___] <- 0
     }
 
 # Check
@@ -268,12 +270,15 @@ for (i in 2:(n/2)) {
   if ((freq[i] <= freq_min) | (freq[i] >= freq_max)) {
     # Set the fft_coefficients to zero, also in the mirrored part
     fft_eeg1[i] <- 0
-    fft_eeg1[n-i] <- 0
+    fft_eeg1[n-i+2] <- 0
     }
   }
+
+# Check the first Fourier coefficient/frequency
 if ((freq[1] <= freq_min) | (freq[1] >= freq_max)) {
     fft_eeg1[1] <- 0
     }
+# Check the hightest frequency
 if ((freq[n/2+1] <= freq_min) | (freq[n/2+1] >= freq_max)) {
     fft_eeg1[n/2+1] <- 0
     }
@@ -298,7 +303,7 @@ ex() %>% check_object("freq_max")  %>% check_equal()
 ex() %>% check_for() %>% {
   check_cond(.) %>% {
     check_code(., "in")
-    check_code(., "1")
+    check_code(., "2")
     check_code(., "(n/2)")
   }
   check_body(.) %>%check_if_else(1) %>%  {
@@ -309,10 +314,27 @@ ex() %>% check_for() %>% {
   	}
   check_if(.) %>%{
     ex() %>% check_code("fft_eeg1[i]",fixed=TRUE)
-    ex() %>% check_code("fft_eeg1[n-i]",fixed=TRUE)  
+    ex() %>% check_code("fft_eeg1[n-i+2]",fixed=TRUE)  
+        #ex() %>% check_code(c("fft_eeg1[n-i+2]","fft_eeg1[2+n-i]","fft_eeg1[n+2-i]"),fixed=TRUE) 
   	}    
   }
 }
+
+# check first index
+ex() %>% check_if_else(1,index=2) %>%  {
+  check_cond(.) %>% {
+	#check_code(., "freq[1]",fixed=TRUE)
+    check_code(., "freq_min")
+    check_code(., "|")
+    check_code(., "freq_max")
+    #check_code(., "freq[1]")
+  }
+  check_if(.) %>%{
+    ex() %>% check_code(.,"fft_eeg1[1]",fixed=TRUE)
+  }
+}
+# check highest frequency
+
 ex() %>% check_object("fft_eeg1") %>% check_equal()
 ex() %>% check_function("plot") %>% check_result() %>% check_equal()
 success_msg("Nice! As you can see in the plot, you have only left frequencies between 8 and 13 Hz.\n In the next task we will look at the effect of this")
