@@ -18,8 +18,8 @@ The signals are measured in milli volts (mV) and need some simple pre-processing
 $\alpha$-waves (8-13 Hz):
 - relaxed and awake, but closed eyes
 
-$\beta$-waves (>13 Hz):
-- during mental oder physical activity or psychological burden
+$\beta$-waves (13-30 Hz):
+- during mental or physical activity or psychological burden
 
 $\delta$-waves (0,5-3 Hz):
 - deep sleep
@@ -582,9 +582,9 @@ key: 010ac11bc0
 xp: 100
 ```
 
-We are coming to our final task were we merge all together what we learned! Here we will create a plot of different EEG-bands from one EEG channel.
+We are coming to our final task where we merge all together what we have learned! To see what happens in different sleep stages in the different EEG-bands, we will plot the α-, β-, δ-band of one EEG-channel and compare them with the corresponding sleep stages, measured in 30 second intervals. 
 
-The signal ```eeg```, ```freq```, ```time``` (in minutes) and the function ```bandpass_filter(signal, freq_min,freq_max,len_eeg)``` are still available. Short reminder of the EEG-bands:
+Short reminder of the EEG-bands:
 
 $\alpha$-waves (8-13 Hz)
 
@@ -593,9 +593,10 @@ $\beta$-waves (13-30 Hz)
 $\delta$-waves (0,5-3 Hz)
 
 `@instructions`
-1. Use your function ```bandpass_filter()``` to calculate the α-, β-, δ-band of the ```eeg1``` signal. Store the result in ```eeg_alpha```, ```eeg_beta``` and ```eeg_delta```
-2. Plot all 3 bands in 3 rows. Therefore, we already prepared some stuff. [par(mfrow=c(4,1))](https://www.rdocumentation.org/packages/graphics/versions/3.5.3/topics/par) will set 4 rows of plots. ```xlimit``` and ```ylimit```defines the range of the plot, here the first 8 minutes from -150 to 150 mV. Finally you just have to add 3 plots. 
-3. Now we add with the 4$^{th}$ plot the sleep stage.
+The signal ```eeg```, ```freq```, ```time``` (in minutes) and the function ```bandpass_filter(signal, freq_min,freq_max,len_eeg)``` are still available. 
+
+1. Use your function ```bandpass_filter()``` to calculate the α-, β-, δ-band of the ```eeg``` signal. Store the result in ```eeg_alpha```, ```eeg_beta``` and ```eeg_delta```.
+2. Plot all 3 EEG-bands in 3 rows. Therefore, we already prepared some stuff. [par(mfrow=c(4,1))](https://www.rdocumentation.org/packages/graphics/versions/3.5.3/topics/par) will set 4 rows of plots. ```xlimit``` and ```ylimit```defines the range of the plot, here the first 4 minutes from -150 to 150 mV. Finally you just have fill the x-values for the plots (see the gaps!)
 
 `@hint`
 
@@ -648,21 +649,22 @@ sleep_time <- seq(0,19,0.5)
 
 `@sample_code`
 ```{r}
-# Calculate the α-, β-, δ-band of the eeg signal (replace ___)
+# Calculate the α-, β- and δ-band of the eeg signal (replace ___)
 eeg_alpha <- ___ 
 eeg_beta  <- ___ 
 eeg_delta <- ___ 
 
-# Plot preparation 
+# Plot preparation (Don't change!)
 par(mfrow=c(4,1),mar=c(1,5,0,0),oma=c(2,2,0,0))
 xlimit<-c(0,4)
 ylimit<-c(-100,100)
 
-# Plot (replace ___)
+# Plot α-, β- and δ-band in this order (replace ___)
 plot(x=time,y=___,"l",xaxt='n',ylab="alpha",xlim=xlimit,ylim=ylimit)
 plot(x=time,y=___,"l",xaxt='n',ylab="beta",xlim=xlimit,ylim=ylimit)
 plot(x=time,y=___,"l",xaxt='n',ylab="delta",xlim=xlimit,ylim=ylimit)
 
+# Plot sleep stages (Don't change!)
 plot(sleep_time,sleep_stage,yaxt='n',xlab="time in minutes",ylab="sleep stage",xlim=xlimit)
 axis(2, at=1:5, labels=c('N1','N2','N3','REM','W'))
 ```
@@ -674,20 +676,97 @@ eeg_alpha <- bandpass_filter(eeg,freq,8,13)
 eeg_beta  <- bandpass_filter(eeg,freq,13,30) 
 eeg_delta <- bandpass_filter(eeg,freq,0.5,3) 
 
-# Plot preparation
+# Plot preparation (Don't change!)
 par(mfrow=c(4,1),mar=c(1,5,0,0),oma=c(2,2,0,0))
 xlimit<-c(0,4)
 ylimit<-c(-100,100)
 
-# Plot
-plot(time,eeg_alpha,"l",xaxt='n',ylab="alpha",xlim=xlimit,ylim=ylimit)
-plot(time,eeg_beta,"l",xaxt='n',ylab="beta",xlim=xlimit,ylim=ylimit)
-plot(time,eeg_delta,"l",xaxt='n',ylab="delta",xlim=xlimit,ylim=ylimit)
-plot(sleep_time,sleep_stage,yaxt='n',xlab="time in minutes",ylab="sleep stage",xlim=xlimit)
+# Plot α-, β- and δ-band in this order (replace ___)
+plot(x=time,y=eeg_alpha,"l",xaxt='n',ylab="alpha",xlim=xlimit,ylim=ylimit)
+plot(x=time,y=eeg_beta,"l",xaxt='n',ylab="beta",xlim=xlimit,ylim=ylimit)
+plot(x=time,y=eeg_delta,"l",xaxt='n',ylab="delta",xlim=xlimit,ylim=ylimit)
+plot(x=sleep_time,y=sleep_stage,yaxt='n',xlab="time in minutes",ylab="sleep stage",xlim=xlimit)
+
+# Plot sleep stages (Don't change!)
 axis(2, at=1:5, labels=c('N1','N2','N3','REM','W'))
 ```
 
 `@sct`
 ```{r}
+ex() %>% check_error()
+#alpha
+ex() %>% check_function("bandpass_filter") %>% {
+  check_arg(., "signal") %>% check_equal()
+  check_arg(., "freq") %>% check_equal()
+  check_arg(., "freq_min") %>% check_equal(incorrect_msg="Check ```eeg_alpha```")
+  check_arg(., "freq_max") %>% check_equal(incorrect_msg="Check ```eeg_alpha```")  
+} 
+ex() %>% check_function("bandpass_filter") %>% check_result() %>% check_equal()
 
+#beta
+ex() %>% check_function("bandpass_filter",index=2) %>% {
+  check_arg(., "signal") %>% check_equal()
+  check_arg(., "freq") %>% check_equal()
+  check_arg(., "freq_min") %>% check_equal(incorrect_msg="Check ```eeg_beta```")
+  check_arg(., "freq_max") %>% check_equal(incorrect_msg="Check ```eeg_beta```")  
+} 
+ex() %>% check_function("bandpass_filter",index=2) %>% check_result() %>% check_equal()
+
+#delta
+ex() %>% check_function("bandpass_filter",index=3) %>% {
+  check_arg(., "signal") %>% check_equal()
+  check_arg(., "freq") %>% check_equal()
+  check_arg(., "freq_min") %>% check_equal(incorrect_msg="Check ```eeg_delta```")
+  check_arg(., "freq_max") %>% check_equal(incorrect_msg="Check ```eeg_delta```")  
+} 
+ex() %>% check_function("bandpass_filter",index=3) %>% check_result() %>% check_equal()
+
+ex() %>% check_object("eeg_alpha") %>% check_equal()
+ex() %>% check_object("eeg_beta") %>% check_equal()
+ex() %>% check_object("eeg_delta") %>% check_equal()
+
+#plot
+ex() %>% check_function("plot",index=1) %>% {
+  check_arg(., "x") %>% check_equal()
+  check_arg(., "y") %>% check_equal()
+}
+ex() %>% check_function("plot",index=2) %>% {
+  check_arg(., "x") %>% check_equal()
+  check_arg(., "y") %>% check_equal()
+}
+ex() %>% check_function("plot",index=3) %>% {
+  check_arg(., "x") %>% check_equal()
+  check_arg(., "y") %>% check_equal()
+}
+
+success_msg("Now you got a glue what we can do with time series analysis!")
 ```
+
+---
+
+## Let's have a last look of your day's work!
+
+```yaml
+type: PureMultipleChoiceExercise
+key: 02a74d2a10
+xp: 50
+```
+
+![](https://assets.datacamp.com/production/repositories/3401/datasets/5fe8bab9a6b6c49b7ceeea084bbfa7dc6c61fac1/eeg_band.png)
+You can see the influence of the sleep stage to the EEG-bands. During awake (W) episodes the $\alpha$- and $\beta$-band show increasing amplitudes.
+When does $\beta$-waves occur?
+
+`@hint`
+
+
+`@possible_answers`
+1. Sleep
+2. Eye movement
+3. [Mental or physical activity or psychological burden]
+4. Relaxed sitting
+
+`@feedback`
+1. Check ```Introduction to EEG``` again
+2. Check ```Introduction to EEG``` again
+3. Wonderful! You finished the todays curse.
+4. Check ```Introduction to EEG``` again
