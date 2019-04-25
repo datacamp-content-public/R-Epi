@@ -577,12 +577,10 @@ xp: 100
 
 We are coming to our final task were we merge all together what we learned! Here we will create a plot of different EEG-bands from one EEG channel.
 
-The function ```bandpass_filter(signal, freq_min,freq_max,len_eeg)``` is still available. 
+The signal ```eeg1``` and the function ```bandpass_filter(signal, freq_min,freq_max,len_eeg)``` is still available. 
 
 `@instructions`
-We are coming to our final task were we merge all together what we learned! Here we will create a plot of different EEG-bands from one EEG channel.
-
-The function ```bandpass_filter(signal, freq_min,freq_max,len_eeg)``` is still available.
+1. Create a
 
 `@hint`
 
@@ -625,12 +623,12 @@ eeg1 <- readRDS("eeg1.rds")
 
 `@sample_code`
 ```{r}
-
+# Calculate the α-, β-, δ-band of the eeg signal
 ```
 
 `@solution`
 ```{r}
-
+# Calculate the α-, β-, δ-band of the eeg signal
 ```
 
 `@sct`
