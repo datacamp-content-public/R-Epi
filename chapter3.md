@@ -92,7 +92,7 @@ time <-
 eeg <- readRDS("eeg.rds")
 
 # Create time 
-time <- seq(0,length(eeg1)/(1024*60)-1/(1024*60),by=1/(1024*60))
+time <- seq(0,length(eeg)/(1024*60)-1/(1024*60),by=1/(1024*60))
 
 # Plot data 
 plot(time,eeg)
