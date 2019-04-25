@@ -642,6 +642,10 @@ eeg <- readRDS("eeg1.rds")[1:2^19]
 freq <- seq(0,512,by = 512/(2^18))
 # Create time 
 time <- seq(0,length(eeg)/(1024*60)-1/(1024*60),by=1/(1024*60))
+
+# sleep stages
+sleep_stage <- c(2,2,2,2,2,5,1,5,5,5,5,5,5,5,1,2,2,2,2,2,2,2,2,2,2,2,2,1,4,4,4,4,4,4,4,4,4,4,4)
+sleep_time <- seq(0,19,0.5)
 ```
 
 `@sample_code`
@@ -656,6 +660,7 @@ par(mfrow=c(3,1))
 plot(time,eeg_alpha,xlab="time in minutes",ylab="alpha")
 plot(time,eeg_beta,xlab="time in minutes",ylab="beta")
 plot(time,eeg_delta,xlab="time in minutes",ylab="delta")
+plot(sleep_time,sleep_stage,xlab="time in minutes",)
 ```
 
 `@solution`
