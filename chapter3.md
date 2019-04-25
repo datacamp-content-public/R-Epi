@@ -364,7 +364,7 @@ xp: 100
 
 As we saw in the result of the last task, we eliminated the frequencies out of **8 to 13 Hz** from the spectrum. With the **inverse FFT (iFFT)** we can now reverse our bandpass filtered FFT and receive a signal with "only" frequencies between 8 to 13 Hz, also called the $\alpha$-band.  
 
-The bandpass filtered Fourier coeffiecients are still available under ```fft_eeg1``` and the time series in minutes is still stored in ```time```. Let's plot the bandpass filtered signal!
+The bandpass filtered Fourier coefficients are still available under ```fft_eeg1``` and the time series in minutes is still stored in ```time```. Let's plot the bandpass filtered signal!
 
 `@instructions`
 1. Use the inverse Fourier transformation to receive your bandpass filtered signal and save it to ```eeg1_alpha```. For iFFT you use ```fft()``` again, but with the argument ```inverse=TRUE```, which is by default ```FALSE```. We need to normalize the result too by dividing by the length of data (but this is a special case for R - see documentation of [fft](https://www.rdocumentation.org/packages/stats/versions/3.5.3/topics/fft). And finaly we need only the real part ```Re()``` of the result. 
@@ -417,7 +417,7 @@ time <- seq(0,length(eeg1)/(1024*60)-1/(1024*60),by=1/(1024*60))
 
 `@sample_code`
 ```{r}
-# Use ifft()
+# Use fft(__, inverse=TRUE), length() and Re() as descriped
 eeg1_alpha <- 
 
 # Plot bandpass filtered signal
@@ -456,8 +456,22 @@ xp: 100
 
 As we know how to apply a bandpass filter in R, we can now write a function, which allows us to use the filter for several EEG-bands!
 
+To define a function in R you use the scheme:
+
+> function_name ```<- function```(argument1, argument2, ...) {
+
+>	#body of thefunction
+
+>   ```return``` (values_you_want_to_return # without return, by default the last line is returned)
+
+>}
+
 `@instructions`
-1. Define your function ```bandpass_filter```
+1. Define your function ```bandpass_filter```. Use the arguments ```signal```, ```freq_min```, ```freq_max``` and ```len_eeg```
+2. Calculate in the function body the FFT of ```signal```.
+3. We used the filter from the previous exercises, you don't have to change anything!
+4. Use fft(..., inverse=TRUE), len_eeg and Re() to get the bandpass filtered signal as in the previous task!
+5. Return the ```bandpass_signal```
 
 `@hint`
 
@@ -491,10 +505,11 @@ ___ <- function(___,___,___,___) {
         fft_eeg1[n/2+1] <- 0
         }
 	
-	# Apply the inverse fft, 
+	# Use fft(__, inverse=TRUE), len_eeg and Re() to get the bandpass filtered signal
 	bandpass_signal <- Re(fft(___,inverse=TRUE)/___)
 
-	return(10) # bandpass_signal
+  	# Use return to return bandpass_signal
+	return(___)
  	}
 ```
 
@@ -522,10 +537,11 @@ bandpass_filter <- function(signal,freq_min,freq_max,len_eeg) {
         fft_eeg1[n/2+1] <- 0
         }
 	
-	# Apply the inverse fft, 
+	# Use fft(__, inverse=TRUE), len_eeg and Re() to get the bandpass filtered signal
 	bandpass_signal <- Re(fft(fft_eeg,inverse=TRUE)/len_eeg)
 
-	return(10) # bandpass_signal
+    # Use return to return bandpass_signal
+	return(bandpass_signal)
  	}
 ```
 
@@ -540,11 +556,84 @@ ex() %>% check_fun_def('bandpass_filter') %>%{
          }
        check_code(.,'fft(signal)',fixed = TRUE)
        check_code(.,'Re(fft(fft_eeg,inverse=TRUE)/len_eeg)',fixed = TRUE)
-       
+       check_code(.,'return(bandpass_signal)',fixed = TRUE)
+     
     }
   }
-
   
 success_msg("Great, now we have a filter function!")
+
+```
+
+---
+
+## EEG waves
+
+```yaml
+type: NormalExercise
+key: 010ac11bc0
+xp: 100
+```
+
+We are coming to our final task were we merge all together what we learned! Here we will create a plot of different EEG-bands from one EEG channel.
+
+The function ```bandpass_filter(signal, freq_min,freq_max,len_eeg)``` is still available. 
+
+`@instructions`
+We are coming to our final task were we merge all together what we learned! Here we will create a plot of different EEG-bands from one EEG channel.
+
+The function ```bandpass_filter(signal, freq_min,freq_max,len_eeg)``` is still available.
+
+`@hint`
+
+
+`@pre_exercise_code`
+```{r}
+# Define your bandpass_filter function:
+bandpass_filter <- function(signal,freq_min,freq_max,len_eeg) {
+	# Calculate the FFT of signal
+	fft_eeg <- fft(signal)
+	
+	# Here we have the filter (do not change!)
+  	# Mirrored part
+    for (i in 2:(n/2)) {
+      if ((freq[i] < freq_min) | (freq[i] > freq_max)) {
+        fft_eeg1[i] <- 0
+        fft_eeg1[n-i+2] <- 0
+        }
+      }
+    # Check the first Fourier coefficient/frequency
+    if ((freq[1] < freq_min) | (freq[1] > freq_max)) {
+        fft_eeg1[1] <- 0
+        }
+    # Check the hightest frequency
+    if ((freq[n/2+1] < freq_min) | (freq[n/2+1] > freq_max)) {
+        fft_eeg1[n/2+1] <- 0
+        }
+	
+	# Use fft(__, inverse=TRUE), len_eeg and Re() to get the bandpass filtered signal
+	bandpass_signal <- Re(fft(fft_eeg,inverse=TRUE)/len_eeg)
+
+    # Use return to return bandpass_signal
+	return(bandpass_signal)
+ 	}
+
+download.file(url = "https://assets.datacamp.com/production/repositories/3401/datasets/636762184295f3f3370287b8a7a20cbc48aa5ae6/eeg_c4m1.rds", destfile = "eeg1.rds")
+# Load compressed EEG data "eeg1.rds"
+eeg1 <- readRDS("eeg1.rds")
+```
+
+`@sample_code`
+```{r}
+
+```
+
+`@solution`
+```{r}
+
+```
+
+`@sct`
+```{r}
 
 ```
