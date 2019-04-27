@@ -770,3 +770,69 @@ When does $\beta$-waves occur?
 2. Check ```Introduction to EEG``` again
 3. Wonderful! You finished the todays curse.
 4. Check ```Introduction to EEG``` again
+
+---
+
+## Instantaneous amplitude by Hilbert transformation
+
+```yaml
+type: NormalExercise
+key: f91d1b7289
+xp: 100
+```
+
+
+
+`@instructions`
+
+
+`@hint`
+
+
+`@pre_exercise_code`
+```{r}
+download.file(url = "https://assets.datacamp.com/production/repositories/3401/datasets/636762184295f3f3370287b8a7a20cbc48aa5ae6/eeg_c4m1.rds", destfile = "eeg1.rds")
+# Load compressed EEG data "eeg1.rds"
+eeg <- readRDS("eeg1.rds")[1:2^19]
+freq <- seq(0,512,by = 512/(2^18))
+# Create time 
+time <- seq(0,length(eeg)/(1024*60)-1/(1024*60),by=1/(1024*60))
+
+
+	
+
+```
+
+`@sample_code`
+```{r}
+# define hilbert transformation from fft
+hilbert <- function(signal){
+  fft_signal <- fft(signal)
+  n <- length(signal)
+  
+  # create h with zeros and length n
+  h <- integer(n)
+  # set first an n/2 value to 1
+  h[1] <- 1
+  h[(n/2+1)] <- 1
+  h[2:(n/2)] <- 2
+  
+  # create hilbert trafo
+  hilbert <- fft(fft_signal*h,inverse=TRUE)/n
+  return(hilbert)
+}
+
+hilbert_eeg <- hilbert(eeg)
+eeg[1:10]
+hilbert_eeg[1:10]
+```
+
+`@solution`
+```{r}
+
+```
+
+`@sct`
+```{r}
+
+```
