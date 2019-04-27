@@ -1,5 +1,5 @@
 library(remotes)
-library(ggplot2)
+
 ##### Install specific package versions from CRAN #####
 install_version("ggplot2", "3.0.0")
 # install_version("dplyr", "0.7.5")
