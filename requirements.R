@@ -1,5 +1,5 @@
 library(remotes)
-install.packages('seewave')
+install.packages(seewave)
 
 ##### Install specific package versions from CRAN #####
 # install_version("ggplot2", "3.0.0")
