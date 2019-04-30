@@ -316,12 +316,12 @@ key: d2eee606de
 xp: 100
 ```
 
-As we saw in the result of the last task, we eliminated the frequencies out of **8 to 13 Hz** from the spectrum. With the **inverse FFT (iFFT)** we can now reverse our bandpass filtered FFT and receive a signal with "only" frequencies between 8 to 13 Hz, also called the $\alpha$-band.  
+As we saw in the result of the last task, we eliminated the frequencies except for the range **8 to 13 Hz**. With the **inverse FFT (iFFT)** we can now reverse our bandpass filtered FFT and receive a signal with "only" frequencies between 8 to 13 Hz, also called the $\alpha$-band.  
 
 The bandpass filtered Fourier coefficients are still available under ```fft_eeg1``` and the time series in minutes is still stored in ```time```. Let's plot the bandpass filtered signal!
 
 `@instructions`
-1. Use the inverse Fourier transformation to receive your bandpass filtered signal and save it to ```eeg1_alpha```. For iFFT you use ```fft()``` again, but with the argument ```inverse=TRUE```, which is by default ```FALSE```. We need to normalize the result too by dividing by the length of data (but this is a special case for R - see documentation of [fft](https://www.rdocumentation.org/packages/stats/versions/3.5.3/topics/fft). And finaly we need only the real part ```Re()``` of the result. 
+1. Use the inverse Fourier transform to obtain your bandpass filtered signal and save it to ```eeg1_alpha```. For iFFT you use ```fft()``` again, but with the argument ```inverse=TRUE``` (the default for this parameter is ```FALSE```). For the R implementation of FFT, we need to normalize the result by dividing by the length of data (see documentation of [fft](https://www.rdocumentation.org/packages/stats/versions/3.5.3/topics/fft). Finally we need only the real part ```Re()``` of the result. 
 2. Plot the bandpass filtered signal.
 
 `@hint`
@@ -338,11 +338,6 @@ n <- 2^20
 fft_eeg <- fft(eeg)
 # Calculate the frequencies
 freq <- seq(0,512,by = 512/(2^19))
-# eeg1, n = 2^20, fft_eeg1 and freq still available
-# Set your minimum frequency and your maximum frequency
-freq_min <- 8
-freq_max <- 13
-
 # Set all fourier coefficients 0, which not between freq_min and freq_max
 freq_min <- 8
 freq_max <- 13
@@ -356,17 +351,11 @@ for (i in 2:(n/2)) {
     fft_eeg[n-i+2] <- 0
     }
   }
-# Check the first Fourier coefficient/frequency
-if ((freq[1] < freq_min) | (freq[1] > freq_max)) {
-    fft_eeg[1] <- 0
-    }
-# Check the hightest frequency
-if ((freq[n/2+1] < freq_min) | (freq[n/2+1] > freq_max)) {
-    fft_eeg[n/2+1] <- 0
-    }
+fft_eeg[1] <- 0
+fft_eeg[n/2+1] <- 0
 
 # Create time 
-time <- seq(0,length(eeg)/(1024*60)-1/(1024*60),by=1/(1024*60))
+time <- seq(0,(length(eeg)-1)/(1024*60),1/(1024*60))
 ```
 
 `@sample_code`
