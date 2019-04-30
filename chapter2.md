@@ -87,7 +87,7 @@ success_msg("You plotted a very nice graph!")
 
 ---
 
-## Insert exercise title here
+## Physiology of respiratory activity
 
 ```yaml
 type: PureMultipleChoiceExercise
@@ -95,7 +95,7 @@ key: b986615cd9
 xp: 50
 ```
 
-What is a normal respiration frequency? (no physical acitvity)
+What is a normal respiratory frequency? (no physical acitvity)
 
 `@hint`
 Take some breaths ;-)
@@ -104,13 +104,13 @@ Take some breaths ;-)
 1. 10 Hz
 2. [0.3 Hz]
 3. 1 Hz 
-4. 0.001 Hz
+4. 0.01 Hz
 
 `@feedback`
-1. Do you really breathe 10 times a second?? 
-2. Correct! Normally the respiration frequency 0.15 and 0.5 Hz.
+1. Do you really breathe 10 times per second?? 
+2. Correct! Normally, the respiration frequency 0.15 and 0.4 Hz (at least according to the 1996 guidelines for heart rate variability analysis).
 3. Close. During physical activities you can reach up to 1 Hz.
-4. I am scared, are you taking only a breath every 1000 seconds?
+4. I am scared, are you taking only a breath each 100 seconds?
 
 ---
 
