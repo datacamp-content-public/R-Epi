@@ -520,7 +520,7 @@ $\delta$-waves (0,5-3 Hz)
 The signal ```eeg```, ```freq```, ```time``` (in minutes) and the function ```bandpass_filter(signal,freq_min,freq_max,samp_freq)``` are still available. 
 In addition, we have defined below a corresponding function ```band_amplitudes(signal,freq_min,freq_max,samp_freq)``` that calculates the instantaneous amplitudes by using a Hilbert transform. 
 
-1. Use the functions ```bandpass_filter()``` or ```band_amplitudes()```to extract the α-, β-, δ-band of the ```eeg``` signal. Store the result in ```eeg_alpha```, ```eeg_beta``` and ```eeg_delta```.
+1. Use the functions ```bandpass_filter()``` or ```band_amplitudes()``` to extract the α-, β-, δ-band of the ```eeg``` signal. Store the result in ```eeg_alpha```, ```eeg_beta``` and ```eeg_delta```.
 2. Plot all 3 EEG-bands one graph. For this purpose, we have already prepared some stuff. [par(mfrow=c(4,1))](https://www.rdocumentation.org/packages/graphics/versions/3.5.3/topics/par). ```xlimit``` and ```ylimit```defines the range of the plot, here the first 4 minutes from -150 to 150 µV. Finally you just have fill the x-values for the plots (see the gaps!)
 
 `@hint`
@@ -528,63 +528,57 @@ In addition, we have defined below a corresponding function ```band_amplitudes(s
 
 `@pre_exercise_code`
 ```{r}
-# Define your bandpass_filter function:
-bandpass_filter <- function(signal,freq,freq_min,freq_max) {
-	# Calculate the length of signal
-	n <- length(signal)
-  
-  	# Calculate the FFT of signal
-	fft_eeg <- fft(signal)
-	
-	# Here we have the filter (do not change!)
-  	# Mirrored part
+bandpass_filter <- function(signal,freq_min,freq_max,samp_rate) {
+	n <- 2^(int(log(length(signal)-1)/log(2)+1))
+    freq = seq(0,samp_rate/2,samp_rate/n)
+    fft_eeg <- fft(signal)
     for (i in 2:(n/2)) {
       if ((freq[i] < freq_min) | (freq[i] > freq_max)) {
         fft_eeg[i] <- 0
         fft_eeg[n-i+2] <- 0
         }
-#      else{
-#        fft_eeg[i] <- (1-i)*fft_eeg[i]
-#        fft_eeg[n-i+2] <- (1+i)*fft_eeg[n-i+2]        
-#      }
       }
-    # Check the first Fourier coefficient/frequency
-    if ((freq[1] < freq_min) | (freq[1] > freq_max)) {
-        fft_eeg[1] <- 0
-        }
-    # Check the hightest frequency
-    if ((freq[n/2+1] < freq_min) | (freq[n/2+1] > freq_max)) {
-        fft_eeg[n/2+1] <- 0
-        }
-  
-	# Use fft(__, inverse=TRUE), n and Re() to get the bandpass filtered signal
+    fft_eeg[1] <- 0
+    fft_eeg[n/2+1] <- 0
 	bandpass_signal <- Re(fft(fft_eeg,inverse=TRUE)/n)
-  
-    # Use return to return bandpass_signal
 	return(bandpass_signal)
  	}
-
 download.file(url = "https://assets.datacamp.com/production/repositories/3401/datasets/636762184295f3f3370287b8a7a20cbc48aa5ae6/eeg_c4m1.rds", destfile = "eeg1.rds")
 # Load compressed EEG data "eeg1.rds"
 eeg <- readRDS("eeg1.rds")[1:2^19]
 freq <- seq(0,512,by = 512/(2^18))
 # Create time 
-time <- seq(0,length(eeg)/(1024*60)-1/(1024*60),by=1/(1024*60))
-
+time <- seq(0,(length(eeg)-1)/(1024*60),1/(1024*60))
 # sleep stages
-sleep_stage <- c(2,2,2,2,2,5,1,5,5,5,5,5,5,5,1,2,2,2,2,2,2,2,2,2,2,2,2,1,4,4,4,4,4,4,4,4,4,4,4)
+sleep_stage <- c(2,2,2,2,2,5,3,5,5,5,5,5,5,5,3,2,2,2,2,2,2,2,2,2,2,2,2,3,4,4,4,4,4,4,4,4,4,4,4)
 sleep_time <- seq(0,19,0.5)
 ```
 
 `@sample_code`
 ```{r}
+band_amplitudes <- function(signal,freq_min,freq_max,samp_rate) {
+	n <- 2^(int(log(length(signal)-1)/log(2)+1))
+    freq = seq(0,samp_rate/2,samp_rate/n)
+    fft_eeg <- fft(signal)
+    for (i in 2:(n/2)) {
+      if ((freq[i] < freq_min) | (freq[i] > freq_max)) {
+        fft_eeg[i] <- 2*fft_eeg[i]
+        fft_eeg[n-i+2] <- 0
+        }
+      }
+    fft_eeg[1] <- 0
+    fft_eeg[n/2+1] <- 0
+	bandpass_signal <- abs(fft(fft_eeg,inverse=TRUE)/n)
+	return(bandpass_signal)
+ 	}
+
 # Calculate the α-, β- and δ-band of the eeg signal (replace ___)
 eeg_alpha <- ___ 
 eeg_beta  <- ___ 
 eeg_delta <- ___ 
 
 # Plot preparation (Don't change!)
-par(mfrow=c(4,1),mar=c(1,5,0,0),oma=c(2,2,0,0))
+par(mfrow=c(2,1),mar=c(1,5,0,0),oma=c(2,2,0,0))
 xlimit<-c(0,4)
 ylimit<-c(-100,100)
 
@@ -595,18 +589,34 @@ plot(x=time,y=___,"l",xaxt='n',ylab="delta",xlim=xlimit,ylim=ylimit)
 
 # Plot sleep stages (Don't change!)
 plot(sleep_time,sleep_stage,yaxt='n',xlab="time in minutes",ylab="sleep stage",xlim=xlimit)
-axis(2, at=1:5, labels=c('N1','N2','N3','REM','W'))
+axis(2, at=1:5, labels=c('N3','N2','N1','REM','W'))
 ```
 
 `@solution`
 ```{r}
+band_amplitudes <- function(signal,freq_min,freq_max,samp_rate) {
+	n <- 2^(int(log(length(signal)-1)/log(2)+1))
+    freq = seq(0,samp_rate/2,samp_rate/n)
+    fft_eeg <- fft(signal)
+    for (i in 2:(n/2)) {
+      if ((freq[i] < freq_min) | (freq[i] > freq_max)) {
+        fft_eeg[i] <- 2*fft_eeg1[i]
+        fft_eeg[n-i+2] <- 0
+        }
+      }
+    fft_eeg[1] <- 0
+    fft_eeg[n/2+1] <- 0
+	bandpass_signal <- abs(fft(fft_eeg,inverse=TRUE)/n)
+	return(bandpass_signal)
+ 	}
+
 # Calculate the α-, β-, δ-band of the eeg signal
 eeg_alpha <- bandpass_filter(eeg,freq,8,13) 
 eeg_beta  <- bandpass_filter(eeg,freq,13,30) 
 eeg_delta <- bandpass_filter(eeg,freq,0.5,3) 
 
 # Plot preparation (Don't change!)
-par(mfrow=c(4,1),mar=c(1,5,0,0),oma=c(2,2,0,0))
+par(mfrow=c(2,1),mar=c(1,5,0,0),oma=c(2,2,0,0))
 xlimit<-c(0,4)
 ylimit<-c(-100,100)
 
@@ -614,10 +624,10 @@ ylimit<-c(-100,100)
 plot(x=time,y=eeg_alpha,"l",xaxt='n',ylab="alpha",xlim=xlimit,ylim=ylimit)
 plot(x=time,y=eeg_beta,"l",xaxt='n',ylab="beta",xlim=xlimit,ylim=ylimit)
 plot(x=time,y=eeg_delta,"l",xaxt='n',ylab="delta",xlim=xlimit,ylim=ylimit)
-plot(x=sleep_time,y=sleep_stage,yaxt='n',xlab="time in minutes",ylab="sleep stage",xlim=xlimit)
 
 # Plot sleep stages (Don't change!)
-axis(2, at=1:5, labels=c('N1','N2','N3','REM','W'))
+plot(x=sleep_time,y=sleep_stage,yaxt='n',xlab="time in minutes",ylab="sleep stage",xlim=xlimit)
+axis(2, at=1:5, labels=c('N3','N2','N1','REM','W'))
 ```
 
 `@sct`
