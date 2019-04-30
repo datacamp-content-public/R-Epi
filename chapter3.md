@@ -56,16 +56,16 @@ In this and the following task we will focus on one EEG channel and how to extra
 
 First we need to load the data.
 
-The EEG data has a sampling rate of **1024 Hz** and is recorded about **17 minutes and 4 seconds**. The values are in mV.
-Be aware that the calculations in this part can take some minutes.
+The EEG data has a sampling rate of **1024 Hz** and is recorded for **17 minutes and 4 seconds**. The values are in µV.
+Be aware that the calculations in this part can take some time.
 
 `@instructions`
 1. Load the compressed EEG file ```eeg.rds``` with ```readRDS(file)``` to ```eeg```
-2. Create a time series in minutes for your EEG data and store it in ```time```. 
-2. Plot the EEG data, y-axis in mV and x-axis in minutes
+2. Create a time series in minutes for the horizontal axis of your EEG data and store it in ```time```. 
+2. Plot the EEG data, y-axis in µV and x-axis in minutes
 
 `@hint`
-- To create a time series use ```seq(start,end,by=step)```. start = 0. end = length(data)/(step) - 1/(step)
+- To create a time series use ```seq(start,end,step)```. start = 0. end = (length(data)-1)/(step)
 - Step size in minutes = 1/(sampling rate * 60)
 
 `@pre_exercise_code`
@@ -92,7 +92,7 @@ time <-
 eeg <- readRDS("eeg.rds")
 
 # Create time 
-time <- seq(0,length(eeg)/(1024*60)-1/(1024*60),by=1/(1024*60))
+time <- seq(0,(length(eeg)-1)/(1024*60),1/(1024*60))
 
 # Plot data 
 plot(time,eeg)
