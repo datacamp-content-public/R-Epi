@@ -11,9 +11,9 @@ key: f7c74cb697
 xp: 50
 ```
 
-[Electroencephalography](https://en.wikipedia.org/wiki/Electroencephalography) is an electrophysiological monitoring method to record electrical activity of the brain. The human body transfers information by neurons. This cells emitting signals via changes of electrochemical potentials. Invivo normally a single neuronal activity can't detected. But in thought process mostly hundreds of cells are involved, why we can measure electrical potentials on the scalp.
+[Electroencephalography](https://en.wikipedia.org/wiki/Electroencephalography) is an electro-physiological monitoring method to record electrical activity of the brain. The human body transfers information by neurons. This cells emitting signals via changes of electrochemical potentials. A single neuronal activity usually cannot be detected in-vivo. But hundreds or thousands of neurons are involved in neurological processes in the brain, so that we can measure their synchronous activity as electrical potentials on the scalp.
 
-The signals are measured in milli volts (mV) and need some simple pre-processing to obtain information. At the end of this part we can compare $\alpha$-, $\beta$- and $\delta$-bands. 
+The signals are measured in micro volts (µV) and need some pre-processing to obtain information. At the end of this part we can compare activities in $\alpha$ , $\beta$  and $\delta$ bands. 
 
 $\alpha$-waves (8-13 Hz):
 - relaxed and awake, but closed eyes
