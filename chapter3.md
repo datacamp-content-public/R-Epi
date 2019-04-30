@@ -513,7 +513,7 @@ ___ <- function(___,___,___) {
 # Define your bandpass_filter function:
 bandpass_filter <- function(signal,freq,freq_min,freq_max) {
 	# Calculate the length of signal
-	n <- length(signal)
+	n <- 2^(int(log(length(signal)-1)/log(2)+1))
   
   	# Calculate the FFT of signal
 	fft_eeg <- fft(signal)
