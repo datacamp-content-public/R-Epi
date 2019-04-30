@@ -268,23 +268,14 @@ freq_max <- 13
 
 # Set all Fourier coefficients 0, which not between freq_min and freq_max 
 # The mirrored Fourier coefficients (replace ___) 
-for (i in 2:(n/2)) {
+for (i in 2:(n/2+1)) {
   if ((freq[i] < freq_min) | (freq[i] > freq_max)) {
     # Set the fft_coefficients to zero, also in the mirrored part
     fft_eeg[i] <- 0
     fft_eeg[n-i+2] <- 0
     }
   }
-
-# Check the first Fourier coefficient/frequency (replace ___) 
-if ((freq[1] < freq_min) | (freq[1] > freq_max)) {
-    fft_eeg[1] <- 0
-    }
-
-# Check the hightest frequency (replace ___) 
-if ((freq[n/2+1] < freq_min) | (freq[n/2+1] > freq_max)) {
-    fft_eeg[n/2+1] <- 0
-    }
+fft_eeg[1] <- 0
 
 # Check your result by plotting the fourier coefficients again (frequency spectrum)
 plot(x=freq,y=abs(fft_eeg[1:(2^19+1)]))
