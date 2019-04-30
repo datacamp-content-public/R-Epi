@@ -609,6 +609,10 @@ bandpass_filter <- function(signal,freq,freq_min,freq_max) {
         fft_eeg[i] <- 0
         fft_eeg[n-i+2] <- 0
         }
+#      else{
+#        fft_eeg[i] <- (1-i)*fft_eeg[i]
+#        fft_eeg[n-i+2] <- (1+i)*fft_eeg[n-i+2]        
+#      }
       }
     # Check the first Fourier coefficient/frequency
     if ((freq[1] < freq_min) | (freq[1] > freq_max)) {
