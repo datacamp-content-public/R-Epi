@@ -119,20 +119,17 @@ key: 3bfc4232e8
 xp: 100
 ```
 
-Now we will calculate the FFT of your EEG data and plot the frequncy spectrum.
-
-The EEG data has a sampling rate of **1024 Hz** and is recorded about **17 minutes and 4 seconds**. The values are in mV.
-Be aware that the calculations in this part can take some minutes.
+Now we will calculate the FFT of your EEG data and plot the frequency spectrum.
 
 `@instructions`
-Now we need the FFT and therfore the max power of 2 in the length of the signal.
-1. Check out the highest power of 2 in the singal length and store it to ```n```. (You can use the R console as a calculator)
+Now we need the FFT and therefore the max power of 2 in the length of the signal.
+1. Check out the highest power of 2 in the signal length and store it to ```n```. (You can use the R console as a calculator)
 2. Calculate the FFT and store it to ```fft_eeg```. Use only a data length of power of 2.
-3. Determine the frequencies (```freq```) that corresponded to the fourier-coefficients.
+3. Determine the frequencies (```freq```) that corresponded to the Fourier coefficients.
 
 `@hint`
 - Check the previous exercises if you need help!
-- Be carfull, you need to use bracktes in calculations of the index like data[1:(2^18+1)]!
+- Be careful, you need to use brackets in calculations of the index like data[1:(2^18+1)]!
 
 `@pre_exercise_code`
 ```{r}
@@ -167,7 +164,7 @@ n <- 2^20
 fft_eeg <- fft(eeg)
 
 # Calculate the frequencies
-freq <- seq(0,512,by = 512/(2^19))
+freq <- seq(0,512,512/(2^19))
 
 # Plot the frequency spectrum
 plot(freq,abs(fft_eeg[1:(2^19+1)]))
