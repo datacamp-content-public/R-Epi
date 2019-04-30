@@ -410,10 +410,10 @@ To define a function in R you use the scheme:
 >}
 
 `@instructions`
-1. Define your function ```bandpass_filter```. Use the arguments ```signal```, ```freq_min``` and ```freq_max```
+1. Define your function ```bandpass_filter```. Use the arguments ```signal```, ```freq_min```, ```freq_max```, and ```samp_rate```
 2. Calculate the length of signal and store it to ```n```
-2. Calculate in the function body the FFT of ```signal```.
-3. We used the filter from the previous exercises, you don't have to change anything!
+2. Calculate the FFT of ```signal``` in the function body.
+3. We used the filter from the previous exercises; you don't have to change anything!
 4. Use fft(..., inverse=TRUE), len_eeg and Re() to get the bandpass filtered signal as in the previous task!
 5. Return the ```bandpass_signal```
 
@@ -429,33 +429,29 @@ To define a function in R you use the scheme:
 ```{r}
 # Define your bandpass_filter function:
 ___ <- function(___,___,___) {
-	# Calculate the length of signal
-	n <- length(___)
+	# Calculate the length of signal (next suitable power of 2)
+	n <- 2^(int(log(length(signal)-1)/log(2)+1))
   
-	# Calculate the FFT of signal
-	fft_eeg <- ___
+    # Calculate frequency vector
+    freq = seq(0,samp_rate/2,samp_rate/n)
+  
+  	# Calculate the FFT of signal
+	fft_eeg <- fft(signal)
 	
 	# Here we have the filter (do not change!)
-  	# Mirrored part
     for (i in 2:(n/2)) {
       if ((freq[i] < freq_min) | (freq[i] > freq_max)) {
         fft_eeg1[i] <- 0
         fft_eeg1[n-i+2] <- 0
         }
       }
-    # Check the first Fourier coefficient/frequency
-    if ((freq[1] < freq_min) | (freq[1] > freq_max)) {
-        fft_eeg1[1] <- 0
-        }
-    # Check the hightest frequency
-    if ((freq[n/2+1] < freq_min) | (freq[n/2+1] > freq_max)) {
-        fft_eeg1[n/2+1] <- 0
-        }
+    fft_eeg1[1] <- 0
+    fft_eeg1[n/2+1] <- 0
 	
 	# Use fft(__, inverse=TRUE), n and Re() to get the bandpass filtered signal
 	bandpass_signal <- Re(fft(___,inverse=TRUE)/___)
 
-  	# Use return to return bandpass_signal
+    # Use return to return bandpass_signal
 	return(___)
  	}
 ```
@@ -463,29 +459,25 @@ ___ <- function(___,___,___) {
 `@solution`
 ```{r}
 # Define your bandpass_filter function:
-bandpass_filter <- function(signal,freq,freq_min,freq_max) {
-	# Calculate the length of signal
+bandpass_filter <- function(signal,freq_min,freq_max,samp_rate) {
+	# Calculate the length of signal (next suitable power of 2)
 	n <- 2^(int(log(length(signal)-1)/log(2)+1))
+  
+    # Calculate frequency vector
+    freq = seq(0,samp_rate/2,samp_rate/n)
   
   	# Calculate the FFT of signal
 	fft_eeg <- fft(signal)
 	
 	# Here we have the filter (do not change!)
-  	# Mirrored part
     for (i in 2:(n/2)) {
       if ((freq[i] < freq_min) | (freq[i] > freq_max)) {
         fft_eeg1[i] <- 0
         fft_eeg1[n-i+2] <- 0
         }
       }
-    # Check the first Fourier coefficient/frequency
-    if ((freq[1] < freq_min) | (freq[1] > freq_max)) {
-        fft_eeg1[1] <- 0
-        }
-    # Check the hightest frequency
-    if ((freq[n/2+1] < freq_min) | (freq[n/2+1] > freq_max)) {
-        fft_eeg1[n/2+1] <- 0
-        }
+    fft_eeg1[1] <- 0
+    fft_eeg1[n/2+1] <- 0
 	
 	# Use fft(__, inverse=TRUE), n and Re() to get the bandpass filtered signal
 	bandpass_signal <- Re(fft(fft_eeg,inverse=TRUE)/n)
@@ -504,7 +496,6 @@ ex() %>% check_fun_def('bandpass_filter') %>%{
        check_function(., 'Re') %>% {
          check_function(., 'fft', index = 1) %>% check_arg(., 'z','inverse') %>% check_equal(eval = FALSE)
          }
-       check_code(.,'fft(signal)',fixed = TRUE)
        check_code(.,'Re(fft(fft_eeg,inverse=TRUE)/n)',fixed = TRUE)
        check_code(.,'return(bandpass_signal)',fixed = TRUE)
      
