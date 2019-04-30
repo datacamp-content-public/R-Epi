@@ -15,7 +15,7 @@ skills: 1
 ```
 
 This is a first task to get familiar with R and time series analysis.
-We will start with some easy tasks. For time series analysis we need some data. So let's create some random numbers. Therefor we can use the command [runif(n)](https://www.rdocumentation.org/packages/compositions/versions/1.40-2/topics/runif). The argument ```n``` should be the number of numbers you would like to generate. By default you will get shuffeld numbers between 0 and 1, uniform distributed.
+We will start with some easy tasks. For time series analysis we need some data. So let's create some random numbers. Therefore we can use the command [runif(n)](https://www.rdocumentation.org/packages/compositions/versions/1.40-2/topics/runif). The argument ```n``` should be the number of numbers you would like to generate. By default you will get shuffeld numbers between 0 and 1, uniform distributed.
 Another possibility is to pull random numbers from a normal distribution. [rnorm(n,mean,std)](https://www.rdocumentation.org/packages/stats/versions/3.5.3/topics/Normal) where n is the number of numbers, mean the mean of the distribution with standard deviation std. 
 You can show your data by using square brackets ```array[start:end]```.
 
