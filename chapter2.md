@@ -122,17 +122,17 @@ key: 4617f36b93
 xp: 100
 ```
 
-In the last programming exercise we got this plot. ![](https://assets.datacamp.com/production/repositories/3401/datasets/3ef69998a7434569bb3df0dc7e33b09c2b827e65/respiration.png). Now we would like to know the respiration frequency - and we can determine it by fourier-transformation. The data is still available and has a **sampling rate of 4 Hz**.
+In the last programming exercise we got this plot. ![](https://assets.datacamp.com/production/repositories/3401/datasets/3ef69998a7434569bb3df0dc7e33b09c2b827e65/respiration.png). Now we would like to know the respiration frequency -- and we can determine it by fourier-transformation. The data is still available and has a **sampling rate of 4 Hz**.
 
 `@instructions`
 The respiration data is still stored in ```data```.
-1. You remember the FFT works best with data lengths of the power of 2. Set ```n``` as highest possible power of 2. So maybe you have to check the length of data first. Hint: You can take the console as a calculator too.
+1. You probably remember that the FFT works best with data of lengths equal to a power of 2. Set ```n``` as lowest possible power of 2 so that the data still fits into the array. Maybe you have to check the length of data first. Hint: You can take the console as a calculator, too.
 
-2. Calculate the fourier-transformation of the data and save fourier-coefficients to ```fft_data```. Use a power of 2 as number of data points. 
+2. Calculate the fast-Fourier-transform of the data and save the Fourier coefficients to ```fft_data```. Use a power of 2 as number of data points. Zero entries will be added to the array, if you specify a range that exceeds the actual length of the data.
 
-3. Save the absolute of the fourier-coefficients to ```abs_fft_data```, which contains the freuqencies from 0 to 2 Hz.
+3. Save the absolute of the Fourier coefficients to ```abs_fft_data```, representing the frequencies from 0 to 2 Hz and no mirror coefficients.
 
-4. Calculate the corresponding frequencies of the fourier-coefficients and store them to ```freq```
+4. Calculate the corresponding frequencies of the Fourier coefficients and store them to ```freq```.
 
 5. Plot the frequency spectrum.
 
@@ -159,7 +159,7 @@ fft_data <- fft(data[1:n])
 abs_fft_data <- abs(fft_data[1:((n/2)+1)])
 
 # Calculate frequencies
-freq <- seq(0, 2, by = (2/2^9))
+freq <- seq(0, 2, 2/2^9)
 
 # Plot the spectogram
 plot(x=freq,y=abs_fft_data,"l")
@@ -177,7 +177,7 @@ fft_data <- fft(data[1:n])
 abs_fft_data <- abs(fft_data[1:((n/2)+1)])
 
 # Calculate frequencies
-freq <- seq(0, 2, by = (2/2^9))
+freq <- seq(0, 2, 2/2^9)
 
 # Plot the spectogram
 plot(x=freq,y=abs_fft_data,"l")
