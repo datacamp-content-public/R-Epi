@@ -700,8 +700,8 @@ xp: 50
 ```
 
 ![](https://assets.datacamp.com/production/repositories/3401/datasets/5fe8bab9a6b6c49b7ceeea084bbfa7dc6c61fac1/eeg_band.png)
-You can see the influence of the sleep stage to the EEG-bands. During awake (W) episodes the $\alpha$- and $\beta$-band show increasing amplitudes.
-When does $\beta$-waves occur?
+You can see the change of EEG amplitudes with sleep and wake states. During wakefulness (W) episodes the $\alpha$ and $\beta$ bands show increased amplitudes, while $\delta$ is more prominent during light sleep N2.
+When do $\beta$-waves occur?
 
 `@hint`
 
