@@ -11,19 +11,19 @@ key: 8dc2739bea
 xp: 100
 ```
 
-In the last example we couldn't actually see anything happens. Thats why we investigate in the next step real data. To load data we use here [scan()](https://www.rdocumentation.org/packages/base/versions/3.5.3/topics/scan). The data is a time series of a temperature sensor placed to the nostrils. This is a common way to record respiration.
+In the last example we could not actually obtain results from our Fourier spectra. Therefore we will now investigate real respiratory data. To load the data we use here [scan()](https://www.rdocumentation.org/packages/base/versions/3.5.3/topics/scan). The data is a time series measured with a temperature sensor placed at the nostrils. This is a common way to record respiratory activity.
 
 `@instructions`
 Let's start with loading your data. 
 1. Load the data ```respiration.dat``` to ```data``` by using ```scan()```. The first argument is the path. The file is located in your current directory. 
 2. The data has a sampling rate of 4 Hz. Create a time series of the time and store it to ```time```. You can check the length of a vector by ```length(vector)```.   
-3. Now plot the data to see how the data looks like. If you like, you can set the x-label and y-label with arguments ```xlab=x-label``` and ```ylab=y-label``` to the arguments of ```plot()```.
-4. The plot from task 3 isn't quit well. Let's plot again, but only the second minute of data and with a **line plot**, by adding ```"l"``` (minuscle of L) to the arguments of ```plot()```. But first create the ```start``` and ```end``` index for the second minute and then use it in the ```plot``` command.
+3. Now plot the data to see what it looks like. You can set the x-label and y-label by adding ```xlab=x-label``` and ```ylab=y-label``` to the arguments of ```plot()```.
+4. The plot from task 3 is not quite nice. Let's plot again, but only the second minute of data and with a **line plot**, by adding ```"l"``` (minuscle of L) to the arguments of ```plot()```. But first create the ```start``` and ```end``` index for the second minute, and then use it in the ```plot``` command.
 
 `@hint`
 - 4 Hz = 4 values per second => step = 0.25
 - Do you remember the ```seq(start,end,step)``` command to create the time series of the time?!  
-- If the lengths of ```data``` and ```time``` doesn't match, you need to reduce maybe the time vector - you can do this by subtracting one step (0.25) from the step argument in ```seq(start,end,by=step)```.
+- If the lengths of ```data``` and ```time``` do not match, you need to reduce maybe the time vector - you can do this by subtracting one step (0.25) from the step argument in ```seq(start,end,by=step)```.
 - You can plot by ```plot(x=time-values,y=data-values,xlab='x-label',ylab='y-label')```.
 
 `@pre_exercise_code`
@@ -37,7 +37,7 @@ download.file(url = "https://assets.datacamp.com/production/repositories/3401/da
 # Load the file "respiration.dat"
 data <- 
 
-# Create time
+# Create time vector
 time <- 
 
 # Plot the data
@@ -47,7 +47,7 @@ time <-
 
 
 
-# Plot only the first houre as line-plot
+# Plot only the second minute as line-plot
 
 ```
 
@@ -57,7 +57,7 @@ time <-
 data <- scan("respiration.dat")
 
 # Create time
-time <- seq(0,length(data)/4-0.25,by=0.25)
+time <- seq(0,length(data)/4-0.25,0.25)
 
 # Plot the data
 plot(x=time,y=data)
@@ -66,7 +66,7 @@ plot(x=time,y=data)
 start <- 240
 end <- 480
 
-# Plot only the first houre as line-plot
+# Plot only the second minute as a line-plot
 plot(x=time[start:end],y=data[start:end],"l")
 ```
 
