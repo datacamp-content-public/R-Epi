@@ -411,8 +411,8 @@ To define a function in R you use the scheme:
 
 `@instructions`
 1. Define your function ```bandpass_filter```. Use the arguments ```signal```, ```freq_min```, ```freq_max```, and ```samp_rate```
-2. Calculate the length of signal and store it to ```n```
-2. Calculate the FFT of ```signal``` in the function body.
+2. Calculate the length of signal and store it to ```n``` (already implemented).
+2. Calculate the FFT of ```signal``` in the function body (already implemented).
 3. We used the filter from the previous exercises; you don't have to change anything!
 4. Use fft(..., inverse=TRUE), len_eeg and Re() to get the bandpass filtered signal as in the previous task!
 5. Return the ```bandpass_signal```
