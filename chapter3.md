@@ -192,24 +192,22 @@ key: a2a114075b
 xp: 100
 ```
 
-Now we come to the highlight of this session, the bandpass filter or how to select specific frequencies of my signal and suppress other frequencies.
+Now we come to the highlight of this session, the bandpass filter or how to select specific frequencies of a signal and suppress other components.
 
-Lets start with the $\alpha$-band of an EEG. You remember it contains the frequency range from 8 to 13 Hz. The basic principle is now to use our frequency domain, and set all fourier coefficients to 0, whose frequencies are out of 8 to 13 Hz. But don't forget the mirrored part. 
+Lets start with the $\alpha$-band of an EEG. You remember it contains the frequency range from 8 to 13 Hz. The basic principle is now to use our frequency domain, and set all Fourier coefficients to 0, if frequencies are out of the range 8 to 13 Hz. But do not forget the mirror part -- is must be treated accordingly. 
 
-The EEG data has a sampling rate of **1024 Hz** and is recorded about **17 minutes and 4 seconds**. The values are in mV.
-Be aware that the calculations in this part can take some minutes.
+The EEG data has a sampling rate of **1024 Hz** and is recorded for **17 minutes and 4 seconds**. The values are in µV.
+Be aware that the calculations in this part can take some time.
 
 `@instructions`
 1. Define your minimum frequency and your maximum frequency of the $\alpha$-band.
-2. Iterate over all frequencies ```freq``` and set the Fourier coefficients to 0, whom not in the $\alpha$-band. Example ```for (i in 1:10) {i}``` will iterate i from 1 to 10. 
+2. Iterate over all frequencies ```freq``` and set the Fourier coefficients to 0, if they are not in the $\alpha$ band. Example ```for (i in 1:10) {i}``` will iterate i from 1 to 10. 
 
-	Don't forget the mirrored part! Remember the first Fourier coefficients (here index 1 of ```freq```) and the (n/2+1)$^{th}$ Fourier coefficient (here index (n/2 +1)) is not mirrored. Otherwise the 2$^{nd}$ coefficient is mirrored to the n$^{th}$ coefficient, the 3$^{rd}$ is mirrored to the (n-1)$^{th}$ coefficient and so on.... till the (n/2)$^{th}$ is mirrored to the (n/2+2)$^{th}$ coefficient.
-    
-    So you need an extra ```if``` condition for the first and the (n/2+1)$^{th}$ Fourier coefficient.
+Do not forget the mirror part! Remember the first Fourier coefficient (index 1) and the (n/2+1)$^{th}$ Fourier coefficient (index n/2+1) are not mirrored and should always become 0. Otherwise the 2$^{nd}$ coefficient is mirrored to the n$^{th}$ coefficient, the 3$^{rd}$ is mirrored to the (n-1)$^{th}$ coefficient and so on, till the (n/2)$^{th}$ is mirrored to the (n/2+2)$^{th}$ coefficient.
 
 `@hint`
 - ```|``` and ```&``` are the logical OR and AND of R 
-- As the ```fft_eeg``` is symmetric from the second to the last index, you have to set ```fft_eeg[i]``` and ```fft_eeg[n-i+2]``` to 0 for i = 2 to n/2.
+- As the ```fft_eeg``` is symmetric from the second to the last index, you have to set ```fft_eeg[i]``` and ```fft_eeg[n-i+2]``` to 0 for i = 2 to n/2+1.
 
 `@pre_exercise_code`
 ```{r}
@@ -240,17 +238,9 @@ for (i in ___:___ {
     fft_eeg[___] <- 0
     }
   }
+fft_eeg[___] <- 0
+fft_eeg[___] <- 0
      
-# Check the first Fourier coefficient/frequency (replace ___) 
-if ((freq[___] < ___) | (freq[___] > ___)) {
-    fft_eeg[___] <- 0
-    }
-     
-# Check the hightest frequency (replace ___) 
-if ((freq[___] < ___) | (freq[___] > ___)) {
-    fft_eeg[___] <- 0
-    }
-
 # Check your result by plotting the fourier coefficients again (frequency spectrum)
 
 
@@ -273,6 +263,7 @@ for (i in 2:(n/2+1)) {
     }
   }
 fft_eeg[1] <- 0
+fft_eeg[n/2+1] <- 0
 
 # Check your result by plotting the fourier coefficients again (frequency spectrum)
 plot(x=freq,y=abs(fft_eeg[1:(2^19+1)]))
@@ -310,31 +301,6 @@ ex() %>% check_for() %>% {
   }
 }
 
-# check first index
-ex() %>% check_if_else() %>%  {
-  check_cond(.) %>% {
-    check_code(.,"freq[1]",times = 2, fixed=TRUE,missing_msg="Did you take the first index in both if-conditions?")
-    check_code(., "freq_min")
-    check_code(., "|")
-    check_code(., "freq_max")
-  }
-  check_if(.) %>%{
-    ex() %>% check_code(.,"fft_eeg[1]",fixed=TRUE,missing_msg="Did you take the first index??")
-  }
-}
-
-# check highest frequency
-ex() %>% check_if_else(index=2) %>%  {
-  check_cond(.) %>% {
-    check_code(.,"freq[n/2+1]",times = 2, fixed=TRUE,missing_msg="Did you take the index with the highest frequency in both if-conditions?")
-    check_code(., "freq_min")
-    check_code(., "|")
-    check_code(., "freq_max")
-  }
-  check_if(.) %>%{
-    ex() %>% check_code(.,"fft_eeg[n/2+1]",fixed=TRUE,missing_msg="Did you take the Fourier coefficient with the highest frequency?")
-  }
-}
 ex() %>% check_object("fft_eeg") %>% check_equal()
 ex() %>% check_function("plot") %>% check_result() %>% check_equal()
 success_msg("Nice! As you can see in the plot, you have only left frequencies between 8 and 13 Hz.\n In the next task we will look at the effect of this")
