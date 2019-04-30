@@ -517,10 +517,11 @@ $\beta$-waves (13-30 Hz)
 $\delta$-waves (0,5-3 Hz)
 
 `@instructions`
-The signal ```eeg```, ```freq```, ```time``` (in minutes) and the function ```bandpass_filter(signal, freq_min,freq_max,len_eeg)``` are still available. 
+The signal ```eeg```, ```freq```, ```time``` (in minutes) and the function ```bandpass_filter(signal,freq_min,freq_max,samp_freq)``` are still available. 
+In addition, we have defined below a corresponding function ```band_amplitudes(signal,freq_min,freq_max,samp_freq)``` that calculates the instantaneous amplitudes by using a Hilbert transform. 
 
-1. Use your function ```bandpass_filter()``` to calculate the α-, β-, δ-band of the ```eeg``` signal. Store the result in ```eeg_alpha```, ```eeg_beta``` and ```eeg_delta```.
-2. Plot all 3 EEG-bands in 3 rows. Therefore, we already prepared some stuff. [par(mfrow=c(4,1))](https://www.rdocumentation.org/packages/graphics/versions/3.5.3/topics/par) will set 4 rows of plots. ```xlimit``` and ```ylimit```defines the range of the plot, here the first 4 minutes from -150 to 150 mV. Finally you just have fill the x-values for the plots (see the gaps!)
+1. Use the functions ```bandpass_filter()``` or ```band_amplitudes()```to extract the α-, β-, δ-band of the ```eeg``` signal. Store the result in ```eeg_alpha```, ```eeg_beta``` and ```eeg_delta```.
+2. Plot all 3 EEG-bands one graph. For this purpose, we have already prepared some stuff. [par(mfrow=c(4,1))](https://www.rdocumentation.org/packages/graphics/versions/3.5.3/topics/par). ```xlimit``` and ```ylimit```defines the range of the plot, here the first 4 minutes from -150 to 150 µV. Finally you just have fill the x-values for the plots (see the gaps!)
 
 `@hint`
 
