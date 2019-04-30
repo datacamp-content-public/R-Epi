@@ -109,19 +109,16 @@ key: 045c484b8a
 xp: 50
 ```
 
-The idea of the Fourier series is to cut a signal down in sinus and cosinus parts. A Fourier series can be defined as follows:
+The idea of the Fourier transform is to split a signal down in sine and cosine (Sinus und Kosinus) parts with different frequencies. In the following, we will assume that:
+- $n = 2^N$ represents the number of data in the signal. The algorithm if fast Fourier transform is most efficient, if the length of the data is a power of 2.
+- The sampling rate of the signal, i.e. the number of measurements per second, is measured in Hz (Hertz), and given by samp_rate.
+- $f_k = (k-1)/n \cdot samp_rate$ is the frequency for Fourier coefficient $a_k$.  
+- Each Fourier coefficient $a_k$ shows the weight of the frequency $f_k$. The coefficients have a real part and an imaginary part.
+- A Fourier Transformation will return the Fourier coefficients as an array, beginning with index 1: the coefficient a_1 belonging to frequency $f_k=0$, i.e., a constant that is equal to the sum of all data.
 
-Fourier series = $2\cdot a_0 + \sum _{i=1} ^{2^N-1} (a_i \cdot cos(i \cdot x) + b _i \cdot sin(i \cdot x))$ 
+Now we assume that we have a signal with **$n=2^{15}$ data points** and a sampling rate of **64 Hz**. So the Fast-Fourier-Transform (FFT) of our signal will return 2^15 Fourier coefficients $a_k$. The first coefficient $a_1$ is the sum (or, in other implementations of FFT, the average) of all data, representing the vertical offset of the signal. The next $2^{14}$ coefficients, $a_k$, represent the oscillations with frequencies $f_k = k / n * samp_rate$. Because of the way FFT deals with complex numbers, the coefficients are mirrored in the following $2^{14}-1$ coefficients, $a_k$ corresponding to $a_{n-k+2}$. Based on the so-called Nyquist theorem the maximal frequency we can detect is half of the sampling rate, here 32 Hz, and always represented by the center coefficient $a_{n/2+1}$, which is not mirrored. $a_1$ is also not mirrored.
 
-- $2^N$ represents the number of datapoints in the interval of the signal. 
-- $i \cdot x$ describe different frequencies.
-- $a$ and $b$ shows the weight of each frequency and called fourier coefficients where $a$ is the real part and $b$ the imaginar part of the complex fourier coefficients. This fourier coefficients are a measurment of appearence of frequencies.
-- A Fourier Transformation will return the fourier coefficients!
-- As you maybe now we can describe sinus with a cosinus function and vice versa which means the second half of the fourier coefficients is mirrored to the first half!
-
-Now we assume that we have a signal with **$2^{15}$ data points** and a sampling rate of **64 Hz**. So the Fast-Fourier-Transformation (FFT) of our signal will return 2^15 fourier coefficients. The first coefficient $a_0$ is a constant representing more or less the offset of a signal. Because of the nature of the FFT the other $2^{15}-1 $ coefficients are mirrored at the $2^{14}+1^{th}$ data point. Based on the Nyquist Theorem (You don't need to know anything about it) the maximal frequency we can detect is half of the sampling rate, here 32 Hz!
-
-Now the first $2^{14} + 1$ fourier coefficients representing 32 Hz. What is the Frequency step/distance between each Fourier coefficient?
+What is the frequency step (or distance) between each of the Fourier coefficients?
 
 `@hint`
 - Hz = Hertz = 1/s, in this case data points per seconds!
