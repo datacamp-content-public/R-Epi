@@ -197,7 +197,7 @@ success_msg("Check out your frequency spectrum. What is the respiration frequenc
 
 ---
 
-## What tells us the frequency spectrum?
+## What does the frequency spectrum tell us?
 
 ```yaml
 type: PureMultipleChoiceExercise
@@ -206,7 +206,7 @@ xp: 50
 ```
 
 ![](https://assets.datacamp.com/production/repositories/3401/datasets/e9a75a9779ec5042622026a258642cf8d64b8e62/respiration_spectrum.png)
-Let's check our frequncy spectrum of the respiration again. 
+Let us check our frequency spectrum of the respiration data again. 
 What is the respiration frequency?
 
 `@hint`
@@ -220,4 +220,4 @@ What is the respiration frequency?
 `@feedback`
 1. No.
 2. Right!
-3. This is the first harmonic of the respiration frequency, but not the respiration frequency.
+3. This is the first harmonic of the respiration frequency, but not the actual respiration frequency.
