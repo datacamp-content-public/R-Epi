@@ -521,7 +521,7 @@ The signal ```eeg```, ```freq```, ```time``` (in minutes) and the function ```ba
 In addition, we have defined below a corresponding function ```band_amplitudes(signal,freq_min,freq_max,samp_freq)``` that calculates the instantaneous amplitudes by using a Hilbert transform. 
 
 1. Use the functions ```bandpass_filter()``` or ```band_amplitudes()``` to extract the α-, β-, δ-band of the ```eeg``` signal. Store the result in ```eeg_alpha```, ```eeg_beta``` and ```eeg_delta```.
-2. Plot all 3 EEG-bands one graph. For this purpose, we have already prepared some stuff. [par(mfrow=c(4,1))](https://www.rdocumentation.org/packages/graphics/versions/3.5.3/topics/par). ```xlimit``` and ```ylimit```defines the range of the plot, here the first 4 minutes from -150 to 150 µV. Finally you just have fill the x-values for the plots (see the gaps!)
+2. Plot all 3 EEG-bands in one graph. For this purpose, we have already prepared some stuff. [par(mfrow=c(4,1))](https://www.rdocumentation.org/packages/graphics/versions/3.5.3/topics/par). ```xlimit``` and ```ylimit```defines the range of the plot, here the first 4 minutes from 0 to 100 µV.
 
 `@hint`
 
@@ -562,6 +562,10 @@ band_amplitudes <- function(signal,freq_min,freq_max,samp_rate) {
     fft_eeg <- fft(signal)
     for (i in 2:(n/2)) {
       if ((freq[i] < freq_min) | (freq[i] > freq_max)) {
+        fft_eeg[i] <- 0
+        fft_eeg[n-i+2] <- 0
+        }
+      else{
         fft_eeg[i] <- 2*fft_eeg[i]
         fft_eeg[n-i+2] <- 0
         }
@@ -578,7 +582,7 @@ eeg_beta  <- ___
 eeg_delta <- ___ 
 
 # Plot preparation (Don't change!)
-par(mfrow=c(2,1),mar=c(1,5,0,0),oma=c(2,2,0,0))
+par(mar=c(1,5,0,0),oma=c(2,2,0,0))
 xlimit<-c(0,4)
 ylimit<-c(-100,100)
 
@@ -600,7 +604,11 @@ band_amplitudes <- function(signal,freq_min,freq_max,samp_rate) {
     fft_eeg <- fft(signal)
     for (i in 2:(n/2)) {
       if ((freq[i] < freq_min) | (freq[i] > freq_max)) {
-        fft_eeg[i] <- 2*fft_eeg1[i]
+        fft_eeg[i] <- 0
+        fft_eeg[n-i+2] <- 0
+        }
+      else{
+        fft_eeg[i] <- 2*fft_eeg[i]
         fft_eeg[n-i+2] <- 0
         }
       }
@@ -611,12 +619,12 @@ band_amplitudes <- function(signal,freq_min,freq_max,samp_rate) {
  	}
 
 # Calculate the α-, β-, δ-band of the eeg signal
-eeg_alpha <- bandpass_filter(eeg,freq,8,13) 
-eeg_beta  <- bandpass_filter(eeg,freq,13,30) 
-eeg_delta <- bandpass_filter(eeg,freq,0.5,3) 
+eeg_alpha <- band_amplitudes(eeg,8,13,1024) 
+eeg_beta  <- band_amplitudes(eeg,13,30,1024) 
+eeg_delta <- band_amplitudes(eeg,0.5,3,1024) 
 
 # Plot preparation (Don't change!)
-par(mfrow=c(2,1),mar=c(1,5,0,0),oma=c(2,2,0,0))
+par(mar=c(1,5,0,0),oma=c(2,2,0,0))
 xlimit<-c(0,4)
 ylimit<-c(-100,100)
 
