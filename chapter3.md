@@ -316,7 +316,10 @@ ex() %>% check_for() %>% {
 }
 
 ex() %>% check_object("fft_eeg") %>% check_equal()
-ex() %>% check_function("plot") %>% check_result() %>% check_equal()
+ex() %>% check_function("plot") %>% {
+	check_arg(.,"x")
+  	check_arg(.,"y")
+} %>% check_equal()
 ex() %>% check_error()
 success_msg("Nice! As you can see in the plot, you have only left frequencies between 8 and 13 Hz.\n In the next task we will look at the effect of this")
 ```
@@ -333,10 +336,10 @@ xp: 100
 
 As we saw in the result of the last task, we eliminated the frequencies except for the range **8 to 13 Hz**. With the **inverse FFT (iFFT)** we can now reverse our bandpass filtered FFT and receive a signal with "only" frequencies between 8 to 13 Hz, also called the $\alpha$-band.  
 
-The bandpass filtered Fourier coefficients are still available under ```fft_eeg1``` and the time series in minutes is still stored in ```time```. Let's plot the bandpass filtered signal!
+The bandpass filtered Fourier coefficients are still available under ```fft_eeg``` and the time series in minutes is still stored in ```time```. Let's plot the bandpass filtered signal!
 
 `@instructions`
-1. Use the inverse Fourier transform to obtain your bandpass filtered signal and save it to ```eeg1_alpha```. For iFFT you use ```fft()``` again, but with the argument ```inverse=TRUE``` (the default for this parameter is ```FALSE```). For the R implementation of FFT, we need to normalize the result by dividing by the length of data (see documentation of [fft](https://www.rdocumentation.org/packages/stats/versions/3.5.3/topics/fft). Finally we need only the real part ```Re()``` of the result. 
+1. Use the inverse Fourier transform to obtain your bandpass filtered signal and save it to ```eeg_alpha```. For iFFT you use ```fft()``` again, but with the argument ```inverse=TRUE``` (the default for this parameter is ```FALSE```). For the R implementation of FFT, we need to normalize the result by dividing by the length of data (see documentation of [fft](https://www.rdocumentation.org/packages/stats/versions/3.5.3/topics/fft). Finally we need only the real part ```Re()``` of the result. 
 2. Plot the bandpass filtered signal.
 
 `@hint`
@@ -344,9 +347,9 @@ The bandpass filtered Fourier coefficients are still available under ```fft_eeg1
 
 `@pre_exercise_code`
 ```{r}
-download.file(url = "https://assets.datacamp.com/production/repositories/3401/datasets/636762184295f3f3370287b8a7a20cbc48aa5ae6/eeg_c4m1.rds", destfile = "eeg1.rds")
-# Load compressed EEG data "eeg1.rds"
-eeg <- readRDS("eeg1.rds")
+download.file(url = "https://assets.datacamp.com/production/repositories/3401/datasets/636762184295f3f3370287b8a7a20cbc48aa5ae6/eeg_c4m1.rds", destfile = "eeg.rds")
+# Load compressed EEG data "eeg.rds"
+eeg <- readRDS("eeg.rds")
 # max power of 2 in the length of the signal
 n <- 2^20
 # Calculate the FFT
@@ -398,7 +401,10 @@ ex() %>% check_function("fft") %>% check_result() %>% check_equal()
 ex() %>% check_function("length") %>% check_result() %>% check_equal()
 ex() %>% check_function("Re") %>% check_result() %>% check_equal()
 ex() %>% check_object("eeg_alpha") %>% check_equal()
-ex() %>% check_function("plot") %>% check_result() %>% check_equal()
+ex() %>% check_function("plot") %>% {
+  check_arg(.,"x")
+  check_arg(.,"y")
+} %>% check_equal()
 success_msg("You got your first bandpass filtered signal - go on!")
 ```
 
@@ -443,7 +449,7 @@ To define a function in R you use the scheme:
 `@sample_code`
 ```{r}
 # Define your bandpass_filter function:
-___ <- function(___,___,___) {
+___ <- function(___,___,___,___) {
   
 	# Calculate the length of signal (next suitable power of 2)
 	n <- 2^(int(log(length(signal)-1)/log(2)+1))
@@ -458,7 +464,7 @@ ___ <- function(___,___,___) {
         }
       }
     fft_eeg1[1] <- 0
-    fft_eeg1[n/2+1] <- 0
+  
 	bandpass_signal <- Re(fft(fft_eeg,inverse=TRUE)/n)
 
     # Use return to return bandpass_signal
@@ -472,20 +478,20 @@ ___ <- function(___,___,___) {
 bandpass_filter <- function(signal,freq_min,freq_max,samp_rate) {
 
   # Calculate the length of signal (next suitable power of 2)
-	n <- 2^(int(log(length(signal)-1)/log(2)+1))
+	n <- 2^(as.integer(log(length(signal)-1)/log(2)+1))
     # Calculate frequency vector
     freq = seq(0,samp_rate/2,samp_rate/n)
     # Bandpass filter procedure
     fft_eeg <- fft(signal)
-    for (i in 2:(n/2)) {
+    for (i in 2:(n/2+1)) {
       if ((freq[i] < freq_min) | (freq[i] > freq_max)) {
         fft_eeg1[i] <- 0
         fft_eeg1[n-i+2] <- 0
         }
       }
     fft_eeg1[1] <- 0
-    fft_eeg1[n/2+1] <- 0
-	bandpass_signal <- Re(fft(fft_eeg,inverse=TRUE)/n)
+    
+  	bandpass_signal <- Re(fft(fft_eeg,inverse=TRUE)/n)
 
     # Use return to return bandpass_signal
 	return(bandpass_signal)
@@ -494,19 +500,15 @@ bandpass_filter <- function(signal,freq_min,freq_max,samp_rate) {
 
 `@sct`
 ```{r}
-ex() %>% check_fun_def('bandpass_filter') %>%{
-    check_arguments(.)
+ex() %>% check_fun_def('bandpass_filter') %>% {
+    check_arguments(.,) 
     check_body(.) %>% {
-       check_function(.,'fft', index = 1) %>% check_arg('z') %>% check_equal(eval = FALSE)
-       check_function(., 'Re') %>% {
-         check_function(., 'fft', index = 1) %>% check_arg(., 'z','inverse') %>% check_equal(eval = FALSE)
-         }
-       check_code(.,'Re(fft(fft_eeg,inverse=TRUE)/n)',fixed = TRUE)
        check_code(.,'return(bandpass_signal)',fixed = TRUE)
      
     }
   }
-  
+ex() %>% check_code('function(signal,freq_min,freq_max,samp_rate)',fixed=TRUE,missing_msg="Did you use the right arguments in function()?")
+ex() %>% check_error()
 success_msg("Great, now we have a filter function!")
 
 ```
@@ -532,50 +534,22 @@ $\beta$-waves (13-30 Hz)
 $\delta$-waves (0,5-3 Hz)
 
 `@instructions`
-The signal ```eeg```, ```freq```, ```time``` (in minutes) and the function ```bandpass_filter(signal,freq_min,freq_max,samp_freq)``` are still available. 
-In addition, we have defined below a corresponding function ```band_amplitudes(signal,freq_min,freq_max,samp_freq)``` that calculates the instantaneous amplitudes by using a Hilbert transform. 
+The signal ```eeg```, ```freq```, ```time``` (in minutes) are still available. 
+In addition, we have extended the ```bandpass_filter``` filter function to calculate the instantaneous amplitudes by using Hilbert transform, available under  ```band_amplitudes(signal,freq_min,freq_max,samp_freq)``` that calculates the instantaneous amplitudes by using a Hilbert transform. 
 
-1. Use the functions ```bandpass_filter()``` or ```band_amplitudes()``` to extract the α-, β-, δ-band of the ```eeg``` signal. Store the result in ```eeg_alpha```, ```eeg_beta``` and ```eeg_delta```.
-2. Plot all 3 EEG-bands in one graph. For this purpose, we have already prepared some stuff. [par(mfrow=c(4,1))](https://www.rdocumentation.org/packages/graphics/versions/3.5.3/topics/par). ```xlimit``` and ```ylimit```defines the range of the plot, here the first 4 minutes from 0 to 100 µV.
+1. Use the functions ```band_amplitudes()``` to extract the α-, β-, δ-band of the ```eeg``` signal. Store the result in ```eeg_alpha```, ```eeg_beta``` and ```eeg_delta```.
+2. Plot all 3 EEG-bands in one graph. For this purpose, we have already prepared some stuff. ```xlimit``` and ```ylimit```defines the range of the plot, here the first 4 minutes from 0 to 100 µV. We also added the sleep stages of this episode of EEG data.
 
 `@hint`
 
 
 `@pre_exercise_code`
 ```{r}
-bandpass_filter <- function(signal,freq_min,freq_max,samp_rate) {
-	n <- 2^(int(log(length(signal)-1)/log(2)+1))
-    freq = seq(0,samp_rate/2,samp_rate/n)
-    fft_eeg <- fft(signal)
-    for (i in 2:(n/2)) {
-      if ((freq[i] < freq_min) | (freq[i] > freq_max)) {
-        fft_eeg[i] <- 0
-        fft_eeg[n-i+2] <- 0
-        }
-      }
-    fft_eeg[1] <- 0
-    fft_eeg[n/2+1] <- 0
-	bandpass_signal <- Re(fft(fft_eeg,inverse=TRUE)/n)
-	return(bandpass_signal)
- 	}
-download.file(url = "https://assets.datacamp.com/production/repositories/3401/datasets/636762184295f3f3370287b8a7a20cbc48aa5ae6/eeg_c4m1.rds", destfile = "eeg1.rds")
-# Load compressed EEG data "eeg1.rds"
-eeg <- readRDS("eeg1.rds")[1:2^19]
-freq <- seq(0,512,by = 512/(2^18))
-# Create time 
-time <- seq(0,(length(eeg)-1)/(1024*60),1/(1024*60))
-# sleep stages
-sleep_stage <- c(2,2,2,2,2,5,3,5,5,5,5,5,5,5,3,2,2,2,2,2,2,2,2,2,2,2,2,3,4,4,4,4,4,4,4,4,4,4,4)
-sleep_time <- seq(0,19,0.5)
-```
-
-`@sample_code`
-```{r}
 band_amplitudes <- function(signal,freq_min,freq_max,samp_rate) {
-	n <- 2^(int(log(length(signal)-1)/log(2)+1))
+	n <- 2^(as.integer(log(length(signal)-1)/log(2)+1))
     freq = seq(0,samp_rate/2,samp_rate/n)
     fft_eeg <- fft(signal)
-    for (i in 2:(n/2)) {
+    for (i in 2:(n/2+1)) {
       if ((freq[i] < freq_min) | (freq[i] > freq_max)) {
         fft_eeg[i] <- 0
         fft_eeg[n-i+2] <- 0
@@ -586,12 +560,25 @@ band_amplitudes <- function(signal,freq_min,freq_max,samp_rate) {
         }
       }
     fft_eeg[1] <- 0
-    fft_eeg[n/2+1] <- 0
+    #fft_eeg[n/2+1] <- 0
 	bandpass_signal <- abs(fft(fft_eeg,inverse=TRUE)/n)
 	return(bandpass_signal)
  	}
 
-# Calculate the α-, β- and δ-band of the eeg signal (replace ___)
+download.file(url = "https://assets.datacamp.com/production/repositories/3401/datasets/636762184295f3f3370287b8a7a20cbc48aa5ae6/eeg_c4m1.rds", destfile = "eeg.rds")
+# Load compressed EEG data "eeg1.rds"
+eeg <- readRDS("eeg.rds")[1:2^19]
+freq <- seq(0,512,by = 512/(2^18))
+# Create time 
+time <- seq(0,(length(eeg)-1)/(1024*60),1/(1024*60))
+# sleep stages
+sleep_stage <- c(2,2,2,2,2,5,3,5,5,5,5,5,5,5,3,2,2,2,2,2,2,2,2,2,2,2,2,1,4,4,4,4,4,4,4,4,4,4,4)
+sleep_time <- seq(0,19,0.5)
+```
+
+`@sample_code`
+```{r}
+ Calculate the α-, β- and δ-band of the eeg signal (replace ___)
 eeg_alpha <- ___ 
 eeg_beta  <- ___ 
 eeg_delta <- ___ 
@@ -613,26 +600,6 @@ axis(2, at=1:5, labels=c('N3','N2','N1','REM','W'))
 
 `@solution`
 ```{r}
-band_amplitudes <- function(signal,freq_min,freq_max,samp_rate) {
-	n <- 2^(int(log(length(signal)-1)/log(2)+1))
-    freq = seq(0,samp_rate/2,samp_rate/n)
-    fft_eeg <- fft(signal)
-    for (i in 2:(n/2)) {
-      if ((freq[i] < freq_min) | (freq[i] > freq_max)) {
-        fft_eeg[i] <- 0
-        fft_eeg[n-i+2] <- 0
-        }
-      else{
-        fft_eeg[i] <- 2*fft_eeg[i]
-        fft_eeg[n-i+2] <- 0
-        }
-      }
-    fft_eeg[1] <- 0
-    fft_eeg[n/2+1] <- 0
-	bandpass_signal <- abs(fft(fft_eeg,inverse=TRUE)/n)
-	return(bandpass_signal)
- 	}
-
 # Calculate the α-, β-, δ-band of the eeg signal
 eeg_alpha <- band_amplitudes(eeg,8,13,1024) 
 eeg_beta  <- band_amplitudes(eeg,13,30,1024) 
@@ -650,38 +617,38 @@ plot(x=time,y=eeg_delta,"l",xaxt='n',ylab="delta",xlim=xlimit,ylim=ylimit)
 
 # Plot sleep stages (Don't change!)
 plot(x=sleep_time,y=sleep_stage,yaxt='n',xlab="time in minutes",ylab="sleep stage",xlim=xlimit)
-axis(2, at=1:5, labels=c('N3','N2','N1','REM','W'))
+axis(2, at=1:5, labels=c('N1','N2','N3','REM','W'))
 ```
 
 `@sct`
 ```{r}
 ex() %>% check_error()
 #alpha
-ex() %>% check_function("bandpass_filter") %>% {
+ex() %>% check_function("bandpass_amplitude") %>% {
   check_arg(., "signal") %>% check_equal()
-  check_arg(., "freq") %>% check_equal()
+  check_arg(., "samp_rate") %>% check_equal()
   check_arg(., "freq_min") %>% check_equal(incorrect_msg="Check ```eeg_alpha```")
   check_arg(., "freq_max") %>% check_equal(incorrect_msg="Check ```eeg_alpha```")  
 } 
-ex() %>% check_function("bandpass_filter") %>% check_result() %>% check_equal()
+ex() %>% check_function("bandpass_amplitude") %>% check_result() %>% check_equal()
 
 #beta
-ex() %>% check_function("bandpass_filter",index=2) %>% {
+ex() %>% check_function("bandpass_amplitude",index=2) %>% {
   check_arg(., "signal") %>% check_equal()
-  check_arg(., "freq") %>% check_equal()
+  check_arg(., "samp_rate") %>% check_equal()
   check_arg(., "freq_min") %>% check_equal(incorrect_msg="Check ```eeg_beta```")
   check_arg(., "freq_max") %>% check_equal(incorrect_msg="Check ```eeg_beta```")  
 } 
-ex() %>% check_function("bandpass_filter",index=2) %>% check_result() %>% check_equal()
+ex() %>% check_function("bandpass_amplitude",index=2) %>% check_result() %>% check_equal()
 
 #delta
-ex() %>% check_function("bandpass_filter",index=3) %>% {
+ex() %>% check_function("bandpass_amplitude",index=3) %>% {
   check_arg(., "signal") %>% check_equal()
-  check_arg(., "freq") %>% check_equal()
+  check_arg(., "samp_rate") %>% check_equal()
   check_arg(., "freq_min") %>% check_equal(incorrect_msg="Check ```eeg_delta```")
   check_arg(., "freq_max") %>% check_equal(incorrect_msg="Check ```eeg_delta```")  
 } 
-ex() %>% check_function("bandpass_filter",index=3) %>% check_result() %>% check_equal()
+ex() %>% check_function("bandpass_amplitude",index=3) %>% check_result() %>% check_equal()
 
 ex() %>% check_object("eeg_alpha") %>% check_equal()
 ex() %>% check_object("eeg_beta") %>% check_equal()
