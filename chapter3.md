@@ -578,13 +578,13 @@ sleep_time <- seq(0,19,0.5)
 
 `@sample_code`
 ```{r}
- Calculate the α-, β- and δ-band of the eeg signal (replace ___)
+# Calculate the α-, β- and δ-band of the eeg signal (replace ___)
 eeg_alpha <- ___ 
 eeg_beta  <- ___ 
 eeg_delta <- ___ 
 
 # Plot preparation (Don't change!)
-par(mar=c(1,5,0,0),oma=c(2,2,0,0))
+#par(mar=c(1,5,0,0),oma=c(2,2,0,0))
 xlimit<-c(0,4)
 ylimit<-c(-100,100)
 
@@ -606,14 +606,14 @@ eeg_beta  <- band_amplitudes(eeg,13,30,1024)
 eeg_delta <- band_amplitudes(eeg,0.5,3,1024) 
 
 # Plot preparation (Don't change!)
-par(mar=c(1,5,0,0),oma=c(2,2,0,0))
+par(mfrow=c(2,1),mar=c(1,5,0,0),oma=c(2,2,0,0))
 xlimit<-c(0,4)
-ylimit<-c(-100,100)
+ylimit<-c(0,100)
 
 # Plot α-, β- and δ-band in this order (replace ___)
-plot(x=time,y=eeg_alpha,"l",xaxt='n',ylab="alpha",xlim=xlimit,ylim=ylimit)
-plot(x=time,y=eeg_beta,"l",xaxt='n',ylab="beta",xlim=xlimit,ylim=ylimit)
-plot(x=time,y=eeg_delta,"l",xaxt='n',ylab="delta",xlim=xlimit,ylim=ylimit)
+plot(x=time,y=eeg_alpha,"l",xaxt='n',ylab="alpha",xlim=xlimit,ylim=ylimit,col = rgb(red = 1, green = 0, blue = 0, alpha = 0.5))
+lines(x=time,y=eeg_beta,"l",xaxt='n',ylab="beta",xlim=xlimit,ylim=ylimit,col = rgb(red = 0, green = 0, blue = 1, alpha = 0.5))
+lines(x=time,y=eeg_delta,"l",xaxt='n',ylab="delta",xlim=xlimit,ylim=ylimit,col = rgb(red = 0, green = 1, blue = 0, alpha = 0.5))
 
 # Plot sleep stages (Don't change!)
 plot(x=sleep_time,y=sleep_stage,yaxt='n',xlab="time in minutes",ylab="sleep stage",xlim=xlimit)
@@ -624,31 +624,31 @@ axis(2, at=1:5, labels=c('N1','N2','N3','REM','W'))
 ```{r}
 ex() %>% check_error()
 #alpha
-ex() %>% check_function("bandpass_amplitude") %>% {
+ex() %>% check_function("band_amplitudes") %>% {
   check_arg(., "signal") %>% check_equal()
   check_arg(., "samp_rate") %>% check_equal()
   check_arg(., "freq_min") %>% check_equal(incorrect_msg="Check ```eeg_alpha```")
   check_arg(., "freq_max") %>% check_equal(incorrect_msg="Check ```eeg_alpha```")  
 } 
-ex() %>% check_function("bandpass_amplitude") %>% check_result() %>% check_equal()
+ex() %>% check_function("band_amplitudes") %>% check_result() %>% check_equal()
 
 #beta
-ex() %>% check_function("bandpass_amplitude",index=2) %>% {
+ex() %>% check_function("band_amplitudes",index=2) %>% {
   check_arg(., "signal") %>% check_equal()
   check_arg(., "samp_rate") %>% check_equal()
   check_arg(., "freq_min") %>% check_equal(incorrect_msg="Check ```eeg_beta```")
   check_arg(., "freq_max") %>% check_equal(incorrect_msg="Check ```eeg_beta```")  
 } 
-ex() %>% check_function("bandpass_amplitude",index=2) %>% check_result() %>% check_equal()
+ex() %>% check_function("band_amplitudes",index=2) %>% check_result() %>% check_equal()
 
 #delta
-ex() %>% check_function("bandpass_amplitude",index=3) %>% {
+ex() %>% check_function("band_amplitudes",index=3) %>% {
   check_arg(., "signal") %>% check_equal()
   check_arg(., "samp_rate") %>% check_equal()
   check_arg(., "freq_min") %>% check_equal(incorrect_msg="Check ```eeg_delta```")
   check_arg(., "freq_max") %>% check_equal(incorrect_msg="Check ```eeg_delta```")  
 } 
-ex() %>% check_function("bandpass_amplitude",index=3) %>% check_result() %>% check_equal()
+ex() %>% check_function("band_amplitudes",index=3) %>% check_result() %>% check_equal()
 
 ex() %>% check_object("eeg_alpha") %>% check_equal()
 ex() %>% check_object("eeg_beta") %>% check_equal()
@@ -659,11 +659,11 @@ ex() %>% check_function("plot",index=1) %>% {
   check_arg(., "x") %>% check_equal()
   check_arg(., "y") %>% check_equal()
 }
-ex() %>% check_function("plot",index=2) %>% {
+ex() %>% check_function("lines",index=1) %>% {
   check_arg(., "x") %>% check_equal()
   check_arg(., "y") %>% check_equal()
 }
-ex() %>% check_function("plot",index=3) %>% {
+ex() %>% check_function("lines",index=2) %>% {
   check_arg(., "x") %>% check_equal()
   check_arg(., "y") %>% check_equal()
 }
