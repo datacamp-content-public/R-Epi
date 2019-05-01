@@ -82,7 +82,7 @@ eeg <-
 # Create time 
 time <- 
 
-# Plot data 
+# Plot data as line-plot
 
 ```
 
@@ -91,21 +91,31 @@ time <-
 # Load compressed EEG data "eeg.rds"
 eeg <- readRDS("eeg.rds")
 
-# Create time 
-time <- seq(0,(length(eeg)-1)/(1024*60),1/(1024*60))
+# Create time in seconds
+#time <- seq(0,(length(eeg)-1)/(1024*60),1/(1024*60))
 
-# Plot data 
-plot(time,eeg)
+# Plot data as line-plot
+#plot(x=time,y=eeg,type="l")
 ```
 
 `@sct`
 ```{r}
 ex() %>% check_error()
+ex() %>% check_function("readRDS") %>% check_arg("file") %>% check_equal()
 ex() %>% check_object("eeg") %>% check_equal()
-ex() %>% check_function("readRDS") %>% check_result() %>% check_equal()
+
+ex() %>% check_function("seq") %>% {
+  check_arg(.,"from")
+  check_arg(.,"to")
+  check_arg(.,"by")
+}%>% check_equal()
 ex() %>% check_object("time") %>% check_equal()
-ex() %>% check_function("seq") %>% check_result() #%>% check_equal()
-ex() %>% check_function("plot") %>% check_result() %>% check_equal()
+
+ex() %>% check_function("plot") %>% {
+  check_arg(.,"x")
+  check_arg(.,"y")
+  check_arg(.,"l")
+} %>% check_equal()
 success_msg("You finished the first step to an EEG analyse!")
 ```
 
