@@ -216,14 +216,28 @@ plot(x=x,y=y)
 
 `@sct`
 ```{r}
-ex() %>% check_object("numbers") #%>% check_equal()
-ex() %>% check_object("numbers_fft") #%>% check_equal()
-ex() %>% check_function("fft") %>% check_result() %>% check_equal()
+ex() %>% check_function("rnorm") %>% {
+  check_arg(.,"n") %>% check_equal()
+  check_arg(.,"mean") %>% check_equal()
+  check_arg(.,"sd") %>% check_equal()
+} 
+ex() %>% check_object("numbers") 
+
+ex() %>% check_function("fft") %>% check_arg("z")
+ex() %>% check_object("numbers_fft") 
+
 ex() %>% check_object("y") %>% check_equal(incorrect_msg="Did you use round brackets for operations in the index area e.g. list[1:(2^2 +1)]?")
+ex() %>% check_function("seq") %>% {
+  check_arg(.,"from") %>% check_equal()
+  check_arg(.,"to") %>% check_equal()
+  check_arg(.,"by") %>% check_equal()
+  }
 ex() %>% check_object("x") %>% check_equal()
-ex() %>% check_function("seq") %>% check_result() %>% check_equal()
 ex() %>% check_error()
-ex() %>% check_function("plot") %>% check_result() %>% check_equal()
+ex() %>% check_function("plot") %>% {
+  check_arg(.,"x")
+  check_arg(.,"y")
+}
 success_msg("Great!")
 
 ```
