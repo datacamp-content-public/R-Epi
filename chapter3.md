@@ -247,7 +247,7 @@ freq <- seq(0,512,by = 512/(2^19))
 
 `@sample_code`
 ```{r}
-# eeg1, n = 2^20, fft_eeg1 and freq still available
+# eeg1, n = 2^20, fft_eeg and freq still available
 # Set your minimum frequency and your maximum frequency (replace ___) 
 freq_min <- ___
 freq_max <- ___
@@ -293,13 +293,6 @@ plot(x=freq,y=abs(fft_eeg[1:(2^19+1)]))
 
 `@sct`
 ```{r}
-ex() %>% check_error()
-ex() %>% check_object("eeg") %>% check_equal()
-#ex() %>% check_function("readRDS") %>% check_result() %>% check_equal()
-ex() %>% check_object("n") %>% check_equal()
-#ex() %>% check_object("fft_eeg1") %>% check_equal()
-#ex() %>% check_function("fft") %>% check_result() %>% check_equal()
-ex() %>% check_object("freq") %>% check_equal()
 ex() %>% check_object("freq_min") %>% check_equal()
 ex() %>% check_object("freq_max")  %>% check_equal()
 # check for loop
@@ -324,6 +317,7 @@ ex() %>% check_for() %>% {
 
 ex() %>% check_object("fft_eeg") %>% check_equal()
 ex() %>% check_function("plot") %>% check_result() %>% check_equal()
+ex() %>% check_error()
 success_msg("Nice! As you can see in the plot, you have only left frequencies between 8 and 13 Hz.\n In the next task we will look at the effect of this")
 ```
 
