@@ -60,7 +60,7 @@ The EEG data has a sampling rate of **1024 Hz** and is recorded for **17 minutes
 Be aware that the calculations in this part can take some time.
 
 `@instructions`
-1. Load the compressed EEG file ```eeg.rds``` with ```readRDS(file)``` to ```eeg```
+1. Load the compressed EEG file ```eeg.rds``` with ```readRDS(FILENAME)``` to ```eeg```
 2. Create a time series in minutes for the horizontal axis of your EEG data and store it in ```time```. 
 2. Plot the EEG data, y-axis in µV and x-axis in minutes
 
@@ -91,11 +91,11 @@ time <-
 # Load compressed EEG data "eeg.rds"
 eeg <- readRDS("eeg.rds")
 
-# Create time in seconds
-#time <- seq(0,(length(eeg)-1)/(1024*60),1/(1024*60))
+# Create time in seconds (use length of eeg )
+time <- seq(0,(length(eeg)-1)/(1024*60),1/(1024*60))
 
 # Plot data as line-plot
-#plot(x=time,y=eeg,type="l")
+plot(x=time,y=eeg,type="l")
 ```
 
 `@sct`
@@ -104,17 +104,18 @@ ex() %>% check_error()
 ex() %>% check_function("readRDS") %>% check_arg("file") %>% check_equal()
 ex() %>% check_object("eeg") %>% check_equal()
 
-ex() %>% check_function("seq") %>% {
-  check_arg(.,"from")
-  check_arg(.,"to")
-  check_arg(.,"by")
-}%>% check_equal()
+#ex() %>% check_function("seq") %>% {
+#  check_arg(.,"from")
+#  check_arg(.,"to")
+#  check_arg(.,"by")
+#}%>% check_equal()
+ex() %>% check_function("seq")
 ex() %>% check_object("time") %>% check_equal()
 
 ex() %>% check_function("plot") %>% {
   check_arg(.,"x")
   check_arg(.,"y")
-  check_arg(.,"l")
+  check_arg(.,"type")
 } %>% check_equal()
 success_msg("You finished the first step to an EEG analyse!")
 ```
@@ -184,11 +185,22 @@ plot(freq,abs(fft_eeg[1:(2^19+1)]))
 ```{r}
 ex() %>% check_error()
 ex() %>% check_object("n") %>% check_equal()
+
+ex() %>% check_function("fft") %>% check_arg("z") %>% check_equal()
 ex() %>% check_object("fft_eeg") %>% check_equal()
-ex() %>% check_function("fft") %>% check_result() %>% check_equal()
+
+ex() %>% check_function("seq") %>% {
+	check_arg(.,"from")
+  	check_arg(.,"to")
+  	check_arg(.,"by")
+} %>% check_equal()
 ex() %>% check_object("freq") %>% check_equal()
-ex() %>% check_function("seq") %>% check_result() %>% check_equal()
-ex() %>% check_function("plot") %>% check_result() %>% check_equal()
+
+ex() %>% check_function("plot") %>% {
+  check_arg(.,"x")
+  check_arg(.,"y")
+} %>% check_equal()
+
 success_msg("You created successfull a frequency spectrum!")
 ```
 
