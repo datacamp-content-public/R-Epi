@@ -137,6 +137,7 @@ Now we need the FFT and therefore the max power of 2 in the length of the signal
 1. Check out the highest power of 2 in the signal length and store it to ```n```. (You can use the R console as a calculator)
 2. Calculate the FFT and store it to ```fft_eeg```. Use only a data length of power of 2.
 3. Determine the frequencies (```freq```) that corresponded to the Fourier coefficients.
+4. Plot the frequency spectrum.
 
 `@hint`
 - Check the previous exercises if you need help!
@@ -167,8 +168,8 @@ freq <-
 
 `@solution`
 ```{r}
-# Your EEG data is still stored in eeg1
-# max power of 2 in the length of the signal
+# Your EEG data is still stored in eeg
+# Max power of 2 in the length of the signal
 n <- 2^20
 
 # Calculate the FFT
@@ -261,7 +262,6 @@ for (i in ___:___ {
     }
   }
 fft_eeg[___] <- 0
-fft_eeg[___] <- 0
      
 # Check your result by plotting the fourier coefficients again (frequency spectrum)
 
@@ -270,7 +270,7 @@ fft_eeg[___] <- 0
 
 `@solution`
 ```{r}
-# eeg1, n = 2^20, fft_eeg1 and freq still available
+# eeg1, n = 2^20, fft_eeg and freq still available
 # Set your minimum frequency and your maximum frequency (replace ___) 
 freq_min <- 8
 freq_max <- 13
@@ -285,7 +285,6 @@ for (i in 2:(n/2+1)) {
     }
   }
 fft_eeg[1] <- 0
-fft_eeg[n/2+1] <- 0
 
 # Check your result by plotting the fourier coefficients again (frequency spectrum)
 plot(x=freq,y=abs(fft_eeg[1:(2^19+1)]))
