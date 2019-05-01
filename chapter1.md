@@ -23,7 +23,7 @@ You can list your data by using square brackets ```array[start:end]```.
 
 - You can assign values to variables by ```<-``` but also ```=``` would work. Most people use ```<-```. But be careful, for arguments in functions, only ```=``` can be used.
 - If you need additional information or if you search for functions, you can use [www.rdocumentation.org](https://www.rdocumentation.org/)
-- Our you can type, e.g., ?runif, in the R Console (the lower window on the right side of the screen), and a help window will pop up.
+- Or you can type, e.g., ?runif, in the R Console (the lower window on the right side of the screen), and a help window will pop up.
 - Array **indices in R start with 1** (like in Fortran, unlike python or C, where the first element has index 0)! 
 - To raise the power in R, use ```n^p```
 
@@ -96,7 +96,7 @@ ex() %>% check_code("u_numbers[1:10]",fixed=TRUE)
 ex() %>% check_code("n_numbers[1:10]",fixed=TRUE)
 ex() %>% check_function("plot",not_called_msg="Did you remove the plot-function?")
 ex() %>% check_function("hist",not_called_msg="Did you remove the hist-function?")
-success_msg("Good job! You finished the first task of our Workshop!")
+success_msg("Good job! You finished the first task of our workshop!")
 ```
 
 ---
@@ -110,13 +110,17 @@ xp: 50
 ```
 
 The idea of the Fourier transform is to split a signal down in sine and cosine (Sinus und Kosinus) parts with different frequencies. In the following, we will assume that:
-- $n = 2^N$ represents the number of data in the signal. The algorithm if fast Fourier transform is most efficient, if the length of the data is a power of 2.
-- The sampling rate of the signal, i.e. the number of measurements per second, is measured in Hz (Hertz), and given by samp_rate.
-- $f_k = (k-1)/n \cdot samp_rate$ is the frequency for Fourier coefficient $a_k$.  
-- Each Fourier coefficient $a_k$ shows the weight of the frequency $f_k$. The coefficients have a real part and an imaginary part.
-- A Fourier Transformation will return the Fourier coefficients as an array, beginning with index 1: the coefficient a_1 belonging to frequency $f_k=0$, i.e., a constant that is equal to the sum of all data.
 
-Now we assume that we have a signal with **$n=2^{15}$ data points** and a sampling rate of **64 Hz**. So the Fast-Fourier-Transform (FFT) of our signal will return 2^15 Fourier coefficients $a_k$. The first coefficient $a_1$ is the sum (or, in other implementations of FFT, the average) of all data, representing the vertical offset of the signal. The next $2^{14}$ coefficients, $a_k$, represent the oscillations with frequencies $f_k = k / n * samp_rate$. Because of the way FFT deals with complex numbers, the coefficients are mirrored in the following $2^{14}-1$ coefficients, $a_k$ corresponding to $a_{n-k+2}$. Based on the so-called Nyquist theorem the maximal frequency we can detect is half of the sampling rate, here 32 Hz, and always represented by the center coefficient $a_{n/2+1}$, which is not mirrored. $a_1$ is also not mirrored.
+- $n = 2^N$ represents the number of data in the signal. The algorithm if fast Fourier transform is most efficient, if the length of the data is a power of 2. The sampling rate of the signal, i.e. the number of measurements per second, is measured in Hz (Hertz), and given by ```samp_rate```.
+- $f_k = \frac{k-1}{n}\cdot samp \_- rate$ 
+is the frequency for Fourier coefficient $a_k$. 
+
+- Each Fourier coefficient $a_k$ shows the weight of the frequency $f_k$. 
+
+The coefficients have a real part and an imaginary part.
+A Fourier Transformation will return the Fourier coefficients as an array, beginning with index 1: the coefficient a_1 belonging to frequency $f_k=0$, i.e., a constant that is equal to the sum of all data.
+
+Now we assume that we have a signal with **$n=2^{15}$ data points** and a sampling rate of **64 Hz**. So the Fast-Fourier-Transform (FFT) of our signal will return 2^15 Fourier coefficients $a_k$. The first coefficient $a_1$ is the sum (or, in other implementations of FFT, the average) of all data, representing the vertical offset of the signal. The next $2^{14}$ coefficients, $a_k$, represent the oscillations with frequencies $f_k$ =k/n*samp_rate$. Because of the way FFT deals with complex numbers, the coefficients are mirrored in the following $2^{14}-1$ coefficients, $a_k$ corresponding to $a_{n-k+2}$. Based on the so-called Nyquist theorem the maximal frequency we can detect is half of the sampling rate, here 32 Hz, and always represented by the center coefficient $a_{n/2+1}$, which is not mirrored. $a_1$ is also not mirrored.
 
 What is the frequency step (or distance) between each of the Fourier coefficients?
 
