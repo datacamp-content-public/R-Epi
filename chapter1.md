@@ -115,7 +115,7 @@ The idea of the Fourier transform is to split a signal down in sine and cosine (
 - $f_k=\frac{k-1}{n}\cdot samp\_- rate$ is the frequency for Fourier coefficient  $a\_k$
 - Each Fourier coefficient $a\_k$ shows the weight of the frequency $f\_k$
 - The coefficients have a real part and an imaginary part.
-- Fourier Transformation will return the Fourier coefficients as an array, beginning with index 1: the coefficient a_1 belonging to frequency $f\_k=0$, i.e., a constant that is equal to the sum of all data.
+- Fourier Transformation will return the Fourier coefficients as an array, beginning with index 1: the coefficient $a\_1$ belonging to frequency $f\_k=0$, i.e., a constant that is equal to the sum of all data.
 
 Now we assume that we have a signal with **$n=2^{15}$ data points** and a sampling rate of **64 Hz**. So the Fast-Fourier-Transform (FFT) of our signal will return 2^15 Fourier coefficients $a\_k$. 
 

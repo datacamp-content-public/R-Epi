@@ -18,7 +18,7 @@ Let's start with loading your data.
 1. Load the data ```respiration.dat``` to ```data``` by using ```scan()```. The first argument is the path. The file is located in your current directory. 
 2. The data has a sampling rate of 4 Hz. Create a time series of the time and store it to ```time```. You can check the length of a vector by ```length(vector)```.   
 3. Now plot the data to see what it looks like. You can set the x-label and y-label by adding ```xlab=x-label``` and ```ylab=y-label``` to the arguments of ```plot()```.
-4. The plot from task 3 is not quite nice. Let's plot again, but only the second minute of data and with a **line plot**, by adding ```"l"``` (minuscle of L) to the arguments of ```plot()```. But first create the ```start``` and ```end``` index for the second minute, and then use it in the ```plot``` command.
+4. The plot from task 3 is not quite nice. Let's plot again, but only the second minute of data and with a **line plot**, by adding ```type="l"``` (minuscle of L) to the arguments of ```plot()```. But first create the ```start``` and ```end``` index for the second minute, and then use it in the ```plot``` command.
 
 `@hint`
 - 4 Hz = 4 values per second => step = 0.25
@@ -67,7 +67,7 @@ start <- 240
 end <- 480
 
 # Plot only the second minute as a line-plot
-plot(x=time[start:end],y=data[start:end],"l")
+plot(x=time[start:end],y=data[start:end],type="l")
 ```
 
 `@sct`
@@ -129,7 +129,7 @@ key: 4617f36b93
 xp: 100
 ```
 
-In the last programming exercise we got this plot. ![](https://assets.datacamp.com/production/repositories/3401/datasets/3ef69998a7434569bb3df0dc7e33b09c2b827e65/respiration.png). Now we would like to know the respiration frequency -- and we can determine it by fourier-transformation. The data is still available and has a **sampling rate of 4 Hz**.
+In the last programming exercise we got this plot. ![](https://assets.datacamp.com/production/repositories/3401/datasets/3ef69998a7434569bb3df0dc7e33b09c2b827e65/respiration.png) Now we would like to know the respiration frequency -- and we can determine it by fourier-transformation. The data is still available and has a **sampling rate of 4 Hz**.
 
 `@instructions`
 The respiration data is still stored in ```data```.
@@ -137,14 +137,16 @@ The respiration data is still stored in ```data```.
 
 2. Calculate the fast-Fourier-transform of the data and save the Fourier coefficients to ```fft_data```. Use a power of 2 as number of data points. Zero entries will be added to the array, if you specify a range that exceeds the actual length of the data.
 
-3. Save the absolute of the Fourier coefficients to ```abs_fft_data```, representing the frequencies from 0 to 2 Hz and no mirror coefficients.
+3. Save the absolute of the Fourier coefficients to ```abs_fft_data```, but use only the first half of Fourier coefficients, $a\_1$ to $a\_{n/2+1}$, representing the frequencies from 0 to 2 Hz and no mirror coefficients.
 
 4. Calculate the corresponding frequencies of the Fourier coefficients and store them to ```freq```.
 
 5. Plot the frequency spectrum.
 
 `@hint`
-
+- seq(from, to, by)
+- plot(x-values,y-values)
+- Don't forget brackets () in indices!
 
 `@pre_exercise_code`
 ```{r}
@@ -157,19 +159,19 @@ data = scan(path_data)
 `@sample_code`
 ```{r}
 # set length of data (power of 2!)
-n <- 2^10
+n <- 
 
-# Calculate the fourier-coefficients
-fft_data <- fft(data[1:n])
+# Calculate the fourier-coefficients, use [1:n] as index
+fft_data <- 
 
-# Calculate absolute of fft and take the first halfe
-abs_fft_data <- abs(fft_data[1:((n/2)+1)])
+# Calculate absolute of fft for frequencies from 0 to 2 Hz 
+abs_fft_data <- 
 
-# Calculate frequencies
-freq <- seq(0, 2, 2/2^9)
+# Calculate frequencies of fft 
+freq <- 
 
-# Plot the spectogram
-plot(x=freq,y=abs_fft_data,"l")
+# Plot the spectogram as line-plot
+
 ```
 
 `@solution`
@@ -177,29 +179,44 @@ plot(x=freq,y=abs_fft_data,"l")
 # set length of data (power of 2!)
 n <- 2^10
 
-# Calculate the fourier-coefficients
+# Calculate the fourier-coefficients, use [1:n] as index
 fft_data <- fft(data[1:n])
 
-# Calculate absolute of fft and take the first halfe
-abs_fft_data <- abs(fft_data[1:((n/2)+1)])
+# Calculate absolute of fft for frequencies from 0 to 2 Hz
+abs_fft_data <- abs(fft_data[1:(n/2+1)])
 
 # Calculate frequencies
-freq <- seq(0, 2, 2/2^9)
+freq <- seq(0, 2, (2/2^9))
 
-# Plot the spectogram
-plot(x=freq,y=abs_fft_data,"l")
+# Plot the spectogram as line-plot
+plot(x=freq,y=abs_fft_data,type="l")
 ```
 
 `@sct`
 ```{r}
-ex() %>% check_error()
 ex() %>% check_object("n") %>% check_equal()
+
+ex() %>% check_function("fft") %>% check_arg("z") %>% check_equal()
 ex() %>% check_object("fft_data") %>% check_equal()
-ex() %>% check_function("fft") %>% check_result() %>% check_equal()
+
+ex() %>% check_function("abs") %>% check_arg("x") %>% check_equal()
 ex() %>% check_object("abs_fft_data") %>% check_equal()
+
+ex() %>% check_function("seq") %>% {
+  check_arg(.,"from") %>% check_equal()
+  check_arg(.,"to") %>% check_equal()
+  check_arg(.,"by") %>% check_equal()
+  } %>% check_equal()
 ex() %>% check_object("freq") %>% check_equal()
-ex() %>% check_function("plot") %>% check_result() %>% check_equal()
-success_msg("Check out your frequency spectrum. What is the respiration frequency? And what represents the other peak? Is it plausible?")
+
+ex() %>% check_function("plot") %>% {
+  check_arg(.,"x")
+  check_arg(.,"y")
+  check_arg(.,"type")
+} %>% check_equal()
+
+ex() %>% check_error()
+success_msg("Check out your frequency spectrum. What is the respiration frequency? And what represents the other peaks? Is it plausible?")
 ```
 
 ---
@@ -225,6 +242,6 @@ What is the respiration frequency?
 3. 0.44 Hz
 
 `@feedback`
-1. No.
+1. No. Check out the graph!
 2. Right!
 3. This is the first harmonic of the respiration frequency, but not the actual respiration frequency.
