@@ -43,9 +43,9 @@ time <-
 # Plot the data
 
 
-# define start and end
-
-
+# Define start and end
+start <-
+end <-
 
 # Plot only the second minute as line-plot
 
@@ -62,7 +62,7 @@ time <- seq(0,length(data)/4-0.25,0.25)
 # Plot the data
 plot(x=time,y=data)
 
-# define start and end
+# Define start and end
 start <- 240
 end <- 480
 
@@ -72,16 +72,23 @@ plot(x=time[start:end],y=data[start:end],"l")
 
 `@sct`
 ```{r}
-
-ex() %>% check_function("scan") %>% check_result() %>% check_equal()
+ex() %>% check_function("scan") %>% check_arg("file") %>% check_equal()
 ex() %>% check_object("data") %>% check_equal()
-ex() %>% check_function("seq") %>% check_result() %>% check_equal()
+
+ex() %>% check_function("seq") %>% {
+  check_arg(.,"from")
+  check_arg(.,"to")
+  check_arg(.,"by")  
+} %>% check_equal()
 ex() %>% check_object("time") %>% check_equal()
+
 ex() %>% check_object("start") %>% check_equal()
 ex() %>% check_object("end") %>% check_equal()
-ex() %>% check_error()
+
 ex() %>% check_function("plot",index=1) %>% check_result() %>% check_equal()
 ex() %>% check_function("plot",index=2) %>% check_result() %>% check_equal()
+
+ex() %>% check_error()
 success_msg("You plotted a very nice graph!")
 ```
 

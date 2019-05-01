@@ -159,9 +159,9 @@ Now we calculate the FFT and plot a frequency spectrum!
 We have a signal with **$2^{15}$ data points** and a sampling rate of **64 Hz**.
 
 `@instructions`
-1. First we need our random numbers (last exercise). Generate a new list of 2^15 normally distributed random numbers with average 0, and standard deviation 0.5. Save it to `numbers`!
-2. Calculate the FFT of this random time series by using the function [fft()](https://www.rdocumentation.org/packages/stats/versions/3.5.3/topics/fft). Save the result in `r_numbers_fft`! 
-3. As mentioned before, we need only the first half of Fourier coefficients (1 to 2^14+1), which we can do with indices in brackets `[start_index:end_index]`. Note that 'end_index' must be enclosed in brackets, if it is to be calculated, e.g., by the expression 2^14+1. 
+1. First we need our random numbers (first exercise). Generate a new list of 2^15 normally distributed random numbers with average 0, and standard deviation 0.5. Save it to `numbers`!
+2. Calculate the FFT of this random time series by using the function [fft()](https://www.rdocumentation.org/packages/stats/versions/3.5.3/topics/fft). Save the result in `numbers_fft`! 
+3. As mentioned before, we need only the first half of Fourier coefficients (1 to 2^14+1), which we can do with indices in brackets `[start_index:end_index]`. Note that ```end_index``` must be enclosed in brackets, if it is to be calculated, e.g., by the expression 2^14+1. 
 4. Since it is difficult to plot complex numbers, we take the absolute values of our Fourier coefficients. You can do it by `abs()` -- it also works for a whole list of complex numbers. Save the result in `y`
 
 5. Create a list of frequencies from 0 to 32 Hz with steps of 32/2^14 = 64/2^15. Use `seq(start, end, step)` and save the result in `x`
@@ -233,11 +233,11 @@ ex() %>% check_function("seq") %>% {
   check_arg(.,"by") %>% check_equal()
   }
 ex() %>% check_object("x") %>% check_equal()
-ex() %>% check_error()
 ex() %>% check_function("plot") %>% {
   check_arg(.,"x")
   check_arg(.,"y")
 }
+ex() %>% check_error()
 success_msg("Great!")
 
 ```
