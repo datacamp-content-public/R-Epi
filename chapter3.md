@@ -485,11 +485,11 @@ bandpass_filter <- function(signal,freq_min,freq_max,samp_rate) {
     fft_eeg <- fft(signal)
     for (i in 2:(n/2+1)) {
       if ((freq[i] < freq_min) | (freq[i] > freq_max)) {
-        fft_eeg1[i] <- 0
-        fft_eeg1[n-i+2] <- 0
+        fft_eeg[i] <- 0
+        fft_eeg[n-i+2] <- 0
         }
       }
-    fft_eeg1[1] <- 0
+    fft_eeg[1] <- 0
     
   	bandpass_signal <- Re(fft(fft_eeg,inverse=TRUE)/n)
 
@@ -545,6 +545,29 @@ In addition, we have extended the ```bandpass_filter``` filter function to calcu
 
 `@pre_exercise_code`
 ```{r}
+# Define your bandpass_filter function:
+bandpass_filter <- function(signal,freq_min,freq_max,samp_rate) {
+
+  # Calculate the length of signal (next suitable power of 2)
+	n <- 2^(as.integer(log(length(signal)-1)/log(2)+1))
+    # Calculate frequency vector
+    freq = seq(0,samp_rate/2,samp_rate/n)
+    # Bandpass filter procedure
+    fft_eeg <- fft(signal)
+    for (i in 2:(n/2+1)) {
+      if ((freq[i] < freq_min) | (freq[i] > freq_max)) {
+        fft_eeg[i] <- 0
+        fft_eeg[n-i+2] <- 0
+        }
+      }
+    fft_eeg[1] <- 0
+    
+  	bandpass_signal <- Re(fft(fft_eeg,inverse=TRUE)/n)
+
+    # Use return to return bandpass_signal
+	return(bandpass_signal)
+ 	}
+# Define your band_amplitude filter
 band_amplitudes <- function(signal,freq_min,freq_max,samp_rate) {
 	n <- 2^(as.integer(log(length(signal)-1)/log(2)+1))
     freq = seq(0,samp_rate/2,samp_rate/n)
@@ -601,19 +624,27 @@ axis(2, at=1:5, labels=c('N3','N2','N1','REM','W'))
 `@solution`
 ```{r}
 # Calculate the α-, β-, δ-band of the eeg signal
-eeg_alpha <- band_amplitudes(eeg,8,13,1024) 
-eeg_beta  <- band_amplitudes(eeg,13,30,1024) 
-eeg_delta <- band_amplitudes(eeg,0.5,3,1024) 
+eeg_alpha <- bandpass_filter(eeg,8,13,1024) 
+eeg_beta  <- bandpass_filter(eeg,13,30,1024) 
+eeg_delta <- bandpass_filter(eeg,0.5,3,1024) 
+
+# Calculate the amplitude of the α-, β-, δ-band of the eeg signal
+eeg_alpha_amp <- band_amplitudes(eeg,8,13,1024) 
+eeg_beta_amp  <- band_amplitudes(eeg,13,30,1024) 
+eeg_delta_amp <- band_amplitudes(eeg,0.5,3,1024) 
 
 # Plot preparation (Don't change!)
-par(mfrow=c(2,1),mar=c(1,5,0,0),oma=c(2,2,0,0))
+par(mfrow=c(4,1),mar=c(1,5,0,0),oma=c(2,2,0,0))
 xlimit<-c(0,4)
 ylimit<-c(0,100)
 
 # Plot α-, β- and δ-band in this order (replace ___)
-plot(x=time,y=eeg_alpha,"l",xaxt='n',ylab="alpha",xlim=xlimit,ylim=ylimit,col = rgb(red = 1, green = 0, blue = 0, alpha = 0.5))
-lines(x=time,y=eeg_beta,"l",xaxt='n',ylab="beta",xlim=xlimit,ylim=ylimit,col = rgb(red = 0, green = 0, blue = 1, alpha = 0.5))
-lines(x=time,y=eeg_delta,"l",xaxt='n',ylab="delta",xlim=xlimit,ylim=ylimit,col = rgb(red = 0, green = 1, blue = 0, alpha = 0.5))
+plot(x=time,y=eeg_alpha,"l",xaxt='n',ylab="alpha",xlim=xlimit,ylim=ylimit)
+lines(x=time,y=eeg_alpha_amp,"l",xaxt='n',ylab="alpha",xlim=xlimit,ylim=ylimit,col = rgb(red = 1, green = 0, blue = 0, alpha = 0.5))
+plot(x=time,y=eeg_beta,"l",xaxt='n',ylab="beta",xlim=xlimit,ylim=ylimit)
+lines(x=time,y=eeg_beta_amp,"l",xaxt='n',ylab="alpha",xlim=xlimit,ylim=ylimit,col = rgb(red = 1, green = 0, blue = 0, alpha = 0.5))
+plot(x=time,y=eeg_delta,"l",xaxt='n',ylab="delta",xlim=xlimit,ylim=ylimit)
+lines(x=time,y=eeg_delta_amp,"l",xaxt='n',ylab="alpha",xlim=xlimit,ylim=ylimit,col = rgb(red = 1, green = 0, blue = 0, alpha = 0.5))
 
 # Plot sleep stages (Don't change!)
 plot(x=sleep_time,y=sleep_stage,yaxt='n',xlab="time in minutes",ylab="sleep stage",xlim=xlimit)
