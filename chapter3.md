@@ -11,9 +11,9 @@ key: f7c74cb697
 xp: 50
 ```
 
-[Electroencephalography](https://en.wikipedia.org/wiki/Electroencephalography) is an electro-physiological monitoring method to record electrical activity of the brain. The human body transfers information by neurons. This cells emitting signals via changes of electrochemical potentials. A single neuronal activity usually cannot be detected in-vivo. But hundreds or thousands of neurons are involved in neurological processes in the brain, so that we can measure their synchronous activity as electrical potentials on the scalp.
+[Electroencephalography](https://en.wikipedia.org/wiki/Electroencephalography) is an electro-physiological monitoring method to record electrical activity of the brain. The human body transfers information by neurons. These cells emit signals via changes of electrochemical potentials. A single neuronal activity usually cannot be detected in-vivo. But hundreds or thousands of neurons are involved in neurological processes in the brain, so that we can measure their synchronous activity as electrical potentials on the scalp.
 
-The signals are measured in micro volts (µV) and need some pre-processing to obtain information. At the end of this part we can compare activities in $\alpha$ , $\beta$  and $\delta$ bands. 
+The signals are measured in micro volts (µV) and need some pre-processing to obtain information. At the end of this part we can compare activities in $\alpha$, $\beta$ and $\delta$ bands. 
 
 $\alpha$-waves (8-13 Hz):
 - relaxed and awake, but closed eyes
@@ -262,6 +262,7 @@ for (i in ___:___ {
     }
   }
 fft_eeg[___] <- 0
+fft_eeg[___] <- 0
      
 # Check your result by plotting the fourier coefficients again (frequency spectrum)
 
@@ -285,6 +286,7 @@ for (i in 2:(n/2+1)) {
     }
   }
 fft_eeg[1] <- 0
+fft_eeg[n/2+1] <- 0
 
 # Check your result by plotting the fourier coefficients again (frequency spectrum)
 plot(x=freq,y=abs(fft_eeg[1:(2^19+1)]))
