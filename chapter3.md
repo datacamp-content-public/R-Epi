@@ -278,7 +278,7 @@ freq_max <- 13
 
 # Set all Fourier coefficients 0, which not between freq_min and freq_max 
 # The mirrored Fourier coefficients (replace ___) 
-for (i in 2:(n/2+1)) {
+for (i in 2:(n/2)) {
   if ((freq[i] < freq_min) | (freq[i] > freq_max)) {
     # Set the fft_coefficients to zero, also in the mirrored part
     fft_eeg[i] <- 0
