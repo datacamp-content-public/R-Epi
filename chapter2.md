@@ -230,6 +230,7 @@ xp: 50
 ```
 
 ![](https://assets.datacamp.com/production/repositories/3401/datasets/e9a75a9779ec5042622026a258642cf8d64b8e62/respiration_spectrum.png)
+
 Let us check our frequency spectrum of the respiration data again. 
 What is the respiration frequency?
 
