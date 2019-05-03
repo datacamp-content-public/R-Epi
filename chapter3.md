@@ -364,7 +364,7 @@ freq_max <- 13
 
 # Set all Fourier coefficients 0, which not between freq_min and freq_max 
 # The mirrored Fourier coefficients (replace ___) 
-for (i in 2:(n/2+1)) {
+for (i in 2:(n/2)) {
   if ((freq[i] < freq_min) | (freq[i] > freq_max)) {
     # Set the fft_coefficients to zero, also in the mirrored part
     fft_eeg[i] <- 0
@@ -372,7 +372,7 @@ for (i in 2:(n/2+1)) {
     }
   }
 fft_eeg[1] <- 0
-#fft_eeg[n/2+1] <- 0
+fft_eeg[n/2+1] <- 0
 
 # Create time 
 time <- seq(0,(length(eeg)-1)/(1024*60),1/(1024*60))
@@ -400,7 +400,6 @@ plot(x=time, y=eeg_alpha)
 ```{r}
 ex() %>% check_error()
 ex() %>% check_function("fft") %>% check_result() %>% check_equal()
-ex() %>% check_function("length") %>% check_result() %>% check_equal()
 ex() %>% check_function("Re") %>% check_result() %>% check_equal()
 ex() %>% check_object("eeg_alpha") %>% check_equal()
 ex() %>% check_function("plot") %>% {
