@@ -460,11 +460,12 @@ ___ <- function(___,___,___,___) {
     fft_eeg <- fft(signal)
     for (i in 2:(n/2)) {
       if ((freq[i] < freq_min) | (freq[i] > freq_max)) {
-        fft_eeg1[i] <- 0
-        fft_eeg1[n-i+2] <- 0
+        fft_eeg[i] <- 0
+        fft_eeg[n-i+2] <- 0
         }
       }
-    fft_eeg1[1] <- 0
+    fft_eeg[1] <- 0
+    fft_eeg[n/2+1] <- 0
   
 	bandpass_signal <- Re(fft(fft_eeg,inverse=TRUE)/n)
 
@@ -484,13 +485,14 @@ bandpass_filter <- function(signal,freq_min,freq_max,samp_rate) {
     freq = seq(0,samp_rate/2,samp_rate/n)
     # Bandpass filter procedure
     fft_eeg <- fft(signal)
-    for (i in 2:(n/2+1)) {
+    for (i in 2:(n/2)) {
       if ((freq[i] < freq_min) | (freq[i] > freq_max)) {
         fft_eeg[i] <- 0
         fft_eeg[n-i+2] <- 0
         }
       }
     fft_eeg[1] <- 0
+    fft_eeg[n/2+1] <- 0
     
   	bandpass_signal <- Re(fft(fft_eeg,inverse=TRUE)/n)
 
