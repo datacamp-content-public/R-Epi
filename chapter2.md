@@ -11,12 +11,12 @@ key: 8dc2739bea
 xp: 100
 ```
 
-In the last example we could not actually obtain results from our Fourier spectra. Therefore we will now investigate real respiratory data. To load the data we use here [scan()](https://www.rdocumentation.org/packages/base/versions/3.5.3/topics/scan). The data is a time series measured with a temperature sensor placed at the nostrils. This is a common way to record respiratory activity.
+In the last example we could not actually obtain results from our Fourier spectrum. Therefore we will now investigate real respiratory data. To load the data we use here [scan()](https://www.rdocumentation.org/packages/base/versions/3.5.3/topics/scan). The data is a time series measured with a temperature sensor placed at the nostrils. This is a common way to record respiratory activity.
 
 `@instructions`
 Let's start with loading your data. 
 1. Load the data ```respiration.dat``` to ```data``` by using ```scan()```. The first argument is the path. The file is located in your current directory. 
-2. The data has a sampling rate of 4 Hz. Create a time series of the time and store it to ```time```. You can check the length of a vector by ```length(vector)```.   
+2. The data has a sampling rate of 4 Hz. Create a series of the time value from 0 to the total measurement duration and store it to ```time```. You can check the length of a vector by ```length(vector)```.   
 3. Now plot the data to see what it looks like. You can set the x-label and y-label by adding ```xlab=x-label``` and ```ylab=y-label``` to the arguments of ```plot()```.
 4. The plot from task 3 is not quite nice. Let's plot again, but only the second minute of data and with a **line plot**, by adding ```type="l"``` (minuscle of L) to the arguments of ```plot()```. But first create the ```start``` and ```end``` index for the second minute, and then use it in the ```plot``` command.
 
@@ -133,7 +133,7 @@ In the last programming exercise we got this plot. ![](https://assets.datacamp.c
 
 `@instructions`
 The respiration data is still stored in ```data```.
-1. You probably remember that the FFT works best with data of lengths equal to a power of 2. Set ```n``` as lowest possible power of 2 so that the data still fits into the array. Maybe you have to check the length of data first. Hint: You can take the console as a calculator, too.
+1. You probably remember that the FFT works best with data of lengths equal to a power of 2. Set ```n``` as highest possible power of 2 so that there is still data for the range from 1 to 2^n. Maybe you have to check the length of data first. Hint: You can take the console as a calculator, too.
 
 2. Calculate the fast-Fourier-transform of the data and save the Fourier coefficients to ```fft_data```. Use a power of 2 as number of data points. Zero entries will be added to the array, if you specify a range that exceeds the actual length of the data.
 
