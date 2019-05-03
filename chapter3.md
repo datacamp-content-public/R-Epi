@@ -152,7 +152,7 @@ eeg <- readRDS("eeg1.rds")
 
 `@sample_code`
 ```{r}
-# Your EEG data is still stored in eeg1
+# Your EEG data is still stored in eeg
 # max power of 2 in the length of the signal
 n <- 
 
