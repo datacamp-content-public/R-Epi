@@ -111,17 +111,17 @@ xp: 50
 
 The idea of the Fourier transform is to split a signal down in sine and cosine (Sinus und Kosinus) parts with different frequencies. In the following, we will assume that:
 
-- $n = 2^N$ represents the number of data in the signal. The algorithm if fast Fourier transform is most efficient, if the length of the data is a power of 2. The sampling rate of the signal, i.e. the number of measurements per second, is measured in Hz (Hertz), and given by ```samp_rate```.
-- $f_k=\frac{k-1}{n}\cdot samp\_- rate$ is the frequency for Fourier coefficient  $a\_k$
+- $n = 2^N$ represents the number of data in the signal. The algorithm of fast Fourier transform is most efficient, if the length of the data is a power of 2. The sampling rate of the signal, i.e. the number of measurements per second, is measured in Hz (Hertz), and given by ```samp_rate```.
+- $f_k=\frac{k-1}{n}\cdot$ ```samp_rate``` is the frequency for Fourier coefficient  $a\_k$
 - Each Fourier coefficient $a\_k$ shows the weight of the frequency $f\_k$
 - The coefficients have a real part and an imaginary part.
-- Fourier Transformation will return the Fourier coefficients as an array, beginning with index 1: the coefficient $a\_1$ belonging to frequency $f\_k=0$, i.e., a constant that is equal to the sum of all data.
+- Fourier Transformation will return the Fourier coefficients as an array, beginning with index 1: the coefficient $a\_1$ belonging to frequency $f\_1=0$, i.e., $a\_1$ is a constant equal to the sum of all data.
 
 Now we assume that we have a signal with **$n=2^{15}$ data points** and a sampling rate of **64 Hz**. So the Fast-Fourier-Transform (FFT) of our signal will return 2^15 Fourier coefficients $a\_k$. 
 
 The first coefficient $a\_1$ is the sum (or, in other implementations of FFT, the average) of all data, representing the vertical offset of the signal. 
 
-The next $2^{14}$ coefficients, $a_k$, represent the oscillations with frequencies $f\_k=\frac{k-1}{n} \cdot samp\_-rate$. Because of the way FFT deals with complex numbers, the coefficients are mirrored in the following $2^{14}-1$ coefficients:
+The next $2^{14}$ coefficients, $a_k$, represent the oscillations with frequencies $f\_k=\frac{k-1}{n} \cdot$ ```samp_rate```. Because of the way FFT deals with complex numbers, the coefficients are mirrored in the following $2^{14}-1$ coefficients:
 - $a\_k$ corresponding to $a\_{n-k+2}$ 
 - $a\_{k+1}$ corresponding to $a\_{n-(k+1)+2}$ 
 - and so on. 
