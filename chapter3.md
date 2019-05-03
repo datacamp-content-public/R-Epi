@@ -542,7 +542,8 @@ In addition, we have added ```band_amplitudes``` a function to calculate the ins
 
 1. Use the functions ```bandpass_filter()``` to extract the α-, β-, δ-band of the ```eeg``` signal. Store the result in ```eeg_alpha```, ```eeg_beta``` and ```eeg_delta```.
 2. Use the functions ```band_amplitudes()``` to extract the α-, β-, δ-band of the ```eeg``` signal. Store the result in ```eeg_alpha_amp```, ```eeg_beta_amp``` and ```eeg_delta_amp```.
-3. Plot all 3 EEG-bands (plot - command) and there instantaneous amplitude (lines - command) in one graph. For this purpose, we have already prepared some stuff. ```xlimit``` and ```ylimit```defines the range of the plot, here the first 4 minutes from 0 to 100 µV. We also added the sleep stages of this episode of EEG data.
+3. Plot all 3 EEG-bands (plot - command) and there instantaneous amplitude (lines - command) in one graph. For this purpose, we have already prepared some stuff. ```xlimit``` and ```ylimit```defines the range of the plot, here the first 4 seconds from 0 to 100 µV. We also added the sleep stages of this episode of EEG data.
+4. For the final picture, extend the ```xlimit``` range, so that the first 4 minutes of data are shown instead of the first four seconds.
 
 `@hint`
 
@@ -617,7 +618,7 @@ eeg_delta_amp <- ___
 
 # Plot preparation (Don't change!)
 par(mfrow=c(4,1),mar=c(1,5,0,0),oma=c(2,2,0,0))
-xlimit<-c(0,4)
+xlimit<-c(0,4/60)
 ylimit<-c(-80,80)
 
 # Plot α-, β- and δ-band in this order (replace ___)
